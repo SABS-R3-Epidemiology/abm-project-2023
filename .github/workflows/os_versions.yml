@@ -32,6 +32,6 @@ jobs:
         python --version
         python -m pip install --upgrade pip setuptools wheel
         python -m pip install .[dev]
-    - name: Run with pytest
+    - name: Run unit tests
       run: |
-        pytest
+        python abm-model/run_tests.py --unit

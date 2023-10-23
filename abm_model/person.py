@@ -1,15 +1,13 @@
-
 from abm_model.status import *
-
 
 class Person:
 
-    def __init__(self, id, status, d = 0):
+    def __init__(self, id, status, d = 1):
         self.id = id
         self.history = {}
-        if status == "Susceptible" or "susceptible":
+        if status == "Susceptible":
             self.status = Susceptible()
-        elif status == "Infected" or "infected":
+        elif status == "Infected":
             self.status = Infected(d, 0)
             self.history["infected"] = 0
         else:
@@ -31,7 +29,11 @@ class Person:
 
     def read_infection_history(self):
         if len(self.history) == 0:
-            print()
+            print(self.id + " was not infected")
         else:
-            for key, value in self.history:
+            for key, value in self.history.items():
                 print(self.id + " was " + key + " at day " + str(value))
+
+    def __repr__(self):
+        return f"Person(ID = '{self.id}', status = {self.status})"
+

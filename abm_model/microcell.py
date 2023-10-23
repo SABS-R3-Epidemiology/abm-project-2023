@@ -6,7 +6,7 @@ class Microcell:
     
     def __init__(self, p, d, N, I0):
         self.p = p
-        self.d = d
+        self.D = d
         self.N = N
         self.i_list = []
         for i in range(I0):
@@ -28,13 +28,13 @@ class Microcell:
             for j in range(len(self.i_list)):
                 p_rand = np.random.poisson(self.p)
                 if p_rand < len(self.s_list):
-                    index = np.random.randint(0, p_rand)
+                    index = np.random.randint(0, len(self.s_list) - 1, size = p_rand)
                     infected_j = []
                     for ind in index:
-                        infected.append(self.s_list[ind])
+                        infected_j.append(self.s_list[ind])
                 else:
                     infected_j = self.s_list
-                infected = infected.union(infected_j)
+                infected = infected.union(set(infected_j))
             for s_person in infected:
                 s_person.update(self)
             for i_person in self.i_list:

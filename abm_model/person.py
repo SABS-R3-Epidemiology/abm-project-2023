@@ -23,7 +23,7 @@ class Person:
                    for originally infected people: check whether it is the time to recover: if yes, recover; if no, pass
                    for originally recovered people: pass
              NOTE: When a infected people is changed to a recovered status, the function will return 1 to indicate this change, 
-                  otherwise None is returned
+                   otherwise None is returned
     .read_infection_history(): print out the date of infection and recovery(if exist) based on '.history' attribute
     
     '''

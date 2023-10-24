@@ -4,6 +4,7 @@ import os
 from abm_model.minicell import Minicell
 
 population_size = 100
+run_time = 20
 beta = 0.01
 recovery_period = 1.0
 I_0 = 1
@@ -14,10 +15,11 @@ dirname = os.path.dirname(os.path.realpath(__file__))
 
 argv = sys.argv[1:]
 try:
-    options, args = getopt.getopt(argv, "hN:b:D:I:t:p:",
+    options, args = getopt.getopt(argv, "hN:t:b:D:I:T:p:",
                                   [
                                       "help",
                                       "population-size=",
+                                      "run-time=",
                                       "beta=",
                                       "recovery-period=",
                                       "initial-infected=",
@@ -44,6 +46,11 @@ if len(options) >= 1:
             except ValueError:
                 print("Error: population size should be an int")
                 sys.exit()
+        elif name in ['-t', '--run-time']:
+            try:
+                run_time = int(value)
+            except ValueError:
+                print("Error: run time should be an int")
         elif name in ['-b', '--beta']:
             try:
                 beta = float(value)
@@ -67,5 +74,5 @@ if len(options) >= 1:
         elif name in ['-p', '--path']:
             path = value
 
-    Minicell(I0=I_0, population_size=population_size, beta=beta, recovery_period=recovery_period,
+    Minicell(I0=I_0, population_size=population_size, run_time=run_time, beta=beta, recovery_period=recovery_period,
              name=title, path=path)

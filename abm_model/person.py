@@ -1,5 +1,5 @@
 import numpy as np
-from .status import *
+from status import Status
 
 class Person:
     '''

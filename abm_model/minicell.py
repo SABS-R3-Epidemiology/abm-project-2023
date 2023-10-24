@@ -28,7 +28,7 @@ class Minicell():
 		'''
 		setting the epistemic parameters
 		'''
-		
+		self.N = N
 		self.P = P
 		self.D = D
 		self.current_time = 0
@@ -57,27 +57,6 @@ class Minicell():
 		initializing the .csv files
 		'''
 
-		file = open(self.path + '/history_'+ self.name + '.csv', 'a')
-		file.write('time\\name,')
-		for subject in self.all_list:
-			file.write(subject.id + ',')
-		file.write('\n')
-		file.write(str(str(self.current_time)) + ',')
-		for subject in self.all_list:
-			file.write(str(subject.status) + ',')
-		file.write('\n')
-		file.close()
-
-		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'a')
-		file.write('time\\stat,')
-		for some_stat in ['Susceptible', 'Infected', 'Recovered']:
-			file.write(some_stat[0] + ',')
-		file.write('\n')
-		file.write(str(self.current_time) + ',')
-		for some_list in [self.s_list, self.i_list, self.r_list]:
-			file.write(len(some_list) + ',')
-		file.write('\n')
-		file.close()
 		
 
 	def handle(self, event):
@@ -122,7 +101,7 @@ class Minicell():
 
 	def update(self, dt: float = 1):
 
-		current_time += dt
+		self.current_time += dt
 
 		'''
 		update each person's status, persons eventually raise events during this process

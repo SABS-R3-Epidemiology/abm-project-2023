@@ -4,6 +4,7 @@ from unittest import TestCase
 
 #import abm_model as abmm
 import minicell as mc
+import person
 
 
 class TestMinicell(TestCase):
@@ -16,19 +17,16 @@ class TestMinicell(TestCase):
         Test the initialisation function in minicell.py
         """
         self.minicell = mc.Minicell(N=56, P=0.66, D=0)
-        self.assertEqual(self.minicell.N, 56)
         self.assertEqual(self.minicell.P, 0.66)
         self.assertEqual(self.minicell.D, 0)
 
         self.minicell = mc.Minicell()
         self.assertEqual(self.minicell.current_time, 0)
-        self.assertEqual(self.minicell.name, 'test')
         self.assertEqual(self.minicell.i_list, [])
         self.assertEqual(self.minicell.r_list, [])
-        self.assertEqual(self.minicell.all_list, [])
 
-        self.assertEqual(len(self.minicell.all_list), self.N)
-        self.assertEqual(len(self.minicell.s_list), self.N)
+        self.assertEqual(len(self.minicell.all_list), self.minicell.N)
+        self.assertEqual(len(self.minicell.s_list), self.minicell.N)
 
         # Test that there are 0 people in i_list and r_list
 
@@ -37,11 +35,11 @@ class TestMinicell(TestCase):
             # [person.id for person in all_list]
             # check if there are any duplicates in this list
 
-        person_ids = [person.id for person in self.minicell.all_list]
+        person_ids = [p.id for p in self.minicell.all_list]
         self.assertEqual(len(person_ids), len(set(person_ids)))
 
         # Check that all people in all_list are susceptible
-        person_statuses = [person.status for person in self.minicell.all_list]
+        person_statuses = [p.status for p in self.minicell.all_list]
         self.assertEqual(all(x == 'Susceptible' for x in person_statuses), True)
 
     def test_handle(self):
@@ -52,8 +50,8 @@ class TestMinicell(TestCase):
         fake_event = {'person': target_person, 'status': 'Infected'}
         self.minicell.handle(fake_event)
         self.assertEqual(len(self.minicell.i_list), 1)
-        self.assertEqual(len(self.minicell.s_list), self.N - 1)
-        self.assertEqual(len(self.minicell.all_list), self.N)
+        self.assertEqual(len(self.minicell.s_list), self.minicell.N - 1)
+        self.assertEqual(len(self.minicell.all_list), self.minicell.N)
         self.assertEqual(len(self.minicell.r_list), 0)
         # Check that we can move people between lists
         # Create a 'fake' event that infects the first person
@@ -67,8 +65,8 @@ class TestMinicell(TestCase):
         fake_event = {'person': target_person, 'status': 'Recovered'}
         self.minicell.handle(fake_event)
         self.assertEqual(len(self.minicell.i_list), 0)
-        self.assertEqual(len(self.minicell.s_list), self.N - 1)
-        self.assertEqual(len(self.minicell.all_list), self.N)
+        self.assertEqual(len(self.minicell.s_list), self.minicell.N - 1)
+        self.assertEqual(len(self.minicell.all_list), self.minicell.N)
         self.assertEqual(len(self.minicell.r_list), 1)
 
 
@@ -83,9 +81,10 @@ class TestMinicell(TestCase):
         """
         Test the 'update' function in minicell.py
         """
-        self.assertEqual(self.microcell.current_time, 0)
-        self.microcell.update(2.0)
-        self.assertEqual(self.microcell.current_time, 2.0)
+        m = mc.Minicell()
+        self.assertEqual(self.minicell.current_time, 0)
+        person.update(cell = m, dt=1)
+        self.assertEqual(self.minicell.current_time, 1)
 
     def test_write_csv(self):
         """

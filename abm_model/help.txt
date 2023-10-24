@@ -1,4 +1,4 @@
-python command_line.py -m [--help] [--population-size=100] [--beta=0.01] [--recovery-period=1.0] [--initial-infected=1] [--title="test"] [--path="data"]
+python command_line.py [--help] [--population-size=100] [--beta=0.01] [--recovery-period=1.0] [--initial-infected=1] [--title="test"] [--path="data"]
 
 --help		    		-h	    Print help
 --population-size=100   -N	    Total number of individuals in the simulation

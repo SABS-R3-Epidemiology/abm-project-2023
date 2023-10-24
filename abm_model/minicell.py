@@ -21,7 +21,7 @@ class Minicell():
 				output: None
 	'''
 
-	def __init__(self, N, P, D, initial = [], name = 'test'):
+	def __init__(self, N: int = 100, P: float = 1, D: float = 1, initial = [], name = 'test', path: str = ''):
 		
 		'''
 		setting the epistemic parameters
@@ -30,6 +30,10 @@ class Minicell():
 		self.P = P
 		self.D = D
 		self.current_time = 0
+		self.s_list = []
+		self.i_list = []
+		self.r_list = []
+		self.all_list = []
 
 		'''
 		initializing each pearson in the minicell as susceptible
@@ -47,18 +51,31 @@ class Minicell():
 			self.handle(event)
 
 		'''
-		initializing the .csv file
+		initializing the .csv files
 		'''
 
-		file = open('history_'+ self.name + '.csv', 'a')
+		file = open(self.path + '/history_'+ self.name + '.csv', 'a')
 		file.write('time\\name,')
 		for subject in self.all_list:
 			file.write(subject.id + ',')
 		file.write('\n')
-		file.write(str(self.current_time) + ',')
+		file.write(str(str(self.current_time)) + ',')
 		for subject in self.all_list:
-			file.write(subject.current_status + ',')
+			file.write(str(subject.status) + ',')
 		file.write('\n')
+		file.close()
+
+		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'a')
+		file.write('time\\stat,')
+		for some_stat in ['Susceptible', 'Infected', 'Recovered']:
+			file.write(some_stat[0] + ',')
+		file.write('\n')
+		file.write(str(self.current_time) + ',')
+		for some_list in [self.s_list, self.i_list, self.r_list]:
+			file.write(len(some_list) + ',')
+		file.write('\n')
+		file.close()
+		
 
 	def handle(self, event):
 
@@ -75,12 +92,32 @@ class Minicell():
 			IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
 		'''
 
-		statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Removed': self.r_list}
-		statuses[str(event['person'].current_status)].remove(event['person'])
-		event['person'].current_status = event['status']
-		statuses[str(event['person'].current_status)].append(event['person'])
+		statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Recovered': self.r_list}
+		statuses[str(event['person'].status)].remove(event['person'])
+		event['person'].status = event['status']
+		statuses[str(event['person'].status)].append(event['person'])
 
-	def update(self, dt):
+	def write_csv(self):
+
+		'''
+		ACHTUNG: if self.all_list is modified, the .csv file will not be reliable
+		'''
+		
+		file = open(self.path + '/history_'+ self.name + '.csv', 'a')
+		file.write(str(self.current_time) + ',')
+		for subject in self.all_list:
+			file.write(subject.status + ',')
+		file.write('\n')
+		file.close()
+
+		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'a')
+		file.write(str(self.current_time) + ',')
+		for some_list in [self.s_list, self.i_list, self.r_list]:
+			file.write(len(some_list) + ',')
+		file.write('\n')
+		file.close()
+
+	def update(self, dt: float = 1):
 
 		current_time += dt
 
@@ -88,7 +125,7 @@ class Minicell():
 		update each person's status, persons eventually raise events during this process
 		'''
 		
-		for some_list in [s_list, i_list, r_list]:
+		for some_list in [self.s_list, self.i_list, self.r_list]:
 			for subject in some_list:
 				subject.update(self)
 
@@ -101,9 +138,5 @@ class Minicell():
 		for event in self.events:
 			self.handle(event)
 
-	def write_csv(self, path):
-		file = open('history_'+ self.name + '.csv', 'a')
-		file.write(str(self.current_time) + ',')
-		for subject in self.all_list:
-			file.write(subject.current_status + ',')
-		file.write('\n')
+		self.write_csv()
+

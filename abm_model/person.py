@@ -7,21 +7,22 @@ class Person:
     --------------
     Parameters:
 
-    id(str): a unique id/name for each agent
-    status(str): has to be either "Susceptible" or "Infected" indicating the initial status of a person
+    name(str): a unique id/name for each agent
+    initial_status: a 'status' object indicating the initial status of the person
     d(float, int, Optional): should be an input from the model, indicating the average recovery period for initially infected people
 
     Attributes:
 
-    .id(str): same as above
+    .name(str): same as above
     .status(status object): use composition with status class, indicating the status for each person
     .history(dic): a dictionary containing the date of infection and date of recovery
 
     Methods:
 
     .update(cell): triggers the change of status with an input of 'Minicell' object
-                   for originally susceptible people: become infected with random recovery date by triggering '.events' of 'Minicell'
-                   for originally infected people: check whether it is the time to recover: if yes, recove by similar method; if no, pass
+                   for originally susceptible people: pass
+                   for originally infected people: check whether it is the time to recover: if yes, recove by adding to '.events' to be handled by '.handle()';
+                                                   if no, generate list of susceptible people to be infected
                    for originally recovered people: pass
     .read_infection_history(): print out the date of infection and recovery(if exist) based on '.history' attribute
     

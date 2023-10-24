@@ -10,7 +10,7 @@ def plot_data(title: str = ""):
     :return:
     """
 
-    with open("../data/plot_data_" + title + ".csv", "r") as csv_file:
+    with open("data/plot_data_" + title + ".csv", "r") as csv_file:
         # Structure of csv file (with no whitespace in between):
         # Time,          Susceptible,     Infected,     Recovered,
         # 1,             90,              10,           0,
@@ -63,7 +63,7 @@ def plot_data(title: str = ""):
         create_plot_legend(total_people)
 
         # And here we will write to a plots folder
-        plot_path = "../data/plots"
+        plot_path = "data/plots"
         create_plot_files(plot_path, total_people, initial_infected)
 
 
@@ -120,3 +120,6 @@ def create_plot_legend(total_people: int):
     plt.xlabel("Time step")
 
     plt.title("Agent Based Model for " + str(total_people) + " individuals in a room")
+
+
+plot_data("test")

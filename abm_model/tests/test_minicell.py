@@ -2,12 +2,14 @@ import sys
 import unittest
 from unittest import TestCase
 
-import abm_model as abmm
+#import abm_model as abmm
+import minicell as mc
+
 
 class TestMinicell(TestCase):
 
     def setUp(self) -> None:
-        self.minicell = abmm.Minicell()
+        self.minicell = mc.Minicell()
 
     def test__init__(self):
         """

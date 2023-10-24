@@ -27,8 +27,15 @@ class Minicell():
 				output: None
 	'''
 
-	def __init__(self, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, initial = {}, name = 'test', path: str = 'data'):
+	def __init__(self, I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name = 'test', path: str = 'data', threshold: int = 5):
 
+		if population_size < I0:
+			raise ValueError("Population size must be greater than I0.")
+		
+		initial = {}
+		for i in range(I0):
+			initial[i] = Infected(recovery_period, 0, threshold)
+			
 		cur_dir = '.'
 		for dir in path.rsplit(sep = '/'):
 			cur_dir += '/' + dir

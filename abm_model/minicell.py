@@ -27,7 +27,7 @@ class Minicell():
 				output: None
 	'''
 
-	def __init__(self, I0 = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name = 'test', path: str = 'data', threshold: int = 5):
+	def __init__(self, I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name = 'test', path: str = 'data', threshold: int = 5):
 
 		if population_size < I0:
 			raise ValueError("Population size must be greater than I0.")

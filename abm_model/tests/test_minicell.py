@@ -4,8 +4,7 @@ from unittest import TestCase
 
 #import abm_model as abmm
 import minicell as mc
-import person
-
+from person import Person
 
 class TestMinicell(TestCase):
 
@@ -83,7 +82,8 @@ class TestMinicell(TestCase):
         """
         m = mc.Minicell()
         self.assertEqual(self.minicell.current_time, 0)
-        person.update(cell = m, dt=1)
+        p = Person("Abbie","Infected")
+        p.update(cell = m, dt=1)
         self.assertEqual(self.minicell.current_time, 1)
 
     def test_write_csv(self):

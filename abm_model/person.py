@@ -1,5 +1,5 @@
 import numpy as np
-from status import Status
+from status import Status, Susceptible, Infected, Recovered
 
 class Person:
     '''

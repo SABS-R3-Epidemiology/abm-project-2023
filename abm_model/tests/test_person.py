@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 #import abm_model as abmm
 import person 
+from status import Status, Susceptible, Infected, Recovered
 
 
 class TestPerson(TestCase):
@@ -26,14 +27,14 @@ class TestPerson(TestCase):
         """
         person1 = person.Person(id='ABC', initial_status='Susceptible')
         person2 = person.Person(id='ABD', initial_status='Susceptible')
-        self.assertEqual(self.__eq__(person1, person2), False)
+        self.assertEqual(person.Person.__eq__(person1, person2), False)
 
     def test_update(self):
         """
         Test the 'update' function in person.py
         """
 
-    @patch('builtins.print')
+    @patch()
     def test_read_infection_history(self):
         """
         Test the 'read_infection_history' function in person.py
@@ -46,4 +47,4 @@ class TestPerson(TestCase):
         Test the '__repr__' function in person.py
         """
         self.person = person.Person(id='TAMYA', initial_status='Infected')
-        self.assertEqual(f"Person(ID = '{self.id}', status = {self.status})", "Person(ID = 'TAMYA', status = 'Infected')")
+        self.assertEqual(f"Person(ID = '{self.person.id}', status = {self.person.status})", f"Person(ID = 'TAMYA', status = '{Infected}')")

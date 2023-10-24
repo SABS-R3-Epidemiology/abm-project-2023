@@ -1,4 +1,5 @@
-from abm_model.person import Person
+from abm_model.status import *
+from abm_model.person import *
 
 class Minicell():
 
@@ -46,11 +47,15 @@ class Minicell():
 		initializing each pearson in the minicell as susceptible
 		'''
 
+		statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Recovered': self.r_list}
 		for id in range(N):
-			if id in initial: my_person = Person(str(id),'Susceptible')
-			else: my_person = Person(str(id),'Susceptible')
+			if id in initial:
+				my_person = Person(str(id), initial[id])
+				statuses[str(initial[id])].append(my_person)
+			else:
+				my_person = Person(str(id), Susceptible())
+				self.s_list.append(my_person)
 			self.all_list.append(my_person)
-			self.s_list.append(my_person)
 
 		'''
 		initializing the .csv files

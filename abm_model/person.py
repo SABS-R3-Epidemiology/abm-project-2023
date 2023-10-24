@@ -26,21 +26,11 @@ class Person:
     .read_infection_history(): print out the date of infection and recovery(if exist) based on '.history' attribute
     
     '''
-    def __init__(self, id: str, status: str, d = 1):
+    def __init__(self, id: str, initial_status):
 
-        if (type(d) != int and type(d) != float):
-            raise TypeError("d needs to be in int or float data type.")
-        if d <= 0:
-            raise ValueError("You need to specify a positive recovery period.")
         self.id = id
         self.history = {}
-        if status == "Susceptible":
-            self.status = Susceptible()
-        elif status == "Infected":
-            self.status = Infected(d, 0)
-            self.history["infected"] = 0
-        else:
-            raise ValueError("Please specify the correct status of a person.")
+        self.status = initial_status
     
     def __eq__(self, other):
         return self.id == other.id
@@ -55,7 +45,7 @@ class Person:
                 cell.events.append({"person": self, "status": Recovered()})
             elif cell.s_list != []:
                 number_of_infections = np.random.poisson(min(cell.P * dt * len(cell.s_list), self.status.threshold))
-                next_infections = np.random.choice(cell.s_list, size = cell.P)
+                next_infections = np.random.choice(cell.s_list, size = number_of_infections)
                 for next_infection in next_infections:
                     cell.events.append({"person": next_infection, "status": Infected(cell.D, cell.current_time, threshold = self.status.threshold)})
                     next_infection.history["infected"] = cell.current_time

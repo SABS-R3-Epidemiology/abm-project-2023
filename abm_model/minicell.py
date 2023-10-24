@@ -11,7 +11,7 @@ class Minicell():
 			s_list: the list of susceptible people
 			i_list: the list of infectious people
 			r_list: the list of recovered people
-			all_list: a list containing people ordered by id
+			all_list: a list containing people ordered by names
 			current_time: the current time of the simulation
 			name: the name of the minicell
 			path: the path where dats are stored
@@ -27,7 +27,7 @@ class Minicell():
 				output: None
 	'''
 
-	def __init__(self, N: int = 100, P: float = 0.01, D: float = 1, initial = {}, name = 'test', path: str = 'data'):
+	def __init__(self, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, initial = {}, name = 'test', path: str = 'data'):
 
 		cur_dir = '.'
 		for dir in path.rsplit(sep = '/'):
@@ -38,8 +38,8 @@ class Minicell():
 		setting the epistemic parameters
 		'''
 		
-		self.P = P
-		self.D = D
+		self.beta = beta
+		self.recovery_period = recovery_period
 		self.current_time = 0
 		self.events = []
 		self.s_list = []
@@ -54,12 +54,12 @@ class Minicell():
 		'''
 
 		statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Recovered': self.r_list}
-		for id in range(N):
-			if id in initial:
-				my_person = Person(str(id), initial[id])
-				statuses[str(initial[id])].append(my_person)
+		for name in range(population_size):
+			if name in initial:
+				my_person = Person(str(name), initial[name])
+				statuses[str(initial[name])].append(my_person)
 			else:
-				my_person = Person(str(id), Susceptible())
+				my_person = Person(str(name), Susceptible())
 				self.s_list.append(my_person)
 			self.all_list.append(my_person)
 

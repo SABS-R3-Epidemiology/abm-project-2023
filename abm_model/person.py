@@ -26,14 +26,14 @@ class Person:
     .read_infection_history(): print out the date of infection and recovery(if exist) based on '.history' attribute
     
     '''
-    def __init__(self, id: str, initial_status):
+    def __init__(self, name: str, initial_status):
 
-        self.id = id
+        self.name = name
         self.history = {}
         self.status = initial_status
     
     def __eq__(self, other):
-        return self.id == other.id
+        return self.name == other.name
 
     def update(self, cell, dt):
 
@@ -44,10 +44,10 @@ class Person:
                 self.history["recovered"] = cell.current_time
                 cell.events.append({"person": self, "status": Recovered()})
             elif cell.s_list != []:
-                number_of_infections = np.random.poisson(min(cell.P * dt * len(cell.s_list), self.status.threshold))
+                number_of_infections = np.random.poisson(min(cell.beta * dt * len(cell.s_list), self.status.threshold))
                 next_infections = np.random.choice(cell.s_list, size = number_of_infections)
                 for next_infection in next_infections:
-                    cell.events.append({"person": next_infection, "status": Infected(cell.D, cell.current_time, threshold = self.status.threshold)})
+                    cell.events.append({"person": next_infection, "status": Infected(cell.recovery_period, cell.current_time, threshold = self.status.threshold)})
                     next_infection.history["infected"] = cell.current_time
         elif isinstance(self.status, Recovered):
             pass
@@ -55,12 +55,12 @@ class Person:
     def read_infection_history(self):
 
         if len(self.history) == 0:
-            print(self.id + " was not infected")
+            print(self.name + " was not infected")
         else:
             for key, value in self.history.items():
-                print(self.id + " was " + key + " at day " + str(value))
+                print(self.name + " was " + key + " at day " + str(value))
 
     def __repr__(self):
 
-        return f"Person(ID = '{self.id}', status = {self.status})"
+        return f"Person(ID = '{self.name}', status = {self.status})"
 

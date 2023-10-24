@@ -1,6 +1,7 @@
 import matplotlib.pylab as plt
 import numpy as np
 import os
+import csv
 
 
 def plot_data(title: str = ""):
@@ -16,8 +17,8 @@ def plot_data(title: str = ""):
         # 1,             90,              10,           0,
         # 2,             79,              20,           1,
         # ...,           ...,             ...,          ...,
-        lines = csv_file.readlines()
-        categories = lines[0].split(",")
+        lines = [line[0:4] for line in csv.reader(csv_file)]
+        categories = lines[0]
 
         # We will exit this method if there are 0 or 1 lines only in the file as
         # there is nothing to plot
@@ -29,11 +30,10 @@ def plot_data(title: str = ""):
         data_dict = {category: [] for category in categories}
 
         for line in lines[1:]:
-            line = line.strip()
 
             # We must check that the length of str_values_list is 4 and that each value
             # can be parsed to an int
-            str_values_list = line.split(",")
+            str_values_list = line
 
             values_list = check_validity(str_values_list)
 
@@ -75,7 +75,6 @@ def check_validity(str_values_list: list[str]):
     :param str_values_list: A inputted list of strings
     :return: The list of strings converted into ints (if they are valid)
     """
-
     if len(str_values_list) != 4:
         raise ValueError("Each line in the .csv file must have 4 values")
 

@@ -1,3 +1,5 @@
+from person import Person
+
 class Minicell():
 
 	'''
@@ -40,8 +42,9 @@ class Minicell():
 		'''
 
 		for id in range(N):
-			self.all_list += [person.Person(str(id),'Susceptible')]
-			self.s_list += [person.Person(str(id),'Susceptible')]
+			my_person = Person(str(id),'Susceptible') # change name id
+			self.all_list.append(my_person)
+			self.s_list.append(my_person)
 			
 		'''
 		specifying the initial events that have to be handled before running the model

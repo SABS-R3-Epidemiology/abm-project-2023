@@ -1,6 +1,6 @@
 # Agent Based Model Mini-Project 2023
 
-This project consists of an SIR model for N indidivuals in a closed room. The simulation will begin with I_0 individuals with Infected Status and updates discretely each time step.
+This project consists of an SIR model for N indidivuals in a closed room. The simulation begins with I_0 individuals with Infected Status and updates discretely each time step.
 
 ## Installation
 

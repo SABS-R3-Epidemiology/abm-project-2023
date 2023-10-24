@@ -39,13 +39,13 @@ class Infected(Status):
     current_time(int): should be an input from the microcell indicating the current time. In order to calculate the recovery date
 
     '''
-    def __init__(self, d, current_time: int, threshold: float = 0):
+    def __init__(self, recovery_period: float = 1, current_time: int = 0, threshold: float = 0):
 
-        if (type(d) != int and type(d) != float):
-            raise TypeError("d needs to be in int or float data type.")
-        if d <= 0:
+        if (type(recovery_period) != int and type(recovery_period) != float):
+            raise TypeError("recovery_period needs to be in int or float data type.")
+        if recovery_period <= 0:
             raise ValueError("You need to specify a positive recovery period.")
-        self.expiry_date = current_time + np.random.poisson(d - 1) + 1
+        self.expiry_date = current_time + np.random.poisson(recovery_period - 1) + 1
         #This is to avoid an infected people having 0 infectious period
         self.threshold = threshold
 

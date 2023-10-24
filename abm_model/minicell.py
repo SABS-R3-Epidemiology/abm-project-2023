@@ -1,6 +1,9 @@
 import os
 from abm_model.status import *
 from abm_model.person import *
+import matplotlib.pyplot as plt
+import networkx as nx
+from mpl_toolkits.mplot3d import Axes3D
 
 class Minicell():
 
@@ -55,6 +58,7 @@ class Minicell():
 		self.all_list = []
 		self.name = name
 		self.path = path
+		self.parent_record = {}
 
 		'''
 		initializing each pearson in the minicell as susceptible
@@ -127,9 +131,14 @@ class Minicell():
 		update each person's status, persons eventually raise events during this process
 		'''
 		
-		for some_list in [self.s_list, self.i_list, self.r_list]:
-			for subject in some_list:
-				subject.update(self, dt)
+		parent_record = {}
+		for subject in self.i_list:
+			child = subject.update(self, dt)
+			if child != None:
+				for child in child:
+					parent_record[child] = subject.name
+		parent_record = {key: value for key, value in parent_record.items() if value is not None}
+			
 
 		'''
 		handle each event raised in the updating loop above
@@ -141,4 +150,16 @@ class Minicell():
 			self.handle(event)
 		self.events = []
 		self.write_csv()
+		self.parent_record.update(parent_record)
+	
+	def tree_diagram(self):
+		di_graph = nx.DiGraph()
+		n = self.current_time
+		for i in range(n):
+			for key, value in self.parent_record.items():
+				di_graph.add_edge(value, key)
+		pos = nx.shell_layout(di_graph)
+		nx.draw(di_graph, pos, with_labels = True)
+		plt.axis('off')
+		plt.show()
 

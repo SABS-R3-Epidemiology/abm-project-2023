@@ -47,9 +47,12 @@ class Person:
             elif cell.s_list != []:
                 number_of_infections = np.random.poisson(min(cell.beta * dt * len(cell.s_list), self.status.threshold))
                 next_infections = np.random.choice(cell.s_list, size = number_of_infections)
+                child_record = []
                 for next_infection in next_infections:
                     cell.events.append({"person": next_infection, "status": Infected(cell.recovery_period, cell.current_time, threshold = self.status.threshold)})
                     next_infection.history["infected"] = cell.current_time
+                    child_record.append(next_infection.name)
+                return child_record
         elif isinstance(self.status, Recovered):
             pass
 

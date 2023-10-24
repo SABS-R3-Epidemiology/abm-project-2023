@@ -37,9 +37,10 @@ class Infected(Status):
 
     d(float, int): the average recovery period
     current_time(int): should be an input from the microcell indicating the current time. In order to calculate the recovery date
+    threshold(int): the maximum number of people that a person can infect in one day(avoid infect too many people with too many susceptibles)
 
     '''
-    def __init__(self, d, current_time: int, threshold: float = 0):
+    def __init__(self, d, current_time: int, threshold: int = 0):
 
         if (type(d) != int and type(d) != float):
             raise TypeError("d needs to be in int or float data type.")

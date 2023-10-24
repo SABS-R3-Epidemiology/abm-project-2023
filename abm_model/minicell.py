@@ -1,3 +1,4 @@
+import os
 from abm_model.status import *
 from abm_model.person import *
 
@@ -27,6 +28,11 @@ class Minicell():
 	'''
 
 	def __init__(self, N: int = 100, P: float = 0.01, D: float = 1, initial = {}, name = 'test', path: str = 'data'):
+
+		cur_dir = '.'
+		for dir in path.rsplit(sep = '/'):
+			cur_dir += '/' + dir
+			if not os.path.exists(cur_dir): os.mkdir(cur_dir)
 	
 		'''
 		setting the epistemic parameters
@@ -61,10 +67,10 @@ class Minicell():
 		initializing the .csv files
 		'''
 
-		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'w')
-		file.write('time\\stat,')
+		file = open(self.path + '/plot_data_' + self.name + '.csv', 'w')
+		file.write('Time,')
 		for some_stat in ['Susceptible', 'Infected', 'Recovered']:
-			file.write(some_stat[0] + ',')
+			file.write(some_stat + ',')
 		file.write('\n')
 		file.write(str(self.current_time) + ',')
 		for some_list in [self.s_list, self.i_list, self.r_list]:

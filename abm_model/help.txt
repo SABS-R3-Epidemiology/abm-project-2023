@@ -1,0 +1,9 @@
+python command_line.py -m [--help] [--population-size=100] [--beta=0.01] [--recovery-period=1.0] [--initial-infected=1] [--title="test"] [--path="data"]
+
+--help		    		-h	    Print help
+--population-size=100   -N	    Total number of individuals in the simulation
+--beta=0.01  			-b	    Effective contact rate of the disease
+--recovery-period=1.0	-D		Average number of time steps of which an individual is infected
+--initial-infected=1	-I	    Initial number of infected individuals
+--title="test"          -t      Title attached to the output .csv file
+--path="data"	        -p	    Path to the directory containing the .csv file and the plots

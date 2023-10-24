@@ -18,10 +18,12 @@ class Person:
 
     Methods:
 
-    .update(cell): triggers the change of status with an input of 'Minicell' object
-                   for originally susceptible people: become infected with random recovery date by triggering '.events' of 'Minicell'
-                   for originally infected people: check whether it is the time to recover: if yes, recove by similar method; if no, pass
+    .update(cell): triggers the change of status with an input of 'Microcell' object
+                   for originally susceptible people: become infected with random recovery date
+                   for originally infected people: check whether it is the time to recover: if yes, recover; if no, pass
                    for originally recovered people: pass
+             NOTE: When a infected people is changed to a recovered status, the function will return 1 to indicate this change, 
+                   otherwise None is returned
     .read_infection_history(): print out the date of infection and recovery(if exist) based on '.history' attribute
     
     '''
@@ -44,12 +46,13 @@ class Person:
     def update(self, cell):
 
         if isinstance(self.status, Susceptible):
-            cell.events.append({"person": self, "status": Infected(cell.D, cell.current_time)})
+            self.status = Infected(cell.D, cell.current_time)
             self.history["infected"] = cell.current_time
         elif isinstance(self.status, Infected):
             if cell.current_time == self.status.expiry_date:
+                self.status = Recovered()
                 self.history["recovered"] = cell.current_time
-                cell.events.append({"person": self, "status": Recovered()})
+                return 1
             else:
                 pass
         else:

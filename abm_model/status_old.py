@@ -33,7 +33,7 @@ class Recovered(Status):
 
 class Infected(Status):
     '''
-    This class indicates a infected status with suitable representation
+    This class indicates a infected status with representation indicating the recovery date determined by a poisson distribution
     ------------
     Parameters:
 
@@ -52,5 +52,5 @@ class Infected(Status):
 
     def __repr__(self):
 
-        return f"Infected"
+        return f"Infected with recovery date on day {self.expiry_date}"
 

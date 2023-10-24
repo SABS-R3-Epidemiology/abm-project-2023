@@ -1,14 +1,18 @@
+from abm_model.person import Person
+
 class Minicell():
 
 	'''
 	A box where all people are tracked:
-		variables:
+		attributes:
 			events: the list of transitions that has to be handled at the end of the time step (shall we call it queue?)
 			s_list: the list of susceptible people
 			i_list: the list of infectious people
 			r_list: the list of recovered people
 			all_list: a list containing people ordered by id
 			current_time: the current time of the simulation
+			name: the name of the minicell
+			path: the path where dats are stored
 		methods:
 			update(dt): changes the status of each pearson into the minicell coherently with the model
 				inputs: dt: the time lenght of the step to update
@@ -21,8 +25,8 @@ class Minicell():
 				output: None
 	'''
 
-	def __init__(self, N: int = 100, P: float = 1, D: float = 1, initial = [], name = 'test', path: str = ''):
-		
+	def __init__(self, N: int = 100, P: float = 0.01, D: float = 1, initial = {}, name = 'test', path: str = 'data'):
+	
 		'''
 		setting the epistemic parameters
 		'''
@@ -30,49 +34,36 @@ class Minicell():
 		self.P = P
 		self.D = D
 		self.current_time = 0
+		self.events = []
 		self.s_list = []
 		self.i_list = []
 		self.r_list = []
 		self.all_list = []
+		self.name = name
+		self.path = path
 
 		'''
 		initializing each pearson in the minicell as susceptible
 		'''
 
 		for id in range(N):
-			self.all_list += [person.Person(str(id),'Susceptible')]
-			self.s_list += [person.Person(str(id),'Susceptible')]
-			
-		'''
-		specifying the initial events that have to be handled before running the model
-		'''
-		
-		for event in initial:
-			self.handle(event)
+			if id in initial: my_person = Person(str(id),'Susceptible')
+			else: my_person = Person(str(id),'Susceptible')
+			self.all_list.append(my_person)
+			self.s_list.append(my_person)
 
 		'''
 		initializing the .csv files
 		'''
 
-		file = open(self.path + '/history_'+ self.name + '.csv', 'a')
-		file.write('time\\name,')
-		for subject in self.all_list:
-			file.write(subject.id + ',')
-		file.write('\n')
-		file.write(str(str(self.current_time)) + ',')
-		for subject in self.all_list:
-			file.write(str(subject.status) + ',')
-		file.write('\n')
-		file.close()
-
-		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'a')
+		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'w')
 		file.write('time\\stat,')
 		for some_stat in ['Susceptible', 'Infected', 'Recovered']:
 			file.write(some_stat[0] + ',')
 		file.write('\n')
 		file.write(str(self.current_time) + ',')
 		for some_list in [self.s_list, self.i_list, self.r_list]:
-			file.write(len(some_list) + ',')
+			file.write(str(len(some_list)) + ',')
 		file.write('\n')
 		file.close()
 		
@@ -100,26 +91,19 @@ class Minicell():
 	def write_csv(self):
 
 		'''
-		ACHTUNG: if self.all_list is modified, the .csv file will not be reliable
+		ACHTUNG1: if self.all_list is modified, the .csv file will not be reliable
 		'''
 		
-		file = open(self.path + '/history_'+ self.name + '.csv', 'a')
-		file.write(str(self.current_time) + ',')
-		for subject in self.all_list:
-			file.write(subject.status + ',')
-		file.write('\n')
-		file.close()
-
 		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'a')
 		file.write(str(self.current_time) + ',')
 		for some_list in [self.s_list, self.i_list, self.r_list]:
-			file.write(len(some_list) + ',')
+			file.write(str(len(some_list)) + ',')
 		file.write('\n')
 		file.close()
 
 	def update(self, dt: float = 1):
 
-		current_time += dt
+		self.current_time += dt
 
 		'''
 		update each person's status, persons eventually raise events during this process
@@ -127,16 +111,16 @@ class Minicell():
 		
 		for some_list in [self.s_list, self.i_list, self.r_list]:
 			for subject in some_list:
-				subject.update(self)
+				subject.update(self, dt)
 
 		'''
 		handle each event raised in the updating loop above
 		(e.g. with) cell.events.append({'person':target,'status':Infected})
-		ACHTUNG: read achtung0 above
+		ACHTUNG2: read achtung0 above
 		'''
 		
 		for event in self.events:
 			self.handle(event)
-
+		self.events = []
 		self.write_csv()
 

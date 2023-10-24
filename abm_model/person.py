@@ -1,3 +1,4 @@
+import numpy as np
 from abm_model.status import *
 
 class Person:
@@ -40,19 +41,25 @@ class Person:
             self.history["infected"] = 0
         else:
             raise ValueError("Please specify the correct status of a person.")
-        
-    def update(self, cell):
+    
+    def __eq__(self, other):
+        return self.id == other.id
+
+    def update(self, cell, dt):
 
         if isinstance(self.status, Susceptible):
-            cell.events.append({"person": self, "status": Infected(cell.D, cell.current_time)})
-            self.history["infected"] = cell.current_time
+            pass
         elif isinstance(self.status, Infected):
             if cell.current_time == self.status.expiry_date:
                 self.history["recovered"] = cell.current_time
                 cell.events.append({"person": self, "status": Recovered()})
-            else:
-                pass
-        else:
+            elif cell.s_list != []:
+                number_of_infections = np.random.poisson(min(cell.P * dt * len(cell.s_list), self.status.threshold))
+                next_infections = np.random.choice(cell.s_list, size = cell.P)
+                for next_infection in next_infections:
+                    cell.events.append({"person": next_infection, "status": Infected(cell.D, cell.current_time, threshold = self.status.threshold)})
+                    next_infection.history["infected"] = cell.current_time
+        elif isinstance(self.status, Recovered):
             pass
 
     def read_infection_history(self):

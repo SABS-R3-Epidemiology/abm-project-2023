@@ -15,8 +15,12 @@ class TestMinicell(TestCase):
         """
         Test the initialisation function in minicell.py
         """
-        self.assertEqual(self.minicell.P, self.P)
-        self.assertEqual(self.minicell.D, self.D)
+        self.minicell = mc.Minicell(N=56, P=0.66, D=0)
+        self.assertEqual(self.minicell.N, 56)
+        self.assertEqual(self.minicell.P, 0.66)
+        self.assertEqual(self.minicell.D, 0)
+
+        self.minicell = mc.Minicell()
         self.assertEqual(self.minicell.current_time, 0)
         self.assertEqual(self.minicell.name, 'test')
         self.assertEqual(self.minicell.i_list, [])

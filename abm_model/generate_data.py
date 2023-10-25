@@ -1,7 +1,21 @@
 import getopt
 import sys
 import os
-from abm_model.minicell import Minicell
+import abm_model.minicell
+
+help_text = """
+
+python generate_data.py [--help] [--population-size=100] [--total-time=20] [--beta=0.01] [--recovery-period=1.0] [--initial-infected=1] [--title="test"] [--path="data"]
+
+--help		    		-h	    Print help
+--population-size=100   -N	    Total number of individuals in the simulation
+--total-time=20         -t      Number of time steps (days) that the simulation will run for
+--beta=0.01  			-b	    Effective contact rate of the disease
+--recovery-period=1.0	-D		Average number of time steps of which an individual is infected
+--initial-infected=1	-I	    Initial number of infected individuals
+--title="test"          -T      Title attached to the output .csv file
+--path="data"	        -p	    Path to the directory containing the .csv file and the plots
+"""
 
 population_size = 100
 total_time = 20
@@ -35,10 +49,7 @@ if len(options) >= 1:
 
     for name, value in options:
         if name in ['-h', '--help']:
-            with open(dirname + "/help.txt", "r") as file:
-                text = file.read()
-                print()
-                print(text)
+            print(help_text)
             sys.exit()
         elif name in ['-N', '--population-size']:
             try:
@@ -74,5 +85,5 @@ if len(options) >= 1:
         elif name in ['-p', '--path']:
             path = value
 
-    Minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta, recovery_period=recovery_period,
-             name=title, path=path)
+    run_minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta, recovery_period=recovery_period,
+                 name=title, path=path)

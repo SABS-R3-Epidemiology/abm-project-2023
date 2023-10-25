@@ -33,7 +33,7 @@ class TestInfected(TestCase):
         self.infected = Infected(recovery_period=3, current_time=1)
         np.random.seed(1)
         self.assertEqual(self.infected.expiry_date, 2 + np.random.poisson(2))
-        # Check status.py current_time 
+        # Check status.py current_time
 
     def test__repr__(self):
         self.susceptible = Susceptible()

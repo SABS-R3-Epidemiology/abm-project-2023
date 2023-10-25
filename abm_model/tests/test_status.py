@@ -39,7 +39,8 @@ class TestInfected(TestCase):
         """
         self.assertEqual(f"{self.infected}", "Infected")
 
-class TestSusceptible(TestCase):
+
+class TestRecovered(TestCase):
 
     def setUp(self) -> None:
         self.recovered = Recovered()

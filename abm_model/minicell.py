@@ -27,7 +27,7 @@ class Minicell():
 				output: None
 	'''
 
-	def __init__(self, I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name = 'test', path: str = 'data', threshold: int = 5):
+	def __init__(self, I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name: str = 'test', path: str = 'data', threshold: int = 5):
 
 		if population_size < I0:
 			raise ValueError("Population size must be greater than I0.")
@@ -142,3 +142,11 @@ class Minicell():
 		self.events = []
 		self.write_csv()
 
+def run_minicell(I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name: str = 'test', path: str = 'data', threshold: int = 5, runtime: int = 10):
+
+	cell = Minicell(I0, population_size, beta, recovery_period, name, path, threshold)
+	
+	for i in range(runtime):
+		cell.update(1)
+	
+	print("Simulation to day " + str(runtime) + " is finished!")

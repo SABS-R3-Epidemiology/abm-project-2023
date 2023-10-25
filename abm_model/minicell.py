@@ -1,4 +1,5 @@
 import os
+import pandas as pd
 from abm_model.status import *
 from abm_model.person import *
 
@@ -67,17 +68,11 @@ class Minicell():
 		initializing the .csv files
 		'''
 
-		file = open(self.path + '/plot_data_' + self.name + '.csv', 'w')
-		file.write('Time,')
-		for some_stat in ['Susceptible', 'Infected', 'Recovered']:
-			file.write(some_stat + ',')
-		file.write('\n')
-		file.write(str(self.current_time) + ',')
-		for some_list in [self.s_list, self.i_list, self.r_list]:
-			file.write(str(len(some_list)) + ',')
-		file.write('\n')
-		file.close()
-		
+		self.data = pd.DataFrame(columns = ('Susceptible', 'Infected', 'Recovered'))
+		self.data._set_value( index = self.current_time, col = 'Susceptible', value = len(self.s_list))
+		self.data._set_value( index = self.current_time, col = 'Infected', value = len(self.i_list))
+		self.data._set_value( index = self.current_time, col = 'Recovered', value = len(self.r_list))
+		self.data.to_csv(self.path + '/plot_data_' + self.name + '.csv')
 
 	def handle(self, event):
 
@@ -98,19 +93,6 @@ class Minicell():
 		statuses[str(event['person'].status)].remove(event['person'])
 		event['person'].status = event['status']
 		statuses[str(event['person'].status)].append(event['person'])
-
-	def write_csv(self):
-
-		'''
-		ACHTUNG1: if self.all_list is modified, the .csv file will not be reliable
-		'''
-		
-		file = open(self.path + '/plot_data_'+ self.name + '.csv', 'a')
-		file.write(str(self.current_time) + ',')
-		for some_list in [self.s_list, self.i_list, self.r_list]:
-			file.write(str(len(some_list)) + ',')
-		file.write('\n')
-		file.close()
 
 	def update(self, dt: float = 1):
 
@@ -133,5 +115,8 @@ class Minicell():
 		for event in self.events:
 			self.handle(event)
 		self.events = []
-		self.write_csv()
 
+		self.data._set_value( index = self.current_time, col = 'Susceptible', value = len(self.s_list))
+		self.data._set_value( index = self.current_time, col = 'Infected', value = len(self.i_list))
+		self.data._set_value( index = self.current_time, col = 'Recovered', value = len(self.r_list))
+		self.data.to_csv(self.path + '/plot_data_' + self.name + '.csv')

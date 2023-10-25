@@ -1,8 +1,7 @@
 import numpy as np
 import unittest
 from unittest import TestCase
-
-from status import Susceptible, Infected
+from status import Susceptible, Infected, Recovered
 
 
 class TestSusceptible(TestCase):
@@ -18,7 +17,6 @@ class TestSusceptible(TestCase):
 
 
 class TestInfected(TestCase):
-
     def setUp(self) -> None:
         self.infected = Infected()
 
@@ -36,9 +34,21 @@ class TestInfected(TestCase):
         # Check status.py current_time
 
     def test__repr__(self):
-        self.susceptible = Susceptible()
-        self.assertEqual(f"{self.susceptible}", "Susceptible")
+        """
+        Test the '__repr__' function of class Infected in status.py
+        """
+        self.assertEqual(f"{self.infected}", "Infected")
 
+class TestSusceptible(TestCase):
+
+    def setUp(self) -> None:
+        self.recovered = Recovered()
+
+    def test__repr__(self):
+        """
+        Test the '__repr__' function of class Recovered in status.py
+        """
+        self.assertEqual(f"{self.recovered}", "Recovered")
 
 if __name__ == '__main__':
 

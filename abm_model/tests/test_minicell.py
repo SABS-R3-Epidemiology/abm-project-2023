@@ -8,7 +8,7 @@ from minicell import Minicell
 class TestMinicell(TestCase):
 
     def setUp(self) -> None:
-        self.minicell = Minicell()
+        self.minicell = Minicell(path = 'data/unit_test')
 
     def test__init__(self):
         """

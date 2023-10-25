@@ -86,7 +86,7 @@ class TestMinicell(TestCase):
 
         m = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
-        t = Minicell("Abbie", "Infected")
+        t = Minicell(recovery_period=2, population_size=50)
         t.update(cell=m, dt=1)
         self.assertEqual(self.minicell.current_time, 1)
 

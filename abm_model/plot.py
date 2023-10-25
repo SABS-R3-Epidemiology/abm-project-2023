@@ -138,3 +138,4 @@ class Plotter:
         plt.xlabel("Time step")
 
         plt.title("Agent Based Model for " + str(self.population_size) + " individuals in a room")
+        plt.show()

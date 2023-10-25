@@ -1,95 +1,94 @@
-import getopt
 import sys
 import os
 from minicell import run_minicell
+from generator import Generator
+
+
+class DataGenerator(Generator):
+
+    def __init__(self, help_string: str):
+        super().__init__(help_string)
+
+        # The default values
+        self.population_size = 100
+        self.total_time = 20
+        self.beta = 0.01
+        self.recovery_period = 3.0
+        self.I_0 = 1
+        self.title = "test"
+        self.path = "data"
+        self.short_flags += ["N", "t", "b", "D", "I", "T", "p"]
+        self.long_flags += ["population-size", "total-time", "beta", "recovery-period",
+                            "initial-infected", "title", "path"]
+
+    def update_parameters(self):
+        options = self.get_options()
+
+        if len(options) >= 1:
+            for name, value in options:
+                if name in ['-h', '--help']:
+                    print(help_text)
+                    sys.exit()
+                elif name in ['-N', '--population-size']:
+                    try:
+                        self.population_size = int(value)
+                    except ValueError:
+                        print("Error: population size should be an int")
+                        sys.exit()
+                elif name in ['-t', '--total-time']:
+                    try:
+                        self.total_time = int(value)
+                    except ValueError:
+                        print("Error: total time should be an int")
+                elif name in ['-b', '--beta']:
+                    try:
+                        self.beta = float(value)
+                    except ValueError:
+                        print("Error: beta value should be a float or an int")
+                        sys.exit()
+                elif name in ['-D', '--recovery-period']:
+                    try:
+                        self.recovery_period = float(value)
+                    except ValueError:
+                        print("Error: recovery period should be a float or an int")
+                        sys.exit()
+                elif name in ['-I', '--initial-infected']:
+                    try:
+                        self.I_0 = int(value)
+                    except ValueError:
+                        print("Error: initial number of infected should be an int")
+                        sys.exit()
+                elif name in ['-T', '--title']:
+                    self.title = value
+                elif name in ['-p', '--path']:
+                    self.path = value
+
+    def create_csv(self):
+
+        data_frame = run_minicell(I0=self.I_0, population_size=self.population_size, total_time=self.total_time,
+                                  beta=self.beta, recovery_period=self.recovery_period, name=self.title, path=self.path)
+
+        self.title = "total_" + str(self.population_size) + "_initial_" + str(self.I_0)
+        if not os.path.exists(self.path + "/csv_files/"):
+            os.makedirs(self.path + "/csv_files/")
+        data_frame.to_csv(self.path + '/csv_files/' + self.title + '.csv')
+
 
 help_text = """
 
-python abm_model/generate_data.py [--help] [--population-size=100] [--total-time=20] [--beta=0.01] [--recovery-period=1.0]
- [--initial-infected=1] [--csv_file_name="test"] [--path="data"]
+python abm_model/generate_data.py [--help] [--population-size=100] [--total-time=20]
+ [--beta=0.01] [--recovery-period=3.0]
+ [--initial-infected=1] [--title="test"] [--path="data"]
 
 --help                  -h      Print help
 --population-size=100   -N      Total number of individuals in the simulation
 --total-time=20         -t      Number of time steps (days) that the simulation will run for
 --beta=0.01             -b      Effective contact rate of the disease
---recovery-period=1.0   -D      Average number of time steps of which an individual is infected
+--recovery-period=3.0   -D      Average number of time steps for which an individual is infected
 --initial-infected=1    -I      Initial number of infected individuals
---csv_file_name="test"  -T      Title attached to the output .csv file
+--title="test"          -T      Title attached to the output .csv file
 --path="data"           -p      Path to the directory containing the .csv file and the plots
 """
-
-population_size = 100
-total_time = 20
-beta = 0.01
-recovery_period = 1.0
-I_0 = 1
-title = "test"
-path = "data"
-
-dirname = os.path.dirname(os.path.realpath(__file__))
-
-argv = sys.argv[1:]
-try:
-    options, args = getopt.getopt(argv, "hN:t:b:D:I:T:p:",
-                                  [
-                                      "help",
-                                      "population-size=",
-                                      "total-time=",
-                                      "beta=",
-                                      "recovery-period=",
-                                      "initial-infected=",
-                                      "csv_file_name=",
-                                      "path=",
-                                  ])
-except getopt.GetoptError:
-    print("Error: incorrect arguments provided. Use '--help' option for help.")
-    sys.exit()
-
-if len(options) >= 1:
-    names = list(zip(*options))[0]
-
-    for name, value in options:
-        if name in ['-h', '--help']:
-            print(help_text)
-            sys.exit()
-        elif name in ['-N', '--population-size']:
-            try:
-                population_size = int(value)
-            except ValueError:
-                print("Error: population size should be an int")
-                sys.exit()
-        elif name in ['-t', '--total-time']:
-            try:
-                total_time = int(value)
-            except ValueError:
-                print("Error: total time should be an int")
-        elif name in ['-b', '--beta']:
-            try:
-                beta = float(value)
-            except ValueError:
-                print("Error: beta value should be a float or an int")
-                sys.exit()
-        elif name in ['-D', '--recovery-period']:
-            try:
-                recovery_period = float(value)
-            except ValueError:
-                print("Error: recovery period should be a float or an int")
-                sys.exit()
-        elif name in ['-I', '--initial-infected']:
-            try:
-                I_0 = int(value)
-            except ValueError:
-                print("Error: initial number of infected should be an int")
-                sys.exit()
-        elif name in ['-T', '--csv_file_name']:
-            title = value
-        elif name in ['-p', '--path']:
-            path = value
-
-    data_frame = run_minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta,
-                              recovery_period=recovery_period, name=title, path=path)
-
-    title = "total_" + str(population_size) + "_initial_" + str(I_0)
-    if not os.path.exists(path + "/csv_files/"):
-        os.makedirs(path + "/csv_files/")
-    data_frame.to_csv(path + '/csv_files/' + title + '.csv')
+generator = DataGenerator(help_text)
+generator.update_parameters()
+generator.create_csv()

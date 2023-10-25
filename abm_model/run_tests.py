@@ -2,6 +2,7 @@ import os
 import sys
 import unittest
 
+
 def run_unit_tests():
     """
     Runs unit tests (without subprocesses).

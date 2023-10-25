@@ -1,8 +1,9 @@
 #import sys
 #import unittest
 from unittest import TestCase
+import unittest
 
-#import plot
+#from plot import Plotter
 
 
 class TestPlot(TestCase):
@@ -12,3 +13,8 @@ class TestPlot(TestCase):
 
     def test_plot_data(self):
         pass
+
+
+if __name__ == '__main__':
+
+    unittest.main()

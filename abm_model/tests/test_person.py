@@ -36,13 +36,15 @@ class TestPerson(TestCase):
         """
 
     @patch('builtins.print')
-    def test_read_infection_history(self):
+    def test_read_infection_history(self, mock_print):
         """
         Test the 'read_infection_history' function in person.py
         """
         self.person = Person(name='AT', initial_status='Infected')
-        Person.read_infection_history()
-        self.assert_called_with('AT', "was not infected")
+
+        Person.read_infection_history(self)
+
+        mock_print.assert_called_with('AT was not infected')
 
     def test__repr__(self):
         """

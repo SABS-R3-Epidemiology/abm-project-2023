@@ -40,9 +40,15 @@ class Minicell:
 
         # setting the epistemic parameters
 
+        if type(beta) is not float and type(beta) is not int:
+            raise TypeError("Beta must be an float")
         self.beta = beta
+        if type(recovery_period) is not float and type(recovery_period) is not int:
+            raise TypeError("Recovery period must be an float")
         self.recovery_period = recovery_period
 
+        if type(population_size) is not int:
+            raise TypeError("Population size must be an int")
         self.population_size = population_size
         self.current_time = 0
         self.events = []

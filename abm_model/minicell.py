@@ -152,14 +152,4 @@ class Minicell():
 		self.write_csv()
 		self.parent_record.update(parent_record)
 	
-	def tree_diagram(self):
-		di_graph = nx.DiGraph()
-		n = self.current_time
-		for i in range(n):
-			for key, value in self.parent_record.items():
-				di_graph.add_edge(value, key)
-		pos = nx.shell_layout(di_graph)
-		nx.draw(di_graph, pos, with_labels = True)
-		plt.axis('off')
-		plt.show()
 

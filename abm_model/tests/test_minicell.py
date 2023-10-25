@@ -14,6 +14,11 @@ class TestMinicell(TestCase):
         """
         Test the initialisation function in minicell.py
         """
+        self.assertRaises(TypeError, self.minicell.__init__, beta='0.01')
+        self.assertRaises(TypeError, self.minicell.__init__, recovery_period='1')
+        self.assertRaises(TypeError, self.minicell.__init__, population_size=2.1)
+        self.assertRaises(TypeError, self.minicell.__init__, population_size='2.1')
+
         self.minicell = Minicell(population_size=56, beta=0.66,
                                  recovery_period=0)
         self.assertEqual(self.minicell.beta, 0.66)
@@ -85,10 +90,9 @@ class TestMinicell(TestCase):
         """
 
         m = Minicell()
-        self.assertEqual(m.current_time, 0)
-        t = Minicell(recovery_period=2, population_size=50)
-        t.update(dt=1)
-        self.assertEqual(t.current_time, 1)
+        self.assertEqual(self.minicell.current_time, 0)
+        m.update(dt=1)
+        self.assertEqual(m.current_time, 1)
 
     def test_write_csv(self):
         """

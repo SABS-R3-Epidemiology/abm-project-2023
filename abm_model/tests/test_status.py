@@ -28,6 +28,7 @@ class TestInfected(TestCase):
         self.assertEqual(self.infected.threshold, 2)
         # Need test for self.expiry_date
         # Think about how to deal with the random function
+        np.random.seed(1)
         self.infected = Infected(recovery_period=3, current_time=1)
         self.assertEqual(self.infected.expiry_date, 2 + np.random.poisson(2))
         # Check status.py current_time 

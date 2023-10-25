@@ -87,7 +87,7 @@ class TestMinicell(TestCase):
         m = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
         t = Minicell(recovery_period=2, population_size=50)
-        t.update(cell=m, dt=1)
+        t.update(dt=1)
         self.assertEqual(self.minicell.current_time, 1)
 
     def test_write_csv(self):

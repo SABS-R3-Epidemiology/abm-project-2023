@@ -38,16 +38,12 @@ class TestPlot(TestCase):
             self.assertEqual(read_data[0][2], 'Infected')
             self.assertEqual(read_data[0][3], 'Recovered')
 
-    
     @patch('plot.plt')
     def test_create_plot_legend(self, mock_plt):
         self.plot.create_plot_legend()
-
         assert mock_plt.legend.called
         mock_plt.xlabel.assert_called_once_with("Time step")
         mock_plt.ylabel.assert_called_once_with("Number of individuals")
-        #mock_plt.title.assert_called_once_with("Agent Based Model for " + str(self.population_size) + " individuals in a room")
-
 
 
 if __name__ == '__main__':

@@ -74,8 +74,8 @@ def plot_lively(cell):
 
     def update(time, point_list):
         ax.clear()
-        for patch in ax.patches:
-            patch.remove()
+        # for patch in ax.patches:
+        #     patch.remove()
         ax.plot(boundary_x, boundary_y, linestyle='-')
         infected_this_step = []
         for point in point_list:
@@ -103,9 +103,10 @@ def plot_lively(cell):
                         starting_point = all_point.position
                 dx = point.position[0] - starting_point[0]
                 dy = point.position[1] - starting_point[1]
-                arrow = Arrow(starting_point[0], starting_point[1], dx, dy, color='red', width=0.01)
-                ax.add_patch(arrow)
+                arrow = ax.arrow(starting_point[0], starting_point[1], dx, dy, color='red', width=0.01, head_width = 0.07, length_includes_head = True)
+                # ax.add_patch(arrow)
         ax.set_title('Day ' + str(time))
+        # ax.text(2, 18, 'Population = ' + str(N) + ', Beta = ' + str(cell.beta) + ', Recovery Period = ' + str(cell.recovery_period))
 
     # Create an animation
     anim = FuncAnimation(fig, partial(update, point_list=point_list), frames=num_frames, repeat=True)

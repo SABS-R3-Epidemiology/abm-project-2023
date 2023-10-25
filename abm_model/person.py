@@ -11,8 +11,6 @@ class Person:
 
     name(str): a unique id/name for each agent
     initial_status: a 'status' object indicating the initial status of the person
-    d(float, int, Optional): should be an input from the model,
-    indicating the average recovery period for initially infected people
 
     Attributes:
 

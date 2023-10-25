@@ -31,7 +31,7 @@ class TestPlot(TestCase):
             read_data = []
             for row in reader:
                 read_data.append(row)
-                self.assertEqual(len(row),4)
+                self.assertEqual(len(row), 4)
 
             self.assertEqual(read_data[0][0], 'Time')
             self.assertEqual(read_data[0][1], 'Susceptible')

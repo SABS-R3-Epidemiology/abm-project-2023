@@ -6,13 +6,20 @@ import csv
 
 class Plotter:
 
-    def __init__(self, title: str = ""):
+    def __init__(self, csv_file_name: str = "plot_data_test.csv"):
         """Here we initialise the class with some default class parameters (note these will
         be read from the file)
 
-        :param title: Title of the .csv file containing the desired data
+        :param csv_file_name: Title of the .csv file containing the desired data
         """
-        self.title = title
+
+        # Check to see if the csv_file_name is a valid csv file
+        if not csv_file_name[-4:] == ".csv":
+            raise ValueError("File must be .csv")
+        if not os.path.exists("data/" + csv_file_name):
+            raise FileNotFoundError("Entered file does not exist")
+
+        self.csv_file_name = csv_file_name
 
         # Both population_size and initial_infected are read from the .csv file, so here
         # we will simply initialise them with default values which will be changed
@@ -29,12 +36,12 @@ class Plotter:
         :return:
         """
 
-        with open("data/plot_data_" + self.title + ".csv", "r") as csv_file:
+        with open("data/" + self.csv_file_name, "r") as csv_file:
             # Structure of csv file (with no whitespace in between):
-            # Time,          Susceptible,     Infected,     Recovered,
-            # 1,             90,              10,           0,
-            # 2,             79,              20,           1,
-            # ...,           ...,             ...,          ...,
+            # Time,          Susceptible,     Infected,     Recovered
+            # 1,             90,              10,           0
+            # 2,             79,              20,           1
+            # ...,           ...,             ...,          ...
             lines = [line[0:4] for line in csv.reader(csv_file)]
             categories = lines[0]
 
@@ -121,7 +128,7 @@ class Plotter:
         plt.savefig(destination)
 
     def create_plot_legend(self):
-        """We create the plot legend and title here
+        """We create the plot legend and csv_file_name here
 
         :return:
         """

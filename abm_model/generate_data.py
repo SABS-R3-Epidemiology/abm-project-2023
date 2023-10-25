@@ -1,11 +1,12 @@
 import getopt
 import sys
 import os
-import abm_model.minicell
+from minicell import run_minicell
 
 help_text = """
 
-python generate_data.py [--help] [--population-size=100] [--total-time=20] [--beta=0.01] [--recovery-period=1.0] [--initial-infected=1] [--title="test"] [--path="data"]
+python generate_data.py [--help] [--population-size=100] [--total-time=20] [--beta=0.01] [--recovery-period=1.0]
+ [--initial-infected=1] [--csv_file_name="test"] [--path="data"]
 
 --help		    		-h	    Print help
 --population-size=100   -N	    Total number of individuals in the simulation
@@ -13,7 +14,7 @@ python generate_data.py [--help] [--population-size=100] [--total-time=20] [--be
 --beta=0.01  			-b	    Effective contact rate of the disease
 --recovery-period=1.0	-D		Average number of time steps of which an individual is infected
 --initial-infected=1	-I	    Initial number of infected individuals
---title="test"          -T      Title attached to the output .csv file
+--csv_file_name="test"          -T      Title attached to the output .csv file
 --path="data"	        -p	    Path to the directory containing the .csv file and the plots
 """
 
@@ -37,7 +38,7 @@ try:
                                       "beta=",
                                       "recovery-period=",
                                       "initial-infected=",
-                                      "title=",
+                                      "csv_file_name=",
                                       "path=",
                                   ])
 except getopt.GetoptError:
@@ -80,10 +81,11 @@ if len(options) >= 1:
             except ValueError:
                 print("Error: initial number of infected should be an int")
                 sys.exit()
-        elif name in ['-t', '--title']:
+        elif name in ['-t', '--csv_file_name']:
             title = value
         elif name in ['-p', '--path']:
             path = value
 
-    run_minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta, recovery_period=recovery_period,
-                 name=title, path=path)
+    data_frame = run_minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta,
+                              recovery_period=recovery_period, name=title, path=path)
+    data_frame.to_csv(path + '/plot_data_' + title + '.csv')

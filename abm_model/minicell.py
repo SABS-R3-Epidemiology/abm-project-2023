@@ -153,4 +153,4 @@ def run_minicell(I0: int = 1, population_size: int = 100, beta: float = 0.01, re
     for i in range(total_time):
         cell.update(1)
 
-    print("Simulation to day " + str(total_time) + " is finished!")
+    return cell.data

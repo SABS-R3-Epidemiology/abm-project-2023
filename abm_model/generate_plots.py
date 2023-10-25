@@ -1,78 +1,44 @@
 import getopt
 import sys
 import os
-import abm_model.minicell
+from abm_model.plot import Plotter
 
-population_size = 100
-total_time = 20
-beta = 0.01
-recovery_period = 1.0
-I_0 = 1
-title = "test"
-path = "data"
+help_text = """
+
+python generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
+
+--help		    		-h	    Print help
+--csv_file_name         -f      Title of the .csv file containing the required data for plotting
+"""
+
+csv_file_name = "plot_data_test"
 
 dirname = os.path.dirname(os.path.realpath(__file__))
 
 argv = sys.argv[1:]
 try:
-    options, args = getopt.getopt(argv, "hN:t:b:D:I:T:p:",
+    options, args = getopt.getopt(argv, "hf:",
                                   [
                                       "help",
-                                      "population-size=",
-                                      "total-time=",
-                                      "beta=",
-                                      "recovery-period=",
-                                      "initial-infected=",
-                                      "title=",
-                                      "path=",
+                                      "csv_file_name=",
                                   ])
 except getopt.GetoptError:
     print("Error: incorrect arguments provided. Use '--help' option for help.")
     sys.exit()
 
-if len(options) >= 1:
-    names = list(zip(*options))[0]
+if len(options) != 1:
+    print("Error: either use '--help' option for help, or '--csv_file_name' to "
+          "state the file containing the data you wish to be plotted")
+    sys.exit()
 
-    for name, value in options:
-        if name in ['-h', '--help']:
-            with open(dirname + "/help.txt", "r") as file:
-                text = file.read()
-                print()
-                print(text)
-            sys.exit()
-        elif name in ['-N', '--population-size']:
-            try:
-                population_size = int(value)
-            except ValueError:
-                print("Error: population size should be an int")
-                sys.exit()
-        elif name in ['-t', '--total-time']:
-            try:
-                total_time = int(value)
-            except ValueError:
-                print("Error: total time should be an int")
-        elif name in ['-b', '--beta']:
-            try:
-                beta = float(value)
-            except ValueError:
-                print("Error: beta value should be a float or an int")
-                sys.exit()
-        elif name in ['-D', '--recovery-period']:
-            try:
-                recovery_period = float(value)
-            except ValueError:
-                print("Error: recovery period should be a float or an int")
-                sys.exit()
-        elif name in ['-I', '--initial-infected']:
-            try:
-                I_0 = int(value)
-            except ValueError:
-                print("Error: initial number of infected should be an int")
-                sys.exit()
-        elif name in ['-t', '--title']:
-            title = value
-        elif name in ['-p', '--path']:
-            path = value
+names = list(zip(*options))[0]
 
-    run_minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta, recovery_period=recovery_period,
-                 name=title, path=path)
+name, value = options[0], options[1]
+if name in ['-h', '--help']:
+    print(help_text)
+    sys.exit()
+elif name in ['-f', '--csv_file_name']:
+    csv_file_name = value
+
+plotter = Plotter(csv_file_name)
+plotter.plot_data()

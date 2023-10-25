@@ -1,7 +1,6 @@
-import os
 import unittest
 from unittest import TestCase
-from unittest.mock import patch, mock_open, create_autospec
+from unittest.mock import patch, mock_open
 from plot import Plotter
 import csv
 
@@ -16,7 +15,7 @@ class TestPlot(TestCase):
 
     @patch('pathlib.Path')
     def test__init__(self, mocked_path):
-        self.assertRaises(ValueError, self.plot.__init__, csv_file_name = 'hello')
+        self.assertRaises(ValueError, self.plot.__init__, csv_file_name='hello')
         self.plot = Plotter(csv_file_name='file.csv')
         self.assertEqual(self.plot.csv_file_name, 'file.csv')
 

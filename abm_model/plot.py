@@ -18,7 +18,6 @@ class Plotter:
             raise ValueError("File must be .csv")
         if not os.path.exists("data/csv_files/" + csv_file_name):
             raise FileNotFoundError("Entered file does not exist")
-        
         self.csv_file_name = csv_file_name
 
         # Both population_size and initial_infected are read from the .csv file, so here

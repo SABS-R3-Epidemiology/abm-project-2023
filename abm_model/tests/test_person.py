@@ -52,7 +52,7 @@ class TestPerson(TestCase):
         """
         self.person = Person(name='TAMYA', initial_status='Infected')
         test_string = f"Person(ID = '{self.person.name}'"
-        test_string += f",status = {self.person.status})"
+        test_string += f", status = {self.person.status})"
         self.assertEqual(test_string,
                          "Person(ID = 'TAMYA', status = Infected)")
 

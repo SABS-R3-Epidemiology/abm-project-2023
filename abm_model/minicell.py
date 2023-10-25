@@ -1,6 +1,8 @@
 import os
-from abm_model.status import *
-from abm_model.person import *
+
+from status import *
+from person import *
+
 
 class Minicell():
 
@@ -40,6 +42,8 @@ class Minicell():
 		
 		self.beta = beta
 		self.recovery_period = recovery_period
+
+		self.population_size = population_size
 		self.current_time = 0
 		self.events = []
 		self.s_list = []

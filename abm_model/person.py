@@ -1,5 +1,7 @@
 import numpy as np
-from abm_model.status import *
+
+from status import *
+
 
 class Person:
     '''

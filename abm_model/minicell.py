@@ -137,7 +137,7 @@ class Minicell():
 			if child != None:
 				for child in child:
 					parent_record[child] = subject.name
-		parent_record = {key: value for key, value in parent_record.items() if value is not None}
+		parent_record = {key: [value, self.current_time] for key, value in parent_record.items() if value is not None}
 			
 
 		'''

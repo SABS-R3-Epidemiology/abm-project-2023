@@ -49,3 +49,6 @@ class TestPerson(TestCase):
         """
         self.person = Person(name='TAMYA', initial_status='Infected')
         self.assertEqual(f"Person(ID = '{self.person.name}', status = {self.person.status})", f"Person(ID = 'TAMYA', status = Infected)")
+
+if __name__ == '__main__':
+    unittest.main()

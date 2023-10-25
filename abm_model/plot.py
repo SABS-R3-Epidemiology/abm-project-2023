@@ -19,6 +19,8 @@ class Plotter:
         self.population_size = 100
         self.initial_infected = 1
         self.plot_path = "data/plots"
+        self.lines = []
+        self.categories = []
 
     def plot_data(self):
         """This is the main method for this class, and will open the file then read from it. It
@@ -35,19 +37,19 @@ class Plotter:
             # 1,             90,              10,           0,
             # 2,             79,              20,           1,
             # ...,           ...,             ...,          ...,
-            lines = [line[0:4] for line in csv.reader(csv_file)]
-            categories = lines[0]
+            self.lines = [line[0:4] for line in csv.reader(csv_file)]
+            self.categories = self.lines[0]
 
             # We will exit this method if there are 0 or 1 lines only in the file as
             # there is nothing to plot
 
-            if len(lines) <= 1:
+            if len(self.lines) <= 1:
                 return
 
             # Here we set up the different lists containing all values
-            data_dict = {category: [] for category in categories}
+            data_dict = {category: [] for category in self.categories}
 
-            for line in lines[1:]:
+            for line in self.lines[1:]:
 
                 # We must check that the length of str_values_list is 4 and that each value
                 # can be parsed to an int
@@ -62,7 +64,7 @@ class Plotter:
                     self.population_size = sum(values_list[1:])
                     self.initial_infected = values_list[2]
 
-                for i, category in enumerate(categories):
+                for i, category in enumerate(self.categories):
 
                     # This line will add a value to the correct category. E.g. if there is a 90
                     # in the Susceptible column, then here we add 90 to the Susceptible list inside
@@ -71,7 +73,7 @@ class Plotter:
 
             # Now we can create the numpy arrays and plots for each category
             time_array = np.array(data_dict["Time"])
-            for status in categories[1:]:
+            for status in self.categories[1:]:
 
                 # This will be a numpy array of one of the statuses (Susceptible, Infected or Recovered)
                 status_array = np.array(data_dict[status])
@@ -84,7 +86,7 @@ class Plotter:
             self.create_plot_files()
 
     @staticmethod
-    def convert_to_ints(str_values_list: list[str]):
+    def convert_to_ints(self, str_values_list: list[str]):
 
         """This method checks that `str_values_list` is of the correct length and that
         the internal values are valid. If this is not the case, then errors will be raised.

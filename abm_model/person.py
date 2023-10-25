@@ -43,11 +43,11 @@ class Person:
         if isinstance(self.status, Susceptible):
             pass
         elif isinstance(self.status, Infected):
-            if cell.current_time == self.status.expiry_date:
+            if cell.current_time >= self.status.expiry_date:
                 self.history["recovered"] = cell.current_time
                 cell.events.append({"person": self, "status": Recovered()})
 
-            elif cell.s_list:
+            if cell.s_list:
                 number_of_infections = np.random.poisson(min(cell.beta * dt * len(cell.s_list), self.status.threshold))
                 next_infections = np.random.choice(cell.s_list, size=number_of_infections)
                 for next_infection in next_infections:

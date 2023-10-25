@@ -78,10 +78,6 @@ class Minicell:
         self.data = pd.DataFrame(columns=('Susceptible',
                                           'Infected',
                                           'Recovered'))
-        
-        self.data._set_value(index=self.current_time, col='Susceptible', value=len(self.s_list))
-        self.data._set_value(index=self.current_time, col='Infected', value=len(self.i_list))
-        self.data._set_value(index=self.current_time, col='Recovered', value=len(self.r_list))
 
         # initializing each pearson in the minicell as susceptible
 
@@ -96,6 +92,10 @@ class Minicell:
             else:
                 my_person = Person(str(name), Susceptible())
                 self.s_list.append(my_person)
+
+        self.data._set_value(index=self.current_time, col='Susceptible', value=len(self.s_list))
+        self.data._set_value(index=self.current_time, col='Infected', value=len(self.i_list))
+        self.data._set_value(index=self.current_time, col='Recovered', value=len(self.r_list))
 
     def handle(self, event):
 
@@ -126,13 +126,15 @@ class Minicell:
         # update each person's status, persons eventually raise events during this process
 
         for some_list in [self.s_list, self.i_list, self.r_list]:
-            for subject in some_list: subject.update(self, dt)
+            for subject in some_list:
+                subject.update(self, dt)
 
         # handle each event raised in the updating loop above
         # (e.g. with) cell.events.append({'person':target,'status':Infected})
         # ACHTUNG2: read achtung0 above
 
-        for event in self.events: self.handle(event)
+        for event in self.events:
+            self.handle(event)
         self.events = []
         self.data._set_value(index=self.current_time, col='Susceptible', value=len(self.s_list))
         self.data._set_value(index=self.current_time, col='Infected', value=len(self.i_list))

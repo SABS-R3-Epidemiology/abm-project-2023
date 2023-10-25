@@ -5,7 +5,7 @@ from abm_model.plot import Plotter
 
 help_text = """
 
-python generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
+python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
 
 --help		    		-h	    Print help
 --csv_file_name         -f      Title of the .csv file containing the required data for plotting

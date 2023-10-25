@@ -5,7 +5,7 @@ from minicell import run_minicell
 
 help_text = """
 
-python generate_data.py [--help] [--population-size=100] [--total-time=20] [--beta=0.01] [--recovery-period=1.0]
+python abm_model/generate_data.py [--help] [--population-size=100] [--total-time=20] [--beta=0.01] [--recovery-period=1.0]
  [--initial-infected=1] [--csv_file_name="test"] [--path="data"]
 
 --help		    		-h	    Print help
@@ -88,4 +88,5 @@ if len(options) >= 1:
 
     data_frame = run_minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta,
                               recovery_period=recovery_period, name=title, path=path)
-    data_frame.to_csv(path + '/plot_data_' + title + '.csv')
+    title = "total_" + str(population_size) + "_initial_" + str(I_0)
+    data_frame.to_csv(path + '/data_' + title + '.csv')

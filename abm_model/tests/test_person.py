@@ -41,8 +41,7 @@ class TestPerson(TestCase):
         Test the 'read_infection_history' function in person.py
         """
         self.person = Person(name='AT', initial_status='Infected')
-
-        Person.read_infection_history(self)
+        self.person.read_infection_history()
 
         mock_print.assert_called_with('AT was not infected')
 

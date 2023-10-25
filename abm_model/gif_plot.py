@@ -10,14 +10,25 @@ from functools import partial
 
 class Point:
 
-    def __init__(self, position, data=None, history=None):
+    def __init__(self, position):
 
         self.position = position
-        self.data = data
-        self.history = history
+        self.data = None
+        self.history = None
 
     def __repr__(self):
         return f"Point(position = {self.position}, data = {self.data}, history = {self.history})"
+
+    def __eq__(self, other):
+        if isinstance(other, Point):
+            if self.position == other.position:
+                if self.history == other.history:
+                    if self.data == other.data:
+                        return True
+                    elif self.data.name == other.data.name:
+                        if str(self.data.status) == str(other.data.status):
+                            return True
+        return False
 
 
 class gif_plotter:
@@ -68,15 +79,16 @@ class gif_plotter:
                 point_list[j].history = [None, 'Susceptible']
             elif isinstance(point_list[j].data.status, Recovered):
                 try:
-                    point_list[j].history = self.cell.parent_record[point_list[j].data.name] + [point_list[j].data.recovery_time]
+                    point_list[j].history = self.cell.parent_record[point_list[j].data.name]\
+                        + [point_list[j].data.recovery_time]
                 except:
                     point_list[j].history = [None, 0, point_list[j].data.recovery_time]
 
         point_list = [point for point in point_list if isinstance(point.data, Person)]
         self.point_list = point_list
 
-    def gif_plotter(self):
-        if self.point_list == None:
+    def gif_plotter(self, path: str = 'data/', name: str = 'output'):
+        if self.point_list is None:
             raise KeyError("You need to run '.points_manipulation()' method firstly, or run '.plot()' method directly.")
         # Setup the .gif figure
         point_list = self.point_list
@@ -117,7 +129,8 @@ class gif_plotter:
                                     starting_point = all_point.position
                             dx = point.position[0] - starting_point[0]
                             dy = point.position[1] - starting_point[1]
-                            ax.arrow(starting_point[0], starting_point[1], dx, dy, color='red', width=0.01, head_width=0.07, length_includes_head=True)
+                            ax.arrow(starting_point[0], starting_point[1], dx, dy, color='red', width=0.01,
+                                     head_width=0.07, length_includes_head=True)
                 ax.set_title('Day ' + str(time))
             else:
                 time = int((time - 1) / 2)
@@ -139,15 +152,16 @@ class gif_plotter:
                     plt.ylim(0, 4)
                     plt.axis('off')
                 ax.set_title('Day ' + str(time))
-            # ax.text(2, 18, 'Population = ' + str(N) + ', Beta = ' + str(cell.beta) + ', Recovery Period = ' + str(cell.recovery_period))
+            # ax.text(2, 18, 'Population = ' + str(N) + ', Beta = ' + str(cell.beta) + ', \
+            # Recovery Period = ' + str(cell.recovery_period))
 
         # Create an animation
         anim = FuncAnimation(fig, partial(update, point_list=point_list), frames=num_frames, repeat=True)
 
         # Save the animation as a GIF
-        anim.save('output.gif', writer='pillow', fps=1)
+        anim.save(path + name + '.gif', writer='pillow', fps=1)
 
-    def plot(self):
+    def plot(self, path='data/', name='output'):
         self.points_manipulation()
-        self.gif_plotter()
+        self.gif_plotter(path, name)
 

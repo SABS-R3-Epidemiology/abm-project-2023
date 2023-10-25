@@ -1,13 +1,13 @@
 import getopt
 import sys
 import os
-from abm_model.plot import Plotter
+from plot import Plotter
 
 help_text = """
 
 python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
 
---help		    		-h	    Print help
+--help                  -h	    Print help
 --csv_file_name         -f      Title of the .csv file containing the required data for plotting
 """
 
@@ -33,12 +33,12 @@ if len(options) != 1:
 
 names = list(zip(*options))[0]
 
-name, value = options[0], options[1]
-if name in ['-h', '--help']:
-    print(help_text)
-    sys.exit()
-elif name in ['-f', '--csv_file_name']:
-    csv_file_name = value
+for name, value in options:
+    if name in ['-h', '--help']:
+        print(help_text)
+        sys.exit()
+    elif name in ['-f', '--csv_file_name']:
+        csv_file_name = value
 
 plotter = Plotter(csv_file_name)
 plotter.plot_data()

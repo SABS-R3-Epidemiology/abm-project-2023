@@ -16,7 +16,7 @@ class Plotter:
         # Check to see if the csv_file_name is a valid csv file
         if not csv_file_name[-4:] == ".csv":
             raise ValueError("File must be .csv")
-        if not os.path.exists("data/" + csv_file_name):
+        if not os.path.exists("data/csv_files/" + csv_file_name):
             raise FileNotFoundError("Entered file does not exist")
 
         self.csv_file_name = csv_file_name
@@ -36,7 +36,7 @@ class Plotter:
         :return:
         """
 
-        with open("data/" + self.csv_file_name, "r") as csv_file:
+        with open("data/csv_files/" + self.csv_file_name, "r") as csv_file:
             # Structure of csv file (with no whitespace in between):
             # Time,          Susceptible,     Infected,     Recovered
             # 1,             90,              10,           0
@@ -44,6 +44,7 @@ class Plotter:
             # ...,           ...,             ...,          ...
             lines = [line[0:4] for line in csv.reader(csv_file)]
             categories = lines[0]
+            categories[0] = "Time"
 
             # We will exit this method if there are 0 or 1 lines only in the file as
             # there is nothing to plot

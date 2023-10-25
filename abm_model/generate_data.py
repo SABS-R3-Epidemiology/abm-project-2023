@@ -8,14 +8,14 @@ help_text = """
 python abm_model/generate_data.py [--help] [--population-size=100] [--total-time=20] [--beta=0.01] [--recovery-period=1.0]
  [--initial-infected=1] [--csv_file_name="test"] [--path="data"]
 
---help		    		-h	    Print help
---population-size=100   -N	    Total number of individuals in the simulation
+--help                  -h      Print help
+--population-size=100   -N      Total number of individuals in the simulation
 --total-time=20         -t      Number of time steps (days) that the simulation will run for
---beta=0.01  			-b	    Effective contact rate of the disease
---recovery-period=1.0	-D		Average number of time steps of which an individual is infected
---initial-infected=1	-I	    Initial number of infected individuals
---csv_file_name="test"          -T      Title attached to the output .csv file
---path="data"	        -p	    Path to the directory containing the .csv file and the plots
+--beta=0.01             -b      Effective contact rate of the disease
+--recovery-period=1.0   -D      Average number of time steps of which an individual is infected
+--initial-infected=1    -I      Initial number of infected individuals
+--csv_file_name="test"  -T      Title attached to the output .csv file
+--path="data"           -p      Path to the directory containing the .csv file and the plots
 """
 
 population_size = 100
@@ -81,12 +81,15 @@ if len(options) >= 1:
             except ValueError:
                 print("Error: initial number of infected should be an int")
                 sys.exit()
-        elif name in ['-t', '--csv_file_name']:
+        elif name in ['-T', '--csv_file_name']:
             title = value
         elif name in ['-p', '--path']:
             path = value
 
     data_frame = run_minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta,
                               recovery_period=recovery_period, name=title, path=path)
+
     title = "total_" + str(population_size) + "_initial_" + str(I_0)
-    data_frame.to_csv(path + '/data_' + title + '.csv')
+    if not os.path.exists(path + "/csv_files/"):
+        os.makedirs(path + "/csv_files/")
+    data_frame.to_csv(path + '/csv_files/' + title + '.csv')

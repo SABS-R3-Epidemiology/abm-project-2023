@@ -51,6 +51,7 @@ class TestRecovered(TestCase):
         """
         self.assertEqual(f"{self.recovered}", "Recovered")
 
+
 if __name__ == '__main__':
 
     unittest.main()

@@ -19,7 +19,7 @@ class Minicell():
 			path: the path where dats are stored
 		methods:
 			update(dt): changes the status of each pearson into the minicell coherently with the model
-				inputs: dt: the time lenght of the step to update
+				inputs: dt: the time length of the step to update
 				output: None
 			write_csv(path): upload the hystory on the file path.csv
 				inputs: path: the path of the file where the hystory is being transcribed
@@ -29,10 +29,12 @@ class Minicell():
 				output: None
 	'''
 
-	def __init__(self, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, initial = {}, name = 'test', path: str = 'data'):
+	def __init__(self, population_size: int=100, 
+			     beta: float=0.01, recovery_period: float=1, 
+			     initial: dict={}, name: str='test', path: str='data'):
 
 		cur_dir = '.'
-		for dir in path.rsplit(sep = '/'):
+		for dir in path.rsplit(sep='/'):
 			cur_dir += '/' + dir
 			if not os.path.exists(cur_dir): os.mkdir(cur_dir)
 	

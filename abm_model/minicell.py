@@ -8,20 +8,17 @@ class Minicell():
 	'''
 	A box where all people are tracked:
 		attributes:
-			events: the list of transitions that has to be handled at the end of the time step (shall we call it queue?)
+			data: a pd.DataFrame conatining the informations about the epidemic
+			events: the list of transitions that has to be handled at the end of the time step
 			s_list: the list of susceptible people
 			i_list: the list of infectious people
 			r_list: the list of recovered people
-			all_list: a list containing people ordered by names
 			current_time: the current time of the simulation
 			name: the name of the minicell
 			path: the path where dats are stored
 		methods:
 			update(dt): changes the status of each pearson into the minicell coherently with the model
 				inputs: dt: the time lenght of the step to update
-				output: None
-			write_csv(path): upload the hystory on the file path.csv
-				inputs: path: the path of the file where the hystory is being transcribed
 				output: None
 			handle(event): update the evets that are to be handled at the end of the time step
 				inputs: event: the event to handle
@@ -46,7 +43,6 @@ class Minicell():
 		self.s_list = []
 		self.i_list = []
 		self.r_list = []
-		self.all_list = []
 		self.name = name
 		self.path = path
 
@@ -81,9 +77,9 @@ class Minicell():
 			'status': the new status specified
 		ACHTUNG0:
 			THIS MAY CAUSE COLLISIONS IF ONE PERSON IS INFECTED
-			WE SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
+			SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
 			(e.g. with) event['person'].status.handle(event['status'])
-			WE SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
+			SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
 			(e.g. with) cell.rising(event)
 			IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
 		'''

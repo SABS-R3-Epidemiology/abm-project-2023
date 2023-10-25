@@ -7,13 +7,13 @@ class Person:
     --------------
     Parameters:
 
-    id(str): a unique id/name for each agent
+    name(str): a unique id/name for each agent
     status(str): has to be either "Susceptible" or "Infected" indicating the initial status of a person
     d(float, int, Optional): should be an input from the model, indicating the average recovery period for initially infected people
 
     Attributes:
 
-    .id(str): same as above
+    .name(str): same as above
     .status(status object): use composition with status class, indicating the status for each person
     .history(dic): a dictionary containing the date of infection and date of recovery
 
@@ -63,4 +63,3 @@ class Person:
     def __repr__(self):
 
         return f"Person(ID = '{self.name}', status = {self.status})"
-

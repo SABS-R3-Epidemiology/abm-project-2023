@@ -32,8 +32,9 @@ jobs:
         coverage run abm_model/run_tests.py --unit
 
     - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        fail_ci_if_error: true
+      if: success()
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         files: coverage.xml
+      run: |
+        codecov

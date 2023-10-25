@@ -1,7 +1,7 @@
-#import sys
+import os
 import unittest
 from unittest import TestCase
-from unittest.mock import patch, mock_open
+from unittest.mock import patch, mock_open, create_autospec
 from plot import Plotter
 import csv
 
@@ -14,16 +14,17 @@ class TestPlot(TestCase):
         self.data += "1, 90, 10, 0\n"
         self.data += "2, 79, 20, 1"
 
-    def test__init__(self):
-        self.plot = Plotter(title='title')
-        self.assertEqual(self.plot.title, 'title')
+    @patch('pathlib.Path')
+    def test__init__(self, mocked_path):
+        self.assertRaises(ValueError, self.plot.__init__, csv_file_name = 'hello')
+        self.plot = Plotter(csv_file_name='file.csv')
+        self.assertEqual(self.plot.csv_file_name, 'file.csv')
 
     def test_plot_data(self):
         with patch('builtins.open', new_callable=mock_open, read_data=self.data) as mock_file:
-            self.plot = Plotter(title='title')
-            read_data = open("data/plot_data_" + self.plot.title + ".csv").read()
+            self.plot = Plotter(csv_file_name='title')
+            read_data = open("data/plot_data_" + self.plot.csv_file_name + ".csv").read()
             assert read_data == self.data
-            #print(read_data)
             mock_file.assert_called_with("data/plot_data_title.csv")
 
             rows = read_data.splitlines()

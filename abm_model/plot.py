@@ -6,13 +6,20 @@ import csv
 
 class Plotter:
 
-    def __init__(self, title: str = ""):
+    def __init__(self, csv_file_name: str = "plot_data_test.csv"):
         """Here we initialise the class with some default class parameters (note these will
         be read from the file)
 
-        :param title: Title of the .csv file containing the desired data
+        :param csv_file_name: Title of the .csv file containing the desired data
         """
-        self.title = title
+
+        # Check to see if the csv_file_name is a valid csv file
+        if not csv_file_name[-4:] == ".csv":
+            raise ValueError("File must be .csv")
+        if not os.path.exists("data/csv_files/" + csv_file_name):
+            raise FileNotFoundError("Entered file does not exist")
+        
+        self.csv_file_name = csv_file_name
 
         # Both population_size and initial_infected are read from the .csv file, so here
         # we will simply initialise them with default values which will be changed
@@ -21,6 +28,7 @@ class Plotter:
         self.plot_path = "data/plots"
         self.lines = []
         self.categories = []
+        self.data_dict = {}
 
     def plot_data(self):
         """This is the main method for this class, and will open the file then read from it. It
@@ -31,7 +39,7 @@ class Plotter:
         :return:
         """
 
-        with open("data/plot_data_" + self.title + ".csv", "r") as csv_file:
+        with open("data/plot_data_" + self.csv_file_name + ".csv", "r") as csv_file:
             # Structure of csv file (with no whitespace in between):
             # Time,          Susceptible,     Infected,     Recovered,
             # 1,             90,              10,           0,
@@ -47,7 +55,7 @@ class Plotter:
                 return
 
             # Here we set up the different lists containing all values
-            data_dict = {category: [] for category in self.categories}
+            self.data_dict = {category: [] for category in self.categories}
 
             for line in self.lines[1:]:
 
@@ -69,14 +77,14 @@ class Plotter:
                     # This line will add a value to the correct category. E.g. if there is a 90
                     # in the Susceptible column, then here we add 90 to the Susceptible list inside
                     # the data_dict
-                    data_dict[category].append(values_list[i])
+                    self.data_dict[category].append(values_list[i])
 
             # Now we can create the numpy arrays and plots for each category
-            time_array = np.array(data_dict["Time"])
+            time_array = np.array(self.data_dict["Time"])
             for status in self.categories[1:]:
 
                 # This will be a numpy array of one of the statuses (Susceptible, Infected or Recovered)
-                status_array = np.array(data_dict[status])
+                status_array = np.array(self.data_dict[status])
                 plt.plot(time_array, status_array, label=status)
 
             # Here we create the plot legends

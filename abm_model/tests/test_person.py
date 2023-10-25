@@ -1,11 +1,12 @@
 import unittest
 from unittest import TestCase
-from unittest import mock
+#from unittest import mock
 from unittest.mock import patch
 
 #import abm_model as abmm
 from person import Person
-from status import Status, Susceptible, Infected, Recovered
+#from status import Status, Susceptible, Infected, Recovered
+
 
 class TestPerson(TestCase):
 
@@ -35,20 +36,26 @@ class TestPerson(TestCase):
         """
 
     @patch('builtins.print')
-    def test_read_infection_history(self):
+    def test_read_infection_history(self, mock_print):
         """
         Test the 'read_infection_history' function in person.py
         """
         self.person = Person(name='AT', initial_status='Infected')
-        Person.read_infection_history()
-        self.assert_called_with('AT', "was not infected")
+
+        Person.read_infection_history(self)
+
+        mock_print.assert_called_with('AT was not infected')
 
     def test__repr__(self):
         """
         Test the '__repr__' function in person.py
         """
         self.person = Person(name='TAMYA', initial_status='Infected')
-        self.assertEqual(f"Person(ID = '{self.person.name}', status = {self.person.status})", f"Person(ID = 'TAMYA', status = Infected)")
+        test_string = f"Person(ID = '{self.person.name}'"
+        test_string += f",status = {self.person.status})"
+        self.assertEqual(test_string,
+                         "Person(ID = 'TAMYA', status = Infected)")
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -28,7 +28,8 @@ class Minicell:
                 output: None
     """
 
-    def __init__(self, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1,
+    def __init__(self, population_size: int = 100, beta: float = 0.01,
+                 recovery_period: float = 1,
                  initial: dict = {}, name: str = 'test', path: str = 'data'):
 
         cur_dir = '.'

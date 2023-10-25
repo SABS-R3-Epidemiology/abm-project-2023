@@ -1,10 +1,9 @@
-import sys
 import unittest
 from unittest import TestCase
 
 #import abm_model as abmm
 from minicell import Minicell
-from person import Person
+
 
 class TestMinicell(TestCase):
 
@@ -15,7 +14,8 @@ class TestMinicell(TestCase):
         """
         Test the initialisation function in minicell.py
         """
-        self.minicell = Minicell(population_size=56, beta=0.66, recovery_period=0)
+        self.minicell = Minicell(population_size=56, beta=0.66,
+                                 recovery_period=0)
         self.assertEqual(self.minicell.beta, 0.66)
         self.assertEqual(self.minicell.recovery_period, 0)
 
@@ -24,15 +24,17 @@ class TestMinicell(TestCase):
         self.assertEqual(self.minicell.i_list, [])
         self.assertEqual(self.minicell.r_list, [])
 
-        self.assertEqual(len(self.minicell.all_list), self.minicell.population_size)
-        self.assertEqual(len(self.minicell.s_list), self.minicell.population_size)
+        self.assertEqual(len(self.minicell.all_list),
+                         self.minicell.population_size)
+        self.assertEqual(len(self.minicell.s_list),
+                         self.minicell.population_size)
 
         # Test that there are 0 people in i_list and r_list
 
         # Test that there are no duplicates in the person id.
-            # Use list comprehensions to generate a list of person ids from all_list
-            # [person.id for person in all_list]
-            # check if there are any duplicates in this list
+        # Use list comprehensions to generate list of person ids from all_list
+        # [person.id for person in all_list]
+        # check if there are any duplicates in this list
 
         person_ids = [p.name for p in self.minicell.all_list]
         self.assertEqual(len(person_ids), len(set(person_ids)))
@@ -49,8 +51,10 @@ class TestMinicell(TestCase):
         fake_event = {'person': target_person, 'status': 'Infected'}
         self.minicell.handle(fake_event)
         self.assertEqual(len(self.minicell.i_list), 1)
-        self.assertEqual(len(self.minicell.s_list), self.minicell.population_size - 1)
-        self.assertEqual(len(self.minicell.all_list), self.minicell.population_size)
+        self.assertEqual(len(self.minicell.s_list),
+                         self.minicell.population_size - 1)
+        self.assertEqual(len(self.minicell.all_list),
+                         self.minicell.population_size)
         self.assertEqual(len(self.minicell.r_list), 0)
         # Check that we can move people between lists
         # Create a 'fake' event that infects the first person
@@ -64,17 +68,16 @@ class TestMinicell(TestCase):
         fake_event = {'person': target_person, 'status': 'Recovered'}
         self.minicell.handle(fake_event)
         self.assertEqual(len(self.minicell.i_list), 0)
-        self.assertEqual(len(self.minicell.s_list), self.minicell.population_size - 1)
-        self.assertEqual(len(self.minicell.all_list), self.minicell.population_size)
+        self.assertEqual(len(self.minicell.s_list),
+                         self.minicell.population_size - 1)
+        self.assertEqual(len(self.minicell.all_list),
+                         self.minicell.population_size)
         self.assertEqual(len(self.minicell.r_list), 1)
-
-
 
         # If you handle collisions in this method, test them
         # Put a incorrect event in to the function, and check whether it breaks
         # the function as you would expect it to
         # self.assertRaises(TypeError)
-
 
     def test_update(self):
         """
@@ -84,7 +87,7 @@ class TestMinicell(TestCase):
         m = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
         t = Minicell("Abbie", "Infected")
-        t.update(cell = m, dt=1)
+        t.update(cell=m, dt=1)
         self.assertEqual(self.minicell.current_time, 1)
 
     def test_write_csv(self):
@@ -96,8 +99,10 @@ class TestMinicell(TestCase):
         # test that this method writes the right data in the right format
 
         # Tests should never change the system
-        # Instead of creating an actual file, and writing to it, we will use mocks
-        # 
+        # Instead of creating an actual file, and writing to it,
+        # we will use mocks
+
 
 if __name__ == '__main__':
+
     unittest.main()

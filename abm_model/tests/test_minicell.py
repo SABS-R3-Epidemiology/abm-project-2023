@@ -3,23 +3,23 @@ import unittest
 from unittest import TestCase
 
 #import abm_model as abmm
-import minicell as mc
+from minicell import Minicell
 from person import Person
 
 class TestMinicell(TestCase):
 
     def setUp(self) -> None:
-        self.minicell = mc.Minicell()
+        self.minicell = Minicell()
 
     def test__init__(self):
         """
         Test the initialisation function in minicell.py
         """
-        self.minicell = mc.Minicell(population_size=56, beta=0.66, recovery_period=0)
+        self.minicell = Minicell(population_size=56, beta=0.66, recovery_period=0)
         self.assertEqual(self.minicell.beta, 0.66)
         self.assertEqual(self.minicell.recovery_period, 0)
 
-        self.minicell = mc.Minicell()
+        self.minicell = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
         self.assertEqual(self.minicell.i_list, [])
         self.assertEqual(self.minicell.r_list, [])
@@ -39,7 +39,7 @@ class TestMinicell(TestCase):
 
         # Check that all people in all_list are susceptible
         person_statuses = [p.status for p in self.minicell.all_list]
-        self.assertEqual(all(x == 'Susceptible' for x in person_statuses), True)
+        self.assertEqual(all(str(x) == 'Susceptible' for x in person_statuses), True)
 
     def test_handle(self):
         """
@@ -81,9 +81,9 @@ class TestMinicell(TestCase):
         Test the 'update' function in minicell.py
         """
 
-        m = mc.Minicell()
+        m = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
-        t = mc.Minicell("Abbie", "Infected")
+        t = Minicell("Abbie", "Infected")
         t.update(cell = m, dt=1)
         self.assertEqual(self.minicell.current_time, 1)
 

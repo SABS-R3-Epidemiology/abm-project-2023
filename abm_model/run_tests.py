@@ -14,6 +14,7 @@ def run_unit_tests():
     res = unittest.TextTestRunner(verbosity=2).run(suite)
     sys.exit(0 if res.wasSuccessful() else 1)
 
+
 if __name__ == '__main__':
     # Set up argument parsing
     parser = argparse.ArgumentParser(

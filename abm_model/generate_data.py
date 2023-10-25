@@ -4,7 +4,7 @@ import os
 from abm_model.minicell import Minicell
 
 population_size = 100
-run_time = 20
+total_time = 20
 beta = 0.01
 recovery_period = 1.0
 I_0 = 1
@@ -19,7 +19,7 @@ try:
                                   [
                                       "help",
                                       "population-size=",
-                                      "run-time=",
+                                      "total-time=",
                                       "beta=",
                                       "recovery-period=",
                                       "initial-infected=",
@@ -46,11 +46,11 @@ if len(options) >= 1:
             except ValueError:
                 print("Error: population size should be an int")
                 sys.exit()
-        elif name in ['-t', '--run-time']:
+        elif name in ['-t', '--total-time']:
             try:
-                run_time = int(value)
+                total_time = int(value)
             except ValueError:
-                print("Error: run time should be an int")
+                print("Error: total time should be an int")
         elif name in ['-b', '--beta']:
             try:
                 beta = float(value)
@@ -74,5 +74,5 @@ if len(options) >= 1:
         elif name in ['-p', '--path']:
             path = value
 
-    Minicell(I0=I_0, population_size=population_size, run_time=run_time, beta=beta, recovery_period=recovery_period,
+    Minicell(I0=I_0, population_size=population_size, total_time=total_time, beta=beta, recovery_period=recovery_period,
              name=title, path=path)

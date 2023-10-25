@@ -142,11 +142,11 @@ class Minicell():
 		self.events = []
 		self.write_csv()
 
-def run_minicell(I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name: str = 'test', path: str = 'data', threshold: int = 5, runtime: int = 10):
+def run_minicell(I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name: str = 'test', path: str = 'data', threshold: int = 5, total_time: int = 10):
 
 	cell = Minicell(I0, population_size, beta, recovery_period, name, path, threshold)
 	
-	for i in range(runtime):
+	for i in range(total_time):
 		cell.update(1)
 	
-	print("Simulation to day " + str(runtime) + " is finished!")
+	print("Simulation to day " + str(total_time) + " is finished!")

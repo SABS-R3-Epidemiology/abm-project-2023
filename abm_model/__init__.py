@@ -11,4 +11,4 @@ from .version_info import VERSION_INT, VERSION  # noqa
 from .person import Person # noqa
 from .status import * # noqa
 from .minicell import Minicell # noqa
-
+from .gif_plot import *

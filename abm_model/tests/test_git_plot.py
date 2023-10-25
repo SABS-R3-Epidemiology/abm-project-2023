@@ -18,6 +18,15 @@ def test_point_repr():
     npt.assert_string_equal('Point(position = [1, 2], data = None, history = None)', str(a))
 
 
+def test_point_error():
+
+    with pytest.raises(TypeError):
+        Point(['123', 2])
+
+    with pytest.raises(ValueError):
+        Point([1])
+
+
 def test_gif_plotter_attri():
 
     a = abm_model.Minicell(recovery_period=100)

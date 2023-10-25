@@ -9,9 +9,28 @@ from functools import partial
 
 
 class Point:
+    '''
+    Point object containing infection history and information for a person.
+    ----------
 
-    def __init__(self, position):
+    Parameters:
 
+    position(list of float): contains the position of the person on the plot
+
+    Attributes:
+
+    .position: same as above
+    .data: None is the default value, should be a 'Person' object.
+    .history: None is the default value, should be a list
+
+    '''
+    def __init__(self, position: list):
+
+        if any(type(coord) is not float for coord in position) and any(type(coord) is not
+           np.float64 for coord in position) and any(type(coord) is not int for coord in position):
+            raise TypeError("Position need to be float or int type.")
+        if len(position) != 2:
+            raise ValueError("Position should be a list of 2 numbers")
         self.position = position
         self.data = None
         self.history = None
@@ -32,7 +51,26 @@ class Point:
 
 
 class gif_plotter:
+    '''
+    object to generate a GIF figure
+    ----------
 
+    Parameter:
+
+    cell('Minicell' object): should be the minicell containing all information within the cell
+
+    Attributes:
+
+    .cell: same as above
+    .point_list: None is the default value, should be a list of points
+
+    Methods:
+
+    .points_manipulation(): extract information from .cell and process it into .point_list
+    .gif_plotter(path, name): generate a GIF figure using .point_list, save to the given path and name
+    .plot(path, name): a method implementing the above 2 methods automatically
+
+    '''
     def __init__(self, cell):
         if isinstance(cell, Minicell):
             self.cell = cell
@@ -59,14 +97,14 @@ class gif_plotter:
 
         x_mesh, y_mesh = np.meshgrid(x_values, y_values)
 
-        x_corrds = x_mesh.flatten()
-        y_corrds = y_mesh.flatten()
+        x_coords = x_mesh.flatten()
+        y_coords = y_mesh.flatten()
 
         # Import the points data and information from the model
         point_list = []
 
         for i in range(point_number_onedim ** 2):
-            point_list.append(Point([x_corrds[i], y_corrds[i]]))
+            point_list.append(Point([x_coords[i], y_coords[i]]))
 
         for j in range(len(all_list)):
             point_list[j].data = all_list[j]
@@ -93,6 +131,7 @@ class gif_plotter:
         # Setup the .gif figure
         point_list = self.point_list
         cell = self.cell
+        N = len(point_list)
         fig, ax = plt.subplots()
         num_frames = (cell.current_time + 1) * 2
 
@@ -152,8 +191,8 @@ class gif_plotter:
                     plt.ylim(0, 4)
                     plt.axis('off')
                 ax.set_title('Day ' + str(time))
-            # ax.text(2, 18, 'Population = ' + str(N) + ', Beta = ' + str(cell.beta) + ', \
-            # Recovery Period = ' + str(cell.recovery_period))
+            note_text = 'Population = ' + str(N) + ' Beta = ' + str(cell.beta) + ' Recovery Period = ' + str(cell.recovery_period)
+            ax.annotate(note_text, xy=(1.0, -0.03), xycoords='axes fraction', ha='right', va='center', fontsize=8)
 
         # Create an animation
         anim = FuncAnimation(fig, partial(update, point_list=point_list), frames=num_frames, repeat=True)

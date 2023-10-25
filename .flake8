@@ -34,3 +34,11 @@ ignore=
     # Binary operator on new line
     # This is now advised in pep8
     W503,
+
+    # Indentation contains tabs
+    # We will ignore this
+    W191,
+
+    # Mixed tabs and spaces
+    # We will ignore this
+    E101,

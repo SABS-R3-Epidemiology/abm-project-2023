@@ -34,4 +34,4 @@ jobs:
         python -m pip install .[dev]
     - name: Run unit tests
       run: |
-        python abm-model/run_tests.py --unit
+        python abm_model/run_tests.py --unit

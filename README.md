@@ -4,7 +4,7 @@ This project consists of an SIR model for N indidivuals in a closed room. The si
 
 ## Installation
 
-To install a copy of the solver, open a terminal and run:
+To install a copy of the simulator, open a terminal and run:
 
 	git clone git@github.com:SABS-R3-Epidemiology/abm-project-2023.git
 

@@ -72,7 +72,6 @@ class Minicell():
 		self.data._set_value( index = self.current_time, col = 'Susceptible', value = len(self.s_list))
 		self.data._set_value( index = self.current_time, col = 'Infected', value = len(self.i_list))
 		self.data._set_value( index = self.current_time, col = 'Recovered', value = len(self.r_list))
-		self.data.to_csv(self.path + '/plot_data_' + self.name + '.csv')
 
 	def handle(self, event):
 
@@ -119,4 +118,3 @@ class Minicell():
 		self.data._set_value( index = self.current_time, col = 'Susceptible', value = len(self.s_list))
 		self.data._set_value( index = self.current_time, col = 'Infected', value = len(self.i_list))
 		self.data._set_value( index = self.current_time, col = 'Recovered', value = len(self.r_list))
-		self.data.to_csv(self.path + '/plot_data_' + self.name + '.csv')

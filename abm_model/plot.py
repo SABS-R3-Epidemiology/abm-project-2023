@@ -7,16 +7,27 @@ import csv
 class Plotter:
 
     def __init__(self, title: str = ""):
-        """
+        """Here we initialise the class with some default class parameters (note these will
+        be read from the file)
 
-        :param title: The optional title for the .csv file
+        :param title: Title of the .csv file containing the desired data
         """
         self.title = title
-        self.total_population = 100
+
+        # Both population_size and initial_infected are read from the .csv file, so here
+        # we will simply initialise them with default values which will be changed
+        self.population_size = 100
         self.initial_infected = 1
         self.plot_path = "data/plots"
 
     def plot_data(self):
+        """This is the main method for this class, and will open the file then read from it. It
+        then creates a dictionary containing lists of all the different observed values, keyed
+        by the headers "Time", "Susceptible", "Infected" and "Recovered". Finally, it calls
+        the desired methods to plot the data.
+
+        :return:
+        """
 
         with open("data/plot_data_" + self.title + ".csv", "r") as csv_file:
             # Structure of csv file (with no whitespace in between):
@@ -42,13 +53,13 @@ class Plotter:
                 # can be parsed to an int
                 str_values_list = line
 
-                values_list = self.check_validity(str_values_list)
+                values_list = self.convert_to_ints(str_values_list)
 
                 # This is checking that the current time step is the first one
                 if values_list[0] == 0:
                     # Here, we can infer the total number of individuals and the initial number of infected.
                     # We will use this to label the plots.
-                    self.total_population = sum(values_list[1:])
+                    self.population_size = sum(values_list[1:])
                     self.initial_infected = values_list[2]
 
                 for i, category in enumerate(categories):
@@ -73,7 +84,7 @@ class Plotter:
             self.create_plot_files()
 
     @staticmethod
-    def check_validity(str_values_list: list[str]):
+    def convert_to_ints(str_values_list: list[str]):
 
         """This method checks that `str_values_list` is of the correct length and that
         the internal values are valid. If this is not the case, then errors will be raised.
@@ -98,22 +109,24 @@ class Plotter:
 
     def create_plot_files(self):
         """This will send the files to the correct location
+
         :return:
         """
         if not os.path.exists(self.plot_path):
             os.makedirs(self.plot_path)
 
-        file_name = "total_" + str(self.total_population) + "_initial_" + str(self.initial_infected)
+        file_name = "total_" + str(self.population_size) + "_initial_" + str(self.initial_infected)
 
         destination = self.plot_path + "/" + file_name + ".png"
         plt.savefig(destination)
 
     def create_plot_legend(self):
         """We create the plot legend and title here
+
         :return:
         """
         plt.legend()
         plt.ylabel("Number of individuals")
         plt.xlabel("Time step")
 
-        plt.title("Agent Based Model for " + str(self.total_population) + " individuals in a room")
+        plt.title("Agent Based Model for " + str(self.population_size) + " individuals in a room")

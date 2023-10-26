@@ -6,11 +6,11 @@ from abm_model.status import Susceptible, Infected, Recovered
 class Person:
     """
     This class contains information for each agent.
-    
+
     Parameters:
     ----------
 
-    name(str): 
+    name(str):
         A unique id/name for each agent
     initial_status: 
         A 'status' object indicating the initial status of the person
@@ -21,26 +21,26 @@ class Person:
     Attributes:
     ----------
 
-    .name(str): 
+    .name(str):
         Same as above
-    .status(status object): 
+    .status(status object):
         Use composition with status class, indicating the status for each person
-    .history(dic): 
+    .history(dic):
         A dictionary containing the date of infection and date of recovery
 
     Methods:
     -------
 
-    .update(cell): 
+    .update(cell):
         Triggers the change of status with an input of 'Minicell' object
         for originally susceptible people: pass
         for originally infected people: check whether it is the time to recover:
         if yes, recover by adding to '.events' to be handled by '.handle()';
         if no, generate list of susceptible people to be infected
         for originally recovered people: pass
-    .read_infection_history(): 
+    .read_infection_history():
         Print out the date of infection and recovery(if exist) based on '.history' attribute
-
+        
     """
     def __init__(self, name: str, initial_status):
 

@@ -2,6 +2,7 @@ import numpy as np
 import unittest
 from unittest import TestCase
 from status import Susceptible, Infected, Recovered
+import copy
 
 
 class TestSusceptible(TestCase):
@@ -38,6 +39,19 @@ class TestInfected(TestCase):
         Test the '__repr__' function of class Infected in status.py
         """
         self.assertEqual(f"{self.infected}", "Infected")
+
+    def test__eq__(self):
+        '''
+        Test the '__eq__' function of class Infected in status.py
+        '''
+        test1 = Infected(recovery_period=1, current_time=0, threshold=3)
+        test2 = Infected(recovery_period=1, current_time=0, threshold=5)
+        self.assertEqual(test1 == test2, False)
+
+        test1 = Infected(recovery_period=1, current_time=0, threshold=3)
+        test2 = copy.deepcopy(test1)
+        test1.expiry_date += 1
+        self.assertEqual(test1 == test2, False)
 
 
 class TestRecovered(TestCase):

@@ -126,11 +126,11 @@ class Minicell:
         """
 
         parent_record = {}
-		for subject in self.i_list:
-			child = subject.update(self, dt)
-			if child != None:
-				for child in child:
-					parent_record[child] = [subject.name, self.current_time]
+        for subject in self.i_list:
+            child = subject.update(self, dt)
+            if child:
+                for child in child:
+                    parent_record[child] = [subject.name, self.current_time]
 
         # handle each event raised in the updating loop above
         # (e.g. with) cell.events.append({'person':target,'status':Infected})
@@ -141,4 +141,4 @@ class Minicell:
         self.events = []
         self.write_csv()
         self.parent_record.update(parent_record)
-        
+

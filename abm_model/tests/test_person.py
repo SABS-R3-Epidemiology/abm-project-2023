@@ -34,18 +34,18 @@ class TestPerson(TestCase):
         """
         Test the '__eq__' function in person.py
         """
-        self.assertFalse( self.susceptible == self.infected )
-        self.assertFalse( self.susceptible == self.recovered )
-        self.assertFalse( self.infected == self.recovered )
+        self.assertFalse(self.susceptible == self.infected)
+        self.assertFalse(self.susceptible == self.recovered)
+        self.assertFalse(self.infected == self.recovered)
         cavy_S, cavy_I, cavy_R = (Person(name='cavy', initial_staus=Susceptible()),
                                   Person(name='cavy', initial_staus=Infected()),
-                                  Person(name='cavy', initial_staus=Recovered()) )
-        self.assertFalse( self.susceptible == cavy_S)
-        self.assertFalse( self.susceptible == cavy_I)
-        self.assertFalse( self.recovered == cavy_R)
-        self.assertEqual( self.susceptible, Person(name='S', initial_staus=self.susceptible.status))
-        self.assertEqual( self.infected, Person(name='I', initial_staus=self.infected.status))
-        self.assertEqual( self.recovered, Person(name='R', initial_staus=self.recovered.status))
+                                  Person(name='cavy', initial_staus=Recovered()))
+        self.assertFalse(self.susceptible == cavy_S)
+        self.assertFalse(self.susceptible == cavy_I)
+        self.assertFalse(self.recovered == cavy_R)
+        self.assertEqual(self.susceptible, Person(name='S', initial_staus=self.susceptible.status))
+        self.assertEqual(self.infected, Person(name='I', initial_staus=self.infected.status))
+        self.assertEqual(self.recovered, Person(name='R', initial_staus=self.recovered.status))
         self.assertRaises(Error('Two people shall not have the same name!'), cavy_S == cavy_I)
         self.assertRaises(Error('Two people shall not have the same name!'), cavy_S == cavy_R)
         self.assertRaises(Error('Two people shall not have the same name!'), cavy_I == cavy_R)

@@ -33,9 +33,11 @@ class Infected(Status):
     Parameters:
     ----------
 
-    d(float, int): the average recovery period
-    current_time(int): should be an input from the microcell indicating the current time.
-    In order to calculate the recovery date
+    recovery_period(float):
+        The average recovery period
+    current_time(int):
+        An input from the microcell indicating the current time which is then used
+        to calculate the recovery date
     """
     def __init__(self, recovery_period: float = 1, current_time: int = 0, threshold: float = 0):
 

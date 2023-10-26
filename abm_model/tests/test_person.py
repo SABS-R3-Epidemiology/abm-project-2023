@@ -49,10 +49,12 @@ class TestPerson(TestCase):
         self.s_list = [Person(name='cavy0', initial_status=Susceptible()),
                        Person(name='cavy1', initial_status=Susceptible()),
                        Person(name='cavy2', initial_status=Susceptible())]
-        self.infected.update()
+        self.infected.update(self, 0)
+        self.assertEqual(self.events, [])
+        self.infected.update(self, 1)
         for event in self.events:
             assert event['person'] in self.s_list
-            assert str(event['status']) == 'Infected'
+            self.assertEqual(str(event['status']), 'Infected')
         self.events = []
         self.infected.expiry_date = 1
         self.current_time = 0
@@ -62,14 +64,14 @@ class TestPerson(TestCase):
                        Person(name='cavy0', initial_status=Recovered()),
                        Person(name='cavy1', initial_status=Recovered()),
                        Person(name='cavy2', initial_status=Recovered())]
-        self.infected.update()
-        assert self.events == []
+        self.infected.update(self, 1)
+        self.assertEqual(self.events, [])
         self.infected.expiry_date = 0
         self.current_time = 1
-        self.susceptible.update()
-        self.infected.update()
-        self.recovered.update()
-        assert self.events == [{ 'person': self.infected, 'status': Recovered() }]
+        self.susceptible.update(self, 1)
+        self.infected.update(self, 1)
+        self.recovered.update(self, 1)
+        self.assertEqual(self.events, [{ 'person': self.infected, 'status': Recovered() }])
 
     @patch('builtins.print')
     def test_read_infection_history(self, mock_print):

@@ -12,9 +12,9 @@ class Person:
 
     name(str):
         A unique id/name for each agent
-    initial_status: 
+    initial_status:
         A 'status' object indicating the initial status of the person
-    d(float, int, Optional): 
+    d(float, int, Optional):
         Should be an input from the model,
         indicating the average recovery period for initially infected people
 
@@ -40,7 +40,6 @@ class Person:
         for originally recovered people: pass
     .read_infection_history():
         Print out the date of infection and recovery(if exist) based on '.history' attribute
-        
     """
     def __init__(self, name: str, initial_status):
 

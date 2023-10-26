@@ -85,10 +85,20 @@ class TestPerson(TestCase):
         self.infected.update(self, 1)
         self.infected.expiry_date = 0
         self.current_time = 1
+        self.infected.update(self, 1)
+        self.assertEqual(self.events, [{'person': self.infected, 'status': Recovered()}])
+        self.events = []
+        self.infected.expiry_date = 0
+        self.current_time = 0
+        self.infected.update(self, 1)
+        self.assertEqual(self.events, [{'person': self.infected, 'status': Recovered()}])
+        self.events = []
+        self.infected.expiry_date = 1
+        self.current_time = 0
         self.susceptible.update(self, 1)
         self.infected.update(self, 1)
         self.recovered.update(self, 1)
-        self.assertEqual(self.events, [{'person': self.infected, 'status': Recovered()}])
+        self.assertEqual(self.events, [])
 
     @patch('builtins.print')
     def test_read_infection_history(self, mock_print):

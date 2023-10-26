@@ -1,6 +1,5 @@
 import unittest
 from unittest import TestCase
-import os
 import sys
 from abm_model.generate_plots import PlotGenerator
 
@@ -21,7 +20,10 @@ class TestGeneratePlots(TestCase):
         self.generator = PlotGenerator("Test text")
         self.assertEqual(self.generator.csv_file_name, "default.csv")
         self.assertEqual(self.generator.help_string, "Test text")
-        self.assertEqual(self.generator.argv, sys.argv[1:])
+        args = sys.argv[1:]
+        if "--unit" in args:
+            args.remove("--unit")
+        self.assertEqual(self.generator.argv, args)
         self.assertEqual(self.generator.short_flags, ["h", "f"])
         self.assertEqual(self.generator.long_flags, ["help", "csv-file-name"])
 

@@ -1,6 +1,5 @@
 import unittest
 from unittest import TestCase
-import os
 import sys
 from abm_model.generator import Generator
 
@@ -20,7 +19,10 @@ class TestGenerator(TestCase):
         # Non default case
         self.generator = Generator("Test text")
         self.assertEqual(self.generator.help_string, "Test text")
-        self.assertEqual(self.generator.argv, sys.argv[1:])
+        args = sys.argv[1:]
+        if "--unit" in args:
+            args.remove("--unit")
+        self.assertEqual(self.generator.argv, args)
         self.assertEqual(self.generator.short_flags, ["h"])
         self.assertEqual(self.generator.long_flags, ["help"])
 

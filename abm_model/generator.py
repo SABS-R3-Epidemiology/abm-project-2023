@@ -13,6 +13,8 @@ class Generator:
         self.help_string = help_string
         self.dirname = os.path.dirname(os.path.realpath(__file__))
         self.argv = sys.argv[1:]
+        if "--unit" in self.argv:
+            self.argv.remove("--unit")
         self.short_flags = ["h"]
         self.long_flags = ["help"]
 

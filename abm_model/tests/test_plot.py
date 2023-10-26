@@ -1,4 +1,4 @@
-#import sys
+# import sys
 import unittest
 from unittest import TestCase
 from unittest.mock import patch, mock_open
@@ -15,15 +15,15 @@ class TestPlot(TestCase):
         self.data += "2, 79, 20, 1"
 
     def test__init__(self):
-        self.plot = Plotter(title='title')
-        self.assertEqual(self.plot.title, 'title')
+        self.plot = Plotter(csv_file_name='plot_data_test.csv')
+        self.assertEqual(self.plot.csv_file_name, 'title')
 
     def test_plot_data(self):
         with patch('builtins.open', new_callable=mock_open, read_data=self.data) as mock_file:
-            self.plot = Plotter(title='title')
-            read_data = open("data/plot_data_" + self.plot.title + ".csv").read()
+            self.plot = Plotter(csv_file_name='plot_data_test.csv')
+            read_data = open("data/plot_data_" + self.plot.csv_file_name + ".csv").read()
             assert read_data == self.data
-            #print(read_data)
+            # print(read_data)
             mock_file.assert_called_with("data/plot_data_title.csv")
 
             rows = read_data.splitlines()

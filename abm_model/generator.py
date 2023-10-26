@@ -11,7 +11,9 @@ class Generator:
         :param help_string: The text that will be outputted if "--help" is entered
         """
         self.help_string = help_string
-        self.dirname = os.path.dirname(os.path.realpath(__file__))
+        # This will be called by the testing machine on GitHub which will not share
+        # any similarities with the path. Therefore we are omitting it.
+        self.dirname = os.path.dirname(os.path.realpath(__file__))  # pragma: no cover
         self.argv = sys.argv[1:]
         if "--unit" in self.argv:
             self.argv.remove("--unit")

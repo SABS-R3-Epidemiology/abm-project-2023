@@ -67,6 +67,19 @@ Here is a table of commands for generate_plots.py:
 |`--help`|`-h`|Print help|
 |`--csv-file-name`|`-f`|The chosen .csv file containing the data of a simulation|
 
+## Running Tests
+
+Within the abm-project-2023 directory, run the following command to run tests
+
+	python -m unittest tests/test_status.py
+
+This will run the tests in `test_status.py`. We can also run the other test scripts by replacing this with:
+
+>* `test_gif_plot.py`
+>* `test_minicell.py`
+>* `test_person.py`
+>* `test_plot.py`
+
 
 ## Parameter Definitions
 

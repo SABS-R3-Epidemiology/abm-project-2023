@@ -4,121 +4,131 @@ import os
 import csv
 
 
-def plot_data(title: str = ""):
-    """
+class Plotter:
 
-    :param title: An optional title for the plot_data file
-    :return:
-    """
+    def __init__(self, title: str = ""):
+        """Here we initialise the class with some default class parameters (note these will
+        be read from the file)
 
-    with open("data/plot_data_" + title + ".csv", "r") as csv_file:
-        # Structure of csv file (with no whitespace in between):
-        # Time,          Susceptible,     Infected,     Recovered,
-        # 1,             90,              10,           0,
-        # 2,             79,              20,           1,
-        # ...,           ...,             ...,          ...,
-        lines = [line[0:4] for line in csv.reader(csv_file)]
-        categories = lines[0]
+        :param title: Title of the .csv file containing the desired data
+        """
+        self.title = title
 
-        # We will exit this method if there are 0 or 1 lines only in the file as
-        # there is nothing to plot
+        # Both population_size and initial_infected are read from the .csv file, so here
+        # we will simply initialise them with default values which will be changed
+        self.population_size = 100
+        self.initial_infected = 1
+        self.plot_path = "data/plots"
+        self.lines = []
+        self.categories = []
 
-        if len(lines) <= 1:
-            return
+    def plot_data(self):
+        """This is the main method for this class, and will open the file then read from it. It
+        then creates a dictionary containing lists of all the different observed values, keyed
+        by the headers "Time", "Susceptible", "Infected" and "Recovered". Finally, it calls
+        the desired methods to plot the data.
 
-        # Here we set up the different lists containing all values
-        data_dict = {category: [] for category in categories}
+        :return:
+        """
 
-        for line in lines[1:]:
+        with open("data/plot_data_" + self.title + ".csv", "r") as csv_file:
+            # Structure of csv file (with no whitespace in between):
+            # Time,          Susceptible,     Infected,     Recovered,
+            # 1,             90,              10,           0,
+            # 2,             79,              20,           1,
+            # ...,           ...,             ...,          ...,
+            self.lines = [line[0:4] for line in csv.reader(csv_file)]
+            self.categories = self.lines[0]
 
-            # We must check that the length of str_values_list is 4 and that each value
-            # can be parsed to an int
-            str_values_list = line
+            # We will exit this method if there are 0 or 1 lines only in the file as
+            # there is nothing to plot
 
-            values_list = check_validity(str_values_list)
+            if len(self.lines) <= 1:
+                return
 
-            # This is checking that the current time step is the first one
-            if values_list[0] == 0:
-                # Here, we can infer the total number of individuals and the initial number of infected.
-                # We will use this to label the plots.
-                total_people = sum(values_list[1:])
-                initial_infected = values_list[2]
+            # Here we set up the different lists containing all values
+            data_dict = {category: [] for category in self.categories}
 
-            for i, category in enumerate(categories):
+            for line in self.lines[1:]:
 
-                # This line will add a value to the correct category. E.g. if there is a 90
-                # in the Susceptible column, then here we add 90 to the Susceptible list inside
-                # the data_dict
-                data_dict[category].append(values_list[i])
+                # We must check that the length of str_values_list is 4 and that each value
+                # can be parsed to an int
+                str_values_list = line
 
-        # Now we can create the numpy arrays and plots for each category
-        time_array = np.array(data_dict["Time"])
-        for status in categories[1:]:
+                values_list = self.convert_to_ints(str_values_list)
 
-            # This will be a numpy array of one of the statuses (Susceptible, Infected or Recovered)
-            status_array = np.array(data_dict[status])
-            plt.plot(time_array, status_array, label=status)
+                # This is checking that the current time step is the first one
+                if values_list[0] == 0:
+                    # Here, we can infer the total number of individuals and the initial number of infected.
+                    # We will use this to label the plots.
+                    self.population_size = sum(values_list[1:])
+                    self.initial_infected = values_list[2]
 
-        # Here we create the plot legends
-        create_plot_legend(total_people)
+                for i, category in enumerate(self.categories):
 
-        # And here we will write to a plots folder
-        plot_path = "data/plots"
-        create_plot_files(plot_path, total_people, initial_infected)
+                    # This line will add a value to the correct category. E.g. if there is a 90
+                    # in the Susceptible column, then here we add 90 to the Susceptible list inside
+                    # the data_dict
+                    data_dict[category].append(values_list[i])
 
+            # Now we can create the numpy arrays and plots for each category
+            time_array = np.array(data_dict["Time"])
+            for status in self.categories[1:]:
 
-def check_validity(str_values_list: list[str]):
+                # This will be a numpy array of one of the statuses (Susceptible, Infected or Recovered)
+                status_array = np.array(data_dict[status])
+                plt.plot(time_array, status_array, label=status)
 
-    """This method checks that `str_values_list` is of the correct length and that
-    the internal values are valid. If this is not the case, then errors will be raised.
+            # Here we create the plot legends
+            self.create_plot_legend()
 
-    :param str_values_list: A inputted list of strings
-    :return: The list of strings converted into ints (if they are valid)
-    """
-    if len(str_values_list) != 4:
-        raise ValueError("Each line in the .csv file must have 4 values")
+            # And here we will write to a plots folder
+            self.create_plot_files()
 
-    try:
-        values_list = [int(value) for value in str_values_list]
+    @staticmethod
+    def convert_to_ints(self, str_values_list: list[str]):
 
-        for value in values_list:
-            if value < 0:
-                raise ValueError("All values in the .csv file must be non-negative")
+        """This method checks that `str_values_list` is of the correct length and that
+        the internal values are valid. If this is not the case, then errors will be raised.
 
-        return values_list
+        :param str_values_list: A inputted list of strings
+        :return: The list of strings converted into ints (if they are valid)
+        """
+        if len(str_values_list) != 4:
+            raise ValueError("Each line in the .csv file must have 4 values")
 
-    except ValueError:
-        raise ValueError("Each value in the .csv file must be an integer")
+        try:
+            values_list = [int(value) for value in str_values_list]
 
+            for value in values_list:
+                if value < 0:
+                    raise ValueError("All values in the .csv file must be non-negative")
 
-def create_plot_files(plot_path: str, total_people: int, initial_infected: int):
-    """This will send the files to the correct location
+            return values_list
 
-    :param plot_path: The path pointing to the directory we wish to write into
-    :param total_people: Total number of people in the model
-    :param initial_infected: Initial number of people infected
-    :return:
-    """
-    if not os.path.exists(plot_path):
-        os.makedirs(plot_path)
+        except ValueError:
+            raise ValueError("Each value in the .csv file must be an integer")
 
-    file_name = "total_" + str(total_people) + "_initial_" + str(initial_infected)
+    def create_plot_files(self):
+        """This will send the files to the correct location
 
-    destination = plot_path + "/" + file_name + ".png"
-    plt.savefig(destination)
+        :return:
+        """
+        if not os.path.exists(self.plot_path):
+            os.makedirs(self.plot_path)
 
+        file_name = "total_" + str(self.population_size) + "_initial_" + str(self.initial_infected)
 
-def create_plot_legend(total_people: int):
-    """We create the plot legend and title here
+        destination = self.plot_path + "/" + file_name + ".png"
+        plt.savefig(destination)
 
-    :param total_people: Total number of people in the model
-    :return:
-    """
-    plt.legend()
-    plt.ylabel("Number of individuals")
-    plt.xlabel("Time step")
+    def create_plot_legend(self):
+        """We create the plot legend and title here
 
-    plt.title("Agent Based Model for " + str(total_people) + " individuals in a room")
+        :return:
+        """
+        plt.legend()
+        plt.ylabel("Number of individuals")
+        plt.xlabel("Time step")
 
-
-plot_data("test")
+        plt.title("Agent Based Model for " + str(self.population_size) + " individuals in a room")

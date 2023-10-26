@@ -13,7 +13,7 @@ class TestPerson(TestCase):
 
     def setUp(self) -> None:
         self.susceptible = Person(name='S', initial_status=Susceptible())
-        self.infected = Person(name='I', initial_status=Infected())
+        self.infected = Person(name='I', initial_status=Infected(threshold=3))
         self.recovered = Person(name='R', initial_status=Recovered())
 
     def test__init__(self):
@@ -76,12 +76,7 @@ class TestPerson(TestCase):
         self.events = []
         self.infected.status.expiry_date = 1
         self.current_time = 0
-        self.s_list = [Person(name='cavy0', initial_status=Infected()),
-                       Person(name='cavy1', initial_status=Infected()),
-                       Person(name='cavy2', initial_status=Infected()),
-                       Person(name='cavy3', initial_status=Recovered()),
-                       Person(name='cavy4', initial_status=Recovered()),
-                       Person(name='cavy5', initial_status=Recovered())]
+        self.s_list = []
         self.infected.update(self, 1)
         self.infected.status.expiry_date = 0
         self.current_time = 1

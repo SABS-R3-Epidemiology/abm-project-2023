@@ -5,26 +5,44 @@ from abm_model.person import Person
 
 class Minicell:
     """
-    A box where all people are tracked:
-        attributes:
-            events: the list of transitions that has to be handled at the end of the time step (shall we call it queue?)
-            s_list: the list of susceptible people
-            i_list: the list of infectious people
-            r_list: the list of recovered people
-            all_list: a list containing people ordered by names
-            current_time: the current time of the simulation
-            name: the name of the minicell
-            path: the path where dats are stored
-        methods:
-            update(dt): changes the status of each pearson into the minicell coherently with the model
-                inputs: dt: the time lenght of the step to update
-                output: None
-            write_csv(path): upload the hystory on the file path.csv
-                inputs: path: the path of the file where the hystory is being transcribed
-                output: None
-            handle(event): update the evets that are to be handled at the end of the time step
-                inputs: event: the event to handle
-                output: None
+    A box where all people are tracked.
+
+    Attributes:
+    ----------
+
+    events:
+        The list of transitions that has to be handled at the end of the time step
+        (shall we call it queue?)
+    s_list:
+        The list of susceptible people
+    i_list:
+        The list of infectious people
+    r_list:
+        The list of recovered people
+    all_list:
+        A list containing people ordered by names
+    current_time:
+        The current time of the simulation
+    name:
+        The name of the minicell
+    path:
+        The path where dats are stored
+
+    Methods:
+    -------
+
+    update(dt):
+        Changes the status of each pearson into the minicell coherently with the model
+        inputs: dt: the time lenght of the step to update
+        output: None
+    write_csv(path):
+        Upload the hystory on the file path.csv
+        inputs: path: the path of the file where the hystory is being transcribed
+        output: None
+    handle(event):
+        Update the evets that are to be handled at the end of the time step
+        inputs: event: the event to handle
+        output: None
     """
 
     def __init__(self, population_size: int = 100, beta: float = 0.01,

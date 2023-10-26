@@ -1,9 +1,11 @@
+from mimetypes import init
+import shutil
 import unittest
 from unittest import TestCase
 
 #import abm_model as abmm
 from minicell import Minicell
-
+from status import Infected
 
 class TestMinicell(TestCase):
 
@@ -11,6 +13,13 @@ class TestMinicell(TestCase):
         self.minicell = Minicell()
 
     def test__init__(self):
+
+        '''
+        Test the possibility of specifying the path directory
+        '''
+        Minicell(path = 'data/tests')
+        shutil.rmtree('data/tests')
+
         """
         Test the initialisation function in minicell.py
         """
@@ -19,7 +28,8 @@ class TestMinicell(TestCase):
         self.assertRaises(TypeError, self.minicell.__init__, population_size=2.1)
         self.assertRaises(TypeError, self.minicell.__init__, population_size='2.1')
 
-        self.minicell = Minicell(population_size=56, beta=0.66,
+        self.minicell = Minicell(population_size=56,
+                                 beta=0.66,
                                  recovery_period=0)
         self.assertEqual(self.minicell.beta, 0.66)
         self.assertEqual(self.minicell.recovery_period, 0)
@@ -88,23 +98,10 @@ class TestMinicell(TestCase):
         Test the 'update' function in minicell.py
         """
 
-        m = Minicell()
+        m = Minicell(initial = {'0': Infected()})
         self.assertEqual(self.minicell.current_time, 0)
         m.update(dt=1)
         self.assertEqual(m.current_time, 1)
-
-    def test_write_csv(self):
-        """
-        Test the 'write_csv' function in minicell.py
-        """
-
-        # wait until this code is written
-        # test that this method writes the right data in the right format
-
-        # Tests should never change the system
-        # Instead of creating an actual file, and writing to it,
-        # we will use mocks
-
 
 if __name__ == '__main__':
 

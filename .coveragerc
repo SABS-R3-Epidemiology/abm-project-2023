@@ -1,5 +1,5 @@
 [run]
 source = abm_model
 omit =
-	abm_model/tests/*
-	abm_model/gif_plot.py
+	*/tests/*
+	*/gif_plot.py

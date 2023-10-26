@@ -191,7 +191,8 @@ class gif_plotter:
                     plt.ylim(0, 4)
                     plt.axis('off')
                 ax.set_title('Day ' + str(time))
-            note_text = 'Population = ' + str(N) + ' Beta = ' + str(cell.beta) + ' Recovery Period = ' + str(cell.recovery_period)
+            note_text = ('Population = ' + str(N) + ' Beta = ' + str(cell.beta)
+                         + ' Recovery Period = ' + str(cell.recovery_period))
             ax.annotate(note_text, xy=(1.0, -0.03), xycoords='axes fraction', ha='right', va='center', fontsize=8)
 
         # Create an animation

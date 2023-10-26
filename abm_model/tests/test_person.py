@@ -12,9 +12,9 @@ from status import Susceptible, Infected, Recovered
 class TestPerson(TestCase):
 
     def setUp(self) -> None:
-        self.susceptible = Person(name='L', initial_status=Susceptible())
-        self.infected = Person(name='M', initial_status=Infected())
-        self.recovered = Person(name='N', initial_status=Recovered())
+        self.susceptible = Person(name='S', initial_status=Susceptible())
+        self.infected = Person(name='I', initial_status=Infected())
+        self.recovered = Person(name='R', initial_status=Recovered())
 
     def test__init__(self):
         """

@@ -1,7 +1,5 @@
 [run]
 source = abm_model
 omit =
-	abm_model/tests/test_minicell.py
-	abm_model/tests/test_person.py
-	abm_model/tests/test_plot.py
-	abm_model/tests/test_status.py
+	abm_model/tests/*
+	abm_model/gif_plot.py

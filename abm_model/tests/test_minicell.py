@@ -38,11 +38,11 @@ class TestMinicell(TestCase):
         # [person.id for person in all_list]
         # check if there are any duplicates in this list
 
-        person_ids = [p.name for p in self.minicell.all_list]
+        person_ids = [p.name for p in self.minicell.s_list] + [p.name for p in self.minicell.i_list] + [p.name for p in self.minicell.r_list]
         self.assertEqual(len(person_ids), len(set(person_ids)))
 
         # Check that all people in all_list are susceptible
-        person_statuses = [p.status for p in self.minicell.all_list]
+        person_statuses = [p.status for p in self.minicell.s_list] + [p.status for p in self.minicell.i_list] + [p.status for p in self.minicell.r_list]
         self.assertEqual(all(str(x) == 'Susceptible' for x in person_statuses), True)
 
     def test_handle(self):
@@ -55,8 +55,6 @@ class TestMinicell(TestCase):
         self.assertEqual(len(self.minicell.i_list), 1)
         self.assertEqual(len(self.minicell.s_list),
                          self.minicell.population_size - 1)
-        self.assertEqual(len(self.minicell.all_list),
-                         self.minicell.population_size)
         self.assertEqual(len(self.minicell.r_list), 0)
         # Check that we can move people between lists
         # Create a 'fake' event that infects the first person
@@ -72,8 +70,6 @@ class TestMinicell(TestCase):
         self.assertEqual(len(self.minicell.i_list), 0)
         self.assertEqual(len(self.minicell.s_list),
                          self.minicell.population_size - 1)
-        self.assertEqual(len(self.minicell.all_list),
-                         self.minicell.population_size)
         self.assertEqual(len(self.minicell.r_list), 1)
 
         # If you handle collisions in this method, test them

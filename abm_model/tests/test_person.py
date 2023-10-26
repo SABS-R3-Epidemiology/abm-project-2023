@@ -55,7 +55,7 @@ class TestPerson(TestCase):
         Test the 'update' function in person.py
         """
         self.events = []
-        self.infected.expiry_date = 1
+        self.infected.status.expiry_date = 1
         self.current_time = 0
         self.s_list = [Person(name='cavy0', initial_status=Susceptible()),
                        Person(name='cavy1', initial_status=Susceptible()),

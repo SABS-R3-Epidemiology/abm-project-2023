@@ -14,15 +14,14 @@ Overview:
 
 .. autoclass:: Generator
     :members:
-    :special-members: __init__, __call__
+    :special-members: __init__
+    :show-inheritance:
 
 .. autoclass:: PlotGenerator
     :members:
-    :special-members: __call__
 
 .. autoclass:: DataGenerator
     :members:
-    :special-members: __call__
 
 .. autoclass:: GifGenerator
     :members:

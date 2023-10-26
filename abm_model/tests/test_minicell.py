@@ -1,4 +1,3 @@
-from mimetypes import init
 import shutil
 import unittest
 from unittest import TestCase
@@ -17,7 +16,7 @@ class TestMinicell(TestCase):
         '''
         Test the possibility of specifying the path directory
         '''
-        Minicell(path = 'data/tests')
+        Minicell(path='data/tests')
         shutil.rmtree('data/tests')
 
         """
@@ -98,10 +97,11 @@ class TestMinicell(TestCase):
         Test the 'update' function in minicell.py
         """
 
-        m = Minicell(initial = {'0': Infected()})
+        m = Minicell(initial={'0': Infected()})
         self.assertEqual(self.minicell.current_time, 0)
         m.update(dt=1)
         self.assertEqual(m.current_time, 1)
+
 
 if __name__ == '__main__':
 

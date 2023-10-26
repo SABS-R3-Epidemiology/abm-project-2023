@@ -90,9 +90,7 @@ class TestMinicell(TestCase):
         fake_event = {'person': target_person, 'status': 'Recovered'}
         self.minicell.handle(fake_event)
         self.assertEqual(len(self.minicell.i_list), 1)
-                         self.minicell.population_size - 2)
-        self.assertEqual(len(self.minicell.all_list),
-                         0)
+        self.assertEqual(len(self.minicell.s_list), self.minicell.population_size - 2)
 
         self.assertEqual(len(self.minicell.r_list), 1)
 

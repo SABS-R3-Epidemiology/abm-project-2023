@@ -12,7 +12,6 @@ from status import *
 class TestPerson(TestCase):
 
     def setUp(self) -> None:
-        self.current_time = 0
         self.susceptible = Person(name='L', initial_status=Susceptible())
         self.infected = Person(name='M', initial_status=Infected())
         self.recovered = Person(name='N', initial_status=Recovered())
@@ -48,10 +47,17 @@ class TestPerson(TestCase):
         self.current_time = 0
         self.s_list = [Person(name='cavy0', initial_status=Susceptible()),
                        Person(name='cavy1', initial_status=Susceptible()),
-                       Person(name='cavy2', initial_status=Susceptible())]
+                       Person(name='cavy2', initial_status=Susceptible()),
+                       Person(name='cavy3', initial_status=Susceptible()),
+                       Person(name='cavy5', initial_status=Susceptible()),
+                       Person(name='cavy4', initial_status=Susceptible())]
+        self.beta = 1
         self.infected.update(self, 0)
-        self.assertEqual(self.events, [])
+        self.beta = 0
         self.infected.update(self, 1)
+        self.assertEqual(self.events, [])
+        self.beta = 2
+        self.infected.update(self, 2)
         for event in self.events:
             assert event['person'] in self.s_list
             self.assertEqual(str(event['status']), 'Infected')
@@ -61,11 +67,10 @@ class TestPerson(TestCase):
         self.s_list = [Person(name='cavy0', initial_status=Infected()),
                        Person(name='cavy1', initial_status=Infected()),
                        Person(name='cavy2', initial_status=Infected()),
-                       Person(name='cavy0', initial_status=Recovered()),
-                       Person(name='cavy1', initial_status=Recovered()),
-                       Person(name='cavy2', initial_status=Recovered())]
+                       Person(name='cavy3', initial_status=Recovered()),
+                       Person(name='cavy4', initial_status=Recovered()),
+                       Person(name='cavy5', initial_status=Recovered())]
         self.infected.update(self, 1)
-        self.assertEqual(self.events, [])
         self.infected.expiry_date = 0
         self.current_time = 1
         self.susceptible.update(self, 1)

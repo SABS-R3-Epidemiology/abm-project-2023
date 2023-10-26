@@ -5,22 +5,31 @@ from unittest.mock import patch
 
 #import abm_model as abmm
 from person import Person
+from status import *
 #from status import Status, Susceptible, Infected, Recovered
 
 
 class TestPerson(TestCase):
 
     def setUp(self) -> None:
-        self.person = Person(name='AA', initial_status='Susceptible')
-
+        self.current_time = 0
+        self.susceptible = Person(name='L', initial_status=Susceptible())
+        self.infected = Person(name='M', initial_status=Infected())
+        self.recovered = Person(name='N', initial_status=Recovered())
+        
     def test__init__(self):
         """
         Test the initialisation function in person.py
         """
-        self.person = Person(name='TAMYA', initial_status='Infected')
-        self.assertEqual(self.person.name, 'TAMYA')
-        self.assertEqual(self.person.status, 'Infected')
-        self.assertEqual(len(self.person.history), 0)
+        self.assertEqual(self.susceptible.name, 'L')
+        self.assertEqual(self.infected.name, 'M')
+        self.assertEqual(self.recovered.name, 'N')
+        self.assertEqual(self.susceptible.status, 'Susceptible')
+        self.assertEqual(self.infected.status, 'Infected')
+        self.assertEqual(self.recovered.status, 'Recovered')
+        self.assertEqual(len(self.susceptible.history), 0)
+        self.assertEqual(len(self.infected.history), 0)
+        self.assertEqual(len(self.recovered.history), 0)
 
     def test__eq__(self):
         """
@@ -34,6 +43,33 @@ class TestPerson(TestCase):
         """
         Test the 'update' function in person.py
         """
+        self.events = []
+        self.infected.expiry_date = 1
+        self.current_time = 0
+        self.s_list = [Person(name='cavy0', initial_status=Susceptible()),
+                       Person(name='cavy1', initial_status=Susceptible()),
+                       Person(name='cavy2', initial_status=Susceptible())]
+        self.infected.update()
+        for event in self.events:
+            assert event['person'] in self.s_list
+            assert str(event['status']) == 'Infected'
+        self.events = []
+        self.infected.expiry_date = 1
+        self.current_time = 0
+        self.s_list = [Person(name='cavy0', initial_status=Infected()),
+                       Person(name='cavy1', initial_status=Infected()),
+                       Person(name='cavy2', initial_status=Infected()),
+                       Person(name='cavy0', initial_status=Recovered()),
+                       Person(name='cavy1', initial_status=Recovered()),
+                       Person(name='cavy2', initial_status=Recovered())]
+        self.infected.update()
+        assert self.events == []
+        self.infected.expiry_date = 0
+        self.current_time = 1
+        self.susceptible.update()
+        self.infected.update()
+        self.recovered.update()
+        assert self.events == [{ 'person': self.infected, 'status': Recovered() }]
 
     @patch('builtins.print')
     def test_read_infection_history(self, mock_print):

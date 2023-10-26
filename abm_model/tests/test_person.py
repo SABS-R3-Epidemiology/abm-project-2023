@@ -74,7 +74,7 @@ class TestPerson(TestCase):
             assert event['person'] in self.s_list
             self.assertEqual(str(event['status']), 'Infected')
         self.events = []
-        self.infected.expiry_date = 1
+        self.infected.status.expiry_date = 1
         self.current_time = 0
         self.s_list = [Person(name='cavy0', initial_status=Infected()),
                        Person(name='cavy1', initial_status=Infected()),
@@ -83,17 +83,17 @@ class TestPerson(TestCase):
                        Person(name='cavy4', initial_status=Recovered()),
                        Person(name='cavy5', initial_status=Recovered())]
         self.infected.update(self, 1)
-        self.infected.expiry_date = 0
+        self.infected.status.expiry_date = 0
         self.current_time = 1
         self.infected.update(self, 1)
         self.assertEqual(self.events, [{'person': self.infected, 'status': Recovered()}])
         self.events = []
-        self.infected.expiry_date = 0
+        self.infected.status.expiry_date = 0
         self.current_time = 0
         self.infected.update(self, 1)
         self.assertEqual(self.events, [{'person': self.infected, 'status': Recovered()}])
         self.events = []
-        self.infected.expiry_date = 1
+        self.infected.status.expiry_date = 1
         self.current_time = 0
         self.susceptible.update(self, 1)
         self.infected.update(self, 1)

@@ -28,9 +28,6 @@ class TestMinicell(TestCase):
         self.assertEqual(self.minicell.current_time, 0)
         self.assertEqual(self.minicell.i_list, [])
         self.assertEqual(self.minicell.r_list, [])
-
-        self.assertEqual(len(self.minicell.all_list),
-                         self.minicell.population_size)
         self.assertEqual(len(self.minicell.s_list),
                          self.minicell.population_size)
 

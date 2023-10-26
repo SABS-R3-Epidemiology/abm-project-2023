@@ -150,3 +150,4 @@ class Minicell:
             self.handle(event)
         self.events = []
         self.parent_record.update(parent_record)
+        

@@ -22,10 +22,10 @@ Overview:
 
 .. autoclass:: Status
     :members:
-    :show-inheritance:
 
 .. autoclass:: Susceptible
     :members:
+    :show-inheritance:
 
 .. autoclass:: Infected
     :members:

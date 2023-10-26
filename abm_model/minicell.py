@@ -1,43 +1,44 @@
 import os
-# REMOVE AFTER TESTING
-from .status import Susceptible, Infected
-# from status import Susceptible, Infected
 import pandas as pd
-from .person import Person
-# from person import Person
+from abm_model.status import Susceptible, Infected
+from abm_model.person import Person
 
 
 class Minicell:
     """
-    A box where all people are tracked:
-        parameters:
-            population_size: the number of people in the minicell
-            beta: the average number of contacts per person per time
-            recovery_period: average time into the infected status
-            initial: a dictionary that specify initial infected and recovered in the minicell
-            name: the name of the minicell
-            path: the path where datas are being saved
+    A box where all people are tracked.
 
+    Parameters:
+    ----------
 
-        attributes:
-            events: the list of transitions that has to be handled at the end of the time step (shall we call it queue?)
-            s_list: the list of susceptible people
-            i_list: the list of infectious people
-            r_list: the list of recovered people
-            all_list: a list containing people ordered by names
-            current_time: the current time of the simulation
-            name: the name of the minicell
-            path: the path where dats are stored
-        methods:
-            update(dt): changes the status of each pearson into the minicell coherently with the model
-                inputs: dt: the time lenght of the step to update
-                output: None
-            write_csv(path): upload the hystory on the file path.csv
-                inputs: path: the path of the file where the hystory is being transcribed
-                output: None
-            handle(event): update the evets that are to be handled at the end of the time step
-                inputs: event: the event to handle
-                output: None
+    population_size:
+        The size of the total population within the cell
+    beta:
+    recovery_period:
+        The number of time steps it takes for someone to go from the infected
+        class to the recovered class
+    initial:
+    name:
+        The name of the minicell
+    path:
+        The path where ... are stored
+
+    Attributes:
+    ----------
+
+    events:
+        The list of transitions that has to be handled at the end of the time step
+        (shall we call it queue?)
+    s_list:
+        The list of susceptible people
+    i_list:
+        The list of infectious people
+    r_list:
+        The list of recovered people
+    all_list:
+        A list containing people ordered by names
+    current_time:
+        The current time of the simulation
     """
     def __init__(self, I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1,
                  name: str = 'test', path: str = 'data', threshold: int = 5):
@@ -81,6 +82,7 @@ class Minicell:
         self.data = pd.DataFrame(columns=('Susceptible',
                                           'Infected',
                                           'Recovered'))
+        self.parent_record = {}
 
         # initializing each pearson in the minicell as susceptible
 
@@ -103,16 +105,28 @@ class Minicell:
     def handle(self, event):
 
         """
-        an event is a dictionary with keys:
+        Update the events that are to be handled at the end of the time step
+
+        An event is a dictionary with keys:
             'person': the target of the event
+
             'status': the new status specified
+
+        Parameters:
+        ----------
+
+        event:
+            The event to handle
+
         ACHTUNG0:
-            THIS MAY CAUSE COLLISIONS IF ONE PERSON IS INFECTED
-            WE SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
-            (e.g. with) event['person'].status.handle(event['status'])
-            WE SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
-            (e.g. with) cell.rising(event)
-            IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
+        --------
+
+        THIS MAY CAUSE COLLISIONS IF ONE PERSON IS INFECTED
+        WE SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
+        (e.g. with) event['person'].status.handle(event['status'])
+        WE SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
+        (e.g. with) cell.rising(event)
+        IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
         """
 
         statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Recovered': self.r_list}
@@ -120,17 +134,20 @@ class Minicell:
         event['person'].status = event['status']
         statuses[str(event['person'].status)].append(event['person'])
 
-        # ACHTUNG1: if self.all_list is modified, the .csv file will not be reliable
-        
     def update(self, dt: float = 1):
 
         self.current_time += dt
-        
-        # update each person's status, persons eventually raise events during this process
 
-        for some_list in [self.s_list, self.i_list, self.r_list]:
-            for subject in some_list:
-                subject.update(self, dt)
+        """
+        Changes the status of each pearson into the minicell coherently with the model
+        """
+
+        parent_record = {}
+        for subject in self.i_list:
+            child = subject.update(self, dt)
+            if child:
+                for child in child:
+                    parent_record[child] = [subject.name, self.current_time]
 
         # handle each event raised in the updating loop above
         # (e.g. with) cell.events.append({'person':target,'status':Infected})
@@ -139,6 +156,7 @@ class Minicell:
         for event in self.events:
             self.handle(event)
         self.events = []
+        self.parent_record.update(parent_record)
         self.data._set_value(index=self.current_time, col='Susceptible', value=len(self.s_list))
         self.data._set_value(index=self.current_time, col='Infected', value=len(self.i_list))
         self.data._set_value(index=self.current_time, col='Recovered', value=len(self.r_list))

@@ -1,3 +1,10 @@
+
+[![Operating systems](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/os_versions.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/os_versions.yml)
+
+[![Python package](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/python_versions.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/python_versions.yml)
+
+[![Style tests (flake8)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/style.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/style.yml)
+
 # Agent Based Model Mini-Project 2023
 
 This project consists of an SIR model for N indidivuals in a closed room. The simulation begins with I_0 individuals with Infected Status and updates discretely each time step.

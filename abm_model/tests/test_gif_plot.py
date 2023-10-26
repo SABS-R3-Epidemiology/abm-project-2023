@@ -42,7 +42,7 @@ class TestGifPlotter(unittest.TestCase):
         gif = gif_plotter(a)
         gif.points_manipulation()
         p = Point([0.1, 0.125])
-        p.data = abm_model.Person('0', abm_model.Infected(1, 1))
+        p.data = a.i_list[0]
         p.history = [None, 0]
         self.assertEqual(gif.point_list[0], p)
 

@@ -1,6 +1,6 @@
 import os
-from status import Susceptible
-from person import Person
+from abm_model.status import Susceptible
+from abm_model.person import Person
 
 
 class Minicell:

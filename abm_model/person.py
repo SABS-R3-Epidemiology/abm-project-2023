@@ -1,6 +1,6 @@
 import numpy as np
 
-from status import Susceptible, Infected, Recovered
+from abm_model.status import Susceptible, Infected, Recovered
 
 
 class Person:

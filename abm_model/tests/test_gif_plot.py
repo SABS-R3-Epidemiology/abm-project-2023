@@ -1,6 +1,8 @@
 import unittest
 from abm_model.gif_plot import Point, gif_plotter
 import abm_model
+from abm_model.status import Infected
+
 
 class TestPoint(unittest.TestCase):
 
@@ -12,13 +14,14 @@ class TestPoint(unittest.TestCase):
 
     def test_representation(self):
         a = Point([1, 2])
-        self.assertEqual(str(a), 'Point(position = [1, 2], data = None, history = None')
+        self.assertEqual(str(a), 'Point(position = [1, 2], data = None, history = None)')
 
     def test_error_cases(self):
         with self.assertRaises(TypeError):
             Point(['123', 2])
         with self.assertRaises(ValueError):
             Point([1])
+
 
 class TestGifPlotter(unittest.TestCase):
 
@@ -36,13 +39,14 @@ class TestGifPlotter(unittest.TestCase):
             gif_plotter('a')
 
     def test_points_manipulation(self):
-        a = abm_model.Minicell(population_size=1)
+        a = abm_model.Minicell(population_size=1, initial={0: Infected(1, 0, 5)})
         gif = gif_plotter(a)
         gif.points_manipulation()
         p = Point([0.1, 0.125])
         p.data = abm_model.Person('0', abm_model.Infected(1, 1))
         p.history = [None, 0]
         self.assertEqual(gif.point_list[0], p)
+
 
 if __name__ == "__main__":
     unittest.main()

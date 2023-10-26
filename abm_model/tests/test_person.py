@@ -20,9 +20,9 @@ class TestPerson(TestCase):
         """
         Test the initialisation function in person.py
         """
-        self.assertEqual(self.susceptible.name, 'L')
-        self.assertEqual(self.infected.name, 'M')
-        self.assertEqual(self.recovered.name, 'N')
+        self.assertEqual(self.susceptible.name, 'S')
+        self.assertEqual(self.infected.name, 'I')
+        self.assertEqual(self.recovered.name, 'R')
         self.assertEqual(self.susceptible.status, Susceptible())
         self.assertEqual(self.infected.status, Infected())
         self.assertEqual(self.recovered.status, Recovered())
@@ -34,9 +34,21 @@ class TestPerson(TestCase):
         """
         Test the '__eq__' function in person.py
         """
-        person1 = Person(name='ABC', initial_status='Susceptible')
-        person2 = Person(name='ABD', initial_status='Susceptible')
-        self.assertEqual(Person.__eq__(person1, person2), False)
+        self.assertFalse( self.susceptible == self.infected )
+        self.assertFalse( self.susceptible == self.recovered )
+        self.assertFalse( self.infected == self.recovered )
+        cavy_S, cavy_I, cavy_R = (Person(name='cavy', initial_staus=Susceptible()),
+                                  Person(name='cavy', initial_staus=Infected()),
+                                  Person(name='cavy', initial_staus=Recovered()) )
+        self.assertFalse( self.susceptible == cavy_S)
+        self.assertFalse( self.susceptible == cavy_I)
+        self.assertFalse( self.recovered == cavy_R)
+        self.assertEqual( self.susceptible, Person(name='S', initial_staus=self.susceptible.status))
+        self.assertEqual( self.infected, Person(name='I', initial_staus=self.infected.status))
+        self.assertEqual( self.recovered, Person(name='R', initial_staus=self.recovered.status))
+        self.assertRaises(Error('Two people shall not have the same name!'), cavy_S == cavy_I)
+        self.assertRaises(Error('Two people shall not have the same name!'), cavy_S == cavy_R)
+        self.assertRaises(Error('Two people shall not have the same name!'), cavy_I == cavy_R)
 
     def test_update(self):
         """

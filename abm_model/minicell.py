@@ -89,7 +89,7 @@ class Minicell:
         statuses = {'Susceptible': self.s_list,
                     'Infected': self.i_list,
                     'Recovered': self.r_list}
-        
+
         for name in range(population_size):
             if name in initial:
                 my_person = Person(str(name), initial[name])
@@ -162,7 +162,8 @@ class Minicell:
         self.data._set_value(index=self.current_time, col='Recovered', value=len(self.r_list))
 
 
-def run_minicell(I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1, name: str = 'test', path: str = 'data', threshold: int = 5, total_time: int = 10):
+def run_minicell(I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1,
+                 name: str = 'test', path: str = 'data', threshold: int = 5, total_time: int = 10):
 
     cell = Minicell(I0, population_size, beta, recovery_period, name, path, threshold)
 

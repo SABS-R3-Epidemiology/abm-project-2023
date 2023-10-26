@@ -6,6 +6,7 @@ from unittest import TestCase
 from minicell import Minicell
 from status import Infected
 
+
 class TestMinicell(TestCase):
 
     def setUp(self) -> None:

@@ -1,7 +1,6 @@
 import os
-
-from status import Susceptible
-from person import Person
+from abm_model.status import Susceptible
+from abm_model.person import Person
 
 
 class Minicell:
@@ -58,6 +57,7 @@ class Minicell:
         self.all_list = []
         self.name = name
         self.path = path
+        self.parent_record = {}
 
         # initializing each pearson in the minicell as susceptible
 
@@ -125,9 +125,12 @@ class Minicell:
         update each person's status, persons eventually raise events during this process
         """
 
-        for some_list in [self.s_list, self.i_list, self.r_list]:
-            for subject in some_list:
-                subject.update(self, dt)
+        parent_record = {}
+        for subject in self.i_list:
+            child = subject.update(self, dt)
+            if child:
+                for child in child:
+                    parent_record[child] = [subject.name, self.current_time]
 
         # handle each event raised in the updating loop above
         # (e.g. with) cell.events.append({'person':target,'status':Infected})
@@ -137,3 +140,5 @@ class Minicell:
             self.handle(event)
         self.events = []
         self.write_csv()
+        self.parent_record.update(parent_record)
+

@@ -101,7 +101,6 @@ class TestPerson(TestCase):
         self.assertEqual(self.infected.recovery_time, 1)
         self.assertEqual(self.infected.history, {'recovered': 1})
 
-
     @patch('builtins.print')
     def test_read_infection_history(self, mock_print):
         """

@@ -22,11 +22,7 @@ extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode', 'sphinx.ext.napoleon'
 
 # Autodoc defaults
 if int(sphinx.__version__.split('.')[1]) < 8:
-    autodoc_default_flags = [
-        'members',
-        'inherited-members',
-        # 'show-inheritance',
-    ]
+    autodoc_default_flags = ['members', 'inherited-members']
 else:
     autodoc_default_options = {
         'members': None,
@@ -39,7 +35,7 @@ master_doc = 'index'
 napoleon_use_ivar = True
 
 templates_path = ['_templates']
-exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = []
 
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output

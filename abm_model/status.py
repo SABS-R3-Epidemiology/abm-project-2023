@@ -4,7 +4,6 @@ import numpy as np
 class Status:
     """
     Parental class to group the following three status classes
-
     """
     pass
 
@@ -12,7 +11,6 @@ class Status:
 class Susceptible(Status):
     """
     This class indicates a susceptible status with suitable representation
-
     """
     def __repr__(self):
 
@@ -22,7 +20,6 @@ class Susceptible(Status):
 class Recovered(Status):
     """
     This class indicates a recovered status with suitable representation
-
     """
     def __repr__(self):
 
@@ -32,13 +29,13 @@ class Recovered(Status):
 class Infected(Status):
     """
     This class indicates a infected status with suitable representation
-    ------------
+
     Parameters:
+    ----------
 
     d(float, int): the average recovery period
     current_time(int): should be an input from the microcell indicating the current time.
     In order to calculate the recovery date
-
     """
     def __init__(self, recovery_period: float = 1, current_time: int = 0, threshold: float = 0):
 

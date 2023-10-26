@@ -117,8 +117,6 @@ class TestMinicell(TestCase):
         self.assertEqual(a.parent_record, {'1': ['0', 1]})
 
 
-
-
 if __name__ == '__main__':
 
     unittest.main()

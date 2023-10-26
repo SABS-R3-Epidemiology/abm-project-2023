@@ -7,30 +7,25 @@ from abm_model.status import Susceptible, Infected, Recovered
 class Person:
     """
     This class contains information for each agent.
-    --------------
-    Parameters:
 
-    name(str): a unique id/name for each agent
-    initial_status: a 'status' object indicating the initial status of the person
-    d(float, int, Optional): should be an input from the model,
-    indicating the average recovery period for initially infected people
+    Parameters:
+    ----------
+
+    name(str):
+        A unique id/name for each agent
+    initial_status:
+        A 'status' object indicating the initial status of the person
+    d(float, int, Optional):
+        Should be an input from the model,
+        indicating the average recovery period for initially infected people
 
     Attributes:
+    ----------
 
-    .name(str): same as above
-    .status(status object): use composition with status class, indicating the status for each person
-    .history(dic): a dictionary containing the date of infection and date of recovery
-
-    Methods:
-
-    .update(cell): triggers the change of status with an input of 'Minicell' object
-                   for originally susceptible people: pass
-                   for originally infected people: check whether it is the time to recover:
-                   if yes, recover by adding to '.events' to be handled by '.handle()';
-                   if no, generate list of susceptible people to be infected
-                   for originally recovered people: pass
-    .read_infection_history(): print out the date of infection and recovery(if exist) based on '.history' attribute
-
+    .status(status object):
+        Use composition with status class, indicating the status for each person
+    .history(dic):
+        A dictionary containing the date of infection and date of recovery
     """
     def __init__(self, name: str, initial_status):
 
@@ -48,6 +43,18 @@ class Person:
             return False
 
     def update(self, cell, dt):
+        """
+        Triggers the change of status with an input of 'Minicell' object
+
+        For originally susceptible people: pass
+
+        For originally infected people: check whether it is the time to recover:
+            If yes, recover by adding to '.events' to be handled by '.handle()'
+
+            If no, generate list of susceptible people to be infected
+
+        For originally recovered people: pass
+        """
 
         if str(self.status) == 'Susceptible':
             pass
@@ -71,6 +78,9 @@ class Person:
             pass
 
     def read_infection_history(self):
+        """
+        Print out the date of infection and recovery(if exist) based on '.history' attribute
+        """
 
         if len(self.history) == 0:
             print(self.name + " was not infected")

@@ -7,6 +7,21 @@ class Minicell:
     """
     A box where all people are tracked.
 
+    Parameters:
+    ----------
+
+    population_size:
+        The size of the total population within the cell
+    beta:
+    recovery_period:
+        The number of time steps it takes for someone to go from the infected
+        class to the recovered class
+    initial:
+    name:
+        The name of the minicell
+    path:
+        The path where ... are stored
+
     Attributes:
     ----------
 
@@ -23,10 +38,6 @@ class Minicell:
         A list containing people ordered by names
     current_time:
         The current time of the simulation
-    name:
-        The name of the minicell
-    path:
-        The path where dats are stored
     """
 
     def __init__(self, population_size: int = 100, beta: float = 0.01,
@@ -90,6 +101,7 @@ class Minicell:
 
         """
         Update the events that are to be handled at the end of the time step
+
         An event is a dictionary with keys:
             'person': the target of the event
 

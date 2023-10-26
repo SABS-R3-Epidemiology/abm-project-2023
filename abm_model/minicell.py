@@ -134,7 +134,7 @@ class Minicell:
         """
         Upload the hystory on the file path.csv
 
-        ACHTUNG1: 
+        ACHTUNG1:
         --------
 
         If self.all_list is modified, the .csv file will not be reliable

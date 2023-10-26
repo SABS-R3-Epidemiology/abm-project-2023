@@ -38,8 +38,8 @@ class TestPlot(TestCase):
             self.assertEqual(read_data[0][2], 'Infected')
             self.assertEqual(read_data[0][3], 'Recovered')
 
-    @patch('plot.plt')
-    def test_create_plot_legend(self, mock_plt):
+    # @patch('plot.plt')
+    # def test_create_plot_legend(self, mock_plt):
         # Plotter.plot_data(self.plot)
         # assert mock_plt.legend.called
         # mock_plt.xlabel.assert_called_once_with("Time step")

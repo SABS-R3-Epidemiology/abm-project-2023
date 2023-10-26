@@ -6,8 +6,9 @@ from abm_model.status import Susceptible, Infected, Recovered
 class Person:
     """
     This class contains information for each agent.
-    --------------
+    
     Parameters:
+    ----------
 
     name(str): a unique id/name for each agent
     initial_status: a 'status' object indicating the initial status of the person
@@ -15,12 +16,14 @@ class Person:
     indicating the average recovery period for initially infected people
 
     Attributes:
+    ----------
 
     .name(str): same as above
     .status(status object): use composition with status class, indicating the status for each person
     .history(dic): a dictionary containing the date of infection and date of recovery
 
     Methods:
+    -------
 
     .update(cell): triggers the change of status with an input of 'Minicell' object
                    for originally susceptible people: pass

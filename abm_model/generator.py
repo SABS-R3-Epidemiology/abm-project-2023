@@ -39,6 +39,8 @@ class Generator:
         """
         self.help_string = help_string
         self.argv = sys.argv[1:]
+        if "--unit" in self.argv:
+            self.argv.remove("--unit")
         self.short_flags = ["h"]
         self.long_flags = ["help"]
 

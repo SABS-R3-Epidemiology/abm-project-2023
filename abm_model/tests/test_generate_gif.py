@@ -112,12 +112,12 @@ class TestGenerateGif(TestCase):
         # at the end of the test
         self.generator.path = "test_path"
         self.generator.create_gif()
-        self.assertEqual(os.path.exists(self.generator.path + "/gif_files/"), True)
-        self.assertEqual(os.path.exists(self.generator.path + '/gif_files/' + self.generator.title + '.gif'), True)
+        self.assertEqual(os.path.exists(self.generator.path + "/gif_figure/"), True)
+        self.assertEqual(os.path.exists(self.generator.path + '/gif_figure/' + self.generator.title + '.gif'), True)
 
         # This checks the other part of the if statement (if the path already exists)
         self.generator.create_gif()
-        self.assertEqual(os.path.exists(self.generator.path + '/gif_files/' + self.generator.title + '.gif'), True)
+        self.assertEqual(os.path.exists(self.generator.path + '/gif_figure/' + self.generator.title + '.gif'), True)
         shutil.rmtree("test_path")
 
 

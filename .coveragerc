@@ -1,8 +1,3 @@
 [run]
 source = abm_model
-omit = 
-  abm_project-2023/abm_model/tests/test_minicell.py
-  abm_project-2023/abm_model/tests/test_person.py
-  abm_project-2023/abm_model/tests/test_plot.py
-  abm_project-2023/abm_model/tests/test_status.py
-  
+omit = abm_model/tests/*

@@ -103,7 +103,7 @@ class TestMinicell(TestCase):
         m.update(dt=1)
         m.update(dt=1)
         m.update(dt=1)
-        self.assertEqual(m.current_time, 1)
+        self.assertEqual(m.current_time, 3)
 
 
 if __name__ == '__main__':

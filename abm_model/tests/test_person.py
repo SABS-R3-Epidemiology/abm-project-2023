@@ -1,3 +1,4 @@
+from uu import Error
 import unittest
 from unittest import TestCase
 #from unittest import mock
@@ -5,35 +6,79 @@ from unittest.mock import patch
 
 #import abm_model as abmm
 from person import Person
+from status import Susceptible, Infected, Recovered
 #from status import Status, Susceptible, Infected, Recovered
 
 
 class TestPerson(TestCase):
 
     def setUp(self) -> None:
-        self.person = Person(name='AA', initial_status='Susceptible')
+        self.infected_status = Infected(threshold=3)
+        self.susceptible = Person(name='S', initial_status=Susceptible())
+        self.infected = Person(name='I', initial_status=self.infected_status)
+        self.recovered = Person(name='R', initial_status=Recovered())
 
     def test__init__(self):
         """
         Test the initialisation function in person.py
         """
-        self.person = Person(name='TAMYA', initial_status='Infected')
-        self.assertEqual(self.person.name, 'TAMYA')
-        self.assertEqual(self.person.status, 'Infected')
-        self.assertEqual(len(self.person.history), 0)
+        self.assertEqual(self.susceptible.name, 'S')
+        self.assertEqual(self.infected.name, 'I')
+        self.assertEqual(self.recovered.name, 'R')
+        self.assertEqual(self.susceptible.status, Susceptible())
+        self.assertEqual(self.infected.status, self.infected_status)
+        self.assertEqual(self.recovered.status, Recovered())
+        self.assertEqual(len(self.susceptible.history), 0)
+        self.assertEqual(len(self.infected.history), 0)
+        self.assertEqual(len(self.recovered.history), 0)
 
     def test__eq__(self):
         """
         Test the '__eq__' function in person.py
         """
-        person1 = Person(name='ABC', initial_status='Susceptible')
-        person2 = Person(name='ABD', initial_status='Susceptible')
-        self.assertEqual(Person.__eq__(person1, person2), False)
+        self.assertFalse(self.susceptible == self.infected)
+        self.assertFalse(self.susceptible == self.recovered)
+        self.assertFalse(self.infected == self.recovered)
+        cavy_S, cavy_I, cavy_R = (Person(name='cavy', initial_status=Susceptible()),
+                                  Person(name='cavy', initial_status=self.infected_status),
+                                  Person(name='cavy', initial_status=Recovered()))
+        self.assertFalse(self.susceptible == cavy_S)
+        self.assertFalse(self.susceptible == cavy_I)
+        self.assertFalse(self.recovered == cavy_R)
+        self.assertEqual(self.susceptible, Person(name='S', initial_status=Susceptible()))
+        self.assertEqual(self.infected, Person(name='I', initial_status=self.infected_status))
+        self.assertEqual(self.recovered, Person(name='R', initial_status=Recovered()))
+        with self.assertRaises(Error):
+            cavy_S == cavy_I
+        with self.assertRaises(Error):
+            cavy_S == cavy_R
+        with self.assertRaises(Error):
+            cavy_I == cavy_R
 
     def test_update(self):
         """
         Test the 'update' function in person.py
         """
+        self.recovery_period = 3
+        self.events = []
+        self.infected.status.expiry_date = 1
+        self.current_time = 0
+        self.s_list = [Person(name='cavy0', initial_status=Susceptible()),
+                       Person(name='cavy1', initial_status=Susceptible()),
+                       Person(name='cavy2', initial_status=Susceptible()),
+                       Person(name='cavy3', initial_status=Susceptible()),
+                       Person(name='cavy5', initial_status=Susceptible()),
+                       Person(name='cavy4', initial_status=Susceptible())]
+        self.beta = 1
+        self.infected.update(self, 0)
+        self.beta = 0
+        self.infected.update(self, 1)
+        self.assertEqual(self.events, [])
+        self.beta = 2
+        self.infected.update(self, 2)
+        for event in self.events:
+            assert event['person'] in self.s_list
+            self.assertEqual(str(event['status']), 'Infected')
 
     @patch('builtins.print')
     def test_read_infection_history(self, mock_print):

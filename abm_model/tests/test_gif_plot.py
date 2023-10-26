@@ -39,11 +39,12 @@ class TestGifPlotter(unittest.TestCase):
             gif_plotter('a')
 
     def test_points_manipulation(self):
-        a = abm_model.Minicell(population_size=1, initial={0: Infected(1, 0, 5)})
+        new_status = Infected(recovery_period=1, current_time=0, threshold=5)
+        a = abm_model.Minicell(population_size=1, initial={0: new_status})
         gif = gif_plotter(a)
         gif.points_manipulation()
         p = Point([0.1, 0.125])
-        p.data = abm_model.Person('0', abm_model.Infected(1, 1))
+        p.data = abm_model.Person('0', new_status)
         p.history = [None, 0]
         self.assertEqual(gif.point_list[0], p)
 

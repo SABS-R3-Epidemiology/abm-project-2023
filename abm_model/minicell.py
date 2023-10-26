@@ -67,7 +67,6 @@ class Minicell:
         self.s_list = []
         self.i_list = []
         self.r_list = []
-        self.all_list = []
         self.name = name
         self.path = path
         self.parent_record = {}
@@ -82,7 +81,6 @@ class Minicell:
             else:
                 my_person = Person(str(name), Susceptible())
                 self.s_list.append(my_person)
-            self.all_list.append(my_person)
 
         # initializing the .csv files
 
@@ -129,24 +127,6 @@ class Minicell:
         event['person'].status = event['status']
         statuses[str(event['person'].status)].append(event['person'])
 
-    def write_csv(self):
-
-        """
-        Upload the hystory on the file path.csv
-
-        ACHTUNG1:
-        --------
-
-        If self.all_list is modified, the .csv file will not be reliable
-        """
-
-        file = open(self.path + '/plot_data_' + self.name + '.csv', 'a')
-        file.write(str(self.current_time) + ',')
-        for some_list in [self.s_list, self.i_list, self.r_list]:
-            file.write(str(len(some_list)) + ',')
-        file.write('\n')
-        file.close()
-
     def update(self, dt: float = 1):
 
         self.current_time += dt
@@ -169,6 +149,4 @@ class Minicell:
         for event in self.events:
             self.handle(event)
         self.events = []
-        self.write_csv()
         self.parent_record.update(parent_record)
-

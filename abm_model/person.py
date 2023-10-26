@@ -1,7 +1,7 @@
 from uu import Error
 import numpy as np
 
-from status import Susceptible, Infected, Recovered
+from abm_model.status import Susceptible, Infected, Recovered
 
 
 class Person:
@@ -55,15 +55,18 @@ class Person:
             if cell.current_time == self.status.expiry_date:
                 self.history["recovered"] = cell.current_time
                 cell.events.append({"person": self, "status": Recovered()})
-
+                self.recovery_time = cell.current_time
             elif cell.s_list:
                 number_of_infections = np.random.poisson(min(cell.beta * dt * len(cell.s_list), self.status.threshold))
                 next_infections = np.random.choice(cell.s_list, size=number_of_infections)
+                child_record = []
                 for next_infection in next_infections:
                     cell.events.append({"person": next_infection,
                                         "status": Infected(cell.recovery_period, cell.current_time,
                                                            threshold=self.status.threshold)})
                     next_infection.history["infected"] = cell.current_time
+                    child_record.append(next_infection.name)
+                return child_record
         elif isinstance(self.status, Recovered):
             pass
 

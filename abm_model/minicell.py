@@ -1,9 +1,6 @@
 import os
 from abm_model.status import *
 from abm_model.person import *
-import matplotlib.pyplot as plt
-import networkx as nx
-from mpl_toolkits.mplot3d import Axes3D
 
 class Minicell():
 
@@ -136,8 +133,7 @@ class Minicell():
 			child = subject.update(self, dt)
 			if child != None:
 				for child in child:
-					parent_record[child] = subject.name
-		parent_record = {key: [value, self.current_time] for key, value in parent_record.items() if value is not None}
+					parent_record[child] = [subject.name, self.current_time]
 			
 
 		'''

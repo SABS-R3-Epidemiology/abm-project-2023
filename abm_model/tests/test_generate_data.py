@@ -3,6 +3,7 @@ from unittest import TestCase
 import os
 import sys
 from abm_model.generate_data import DataGenerator
+import shutil
 
 
 class TestGenerateData(TestCase):
@@ -27,7 +28,7 @@ class TestGenerateData(TestCase):
         self.assertEqual(self.generator.title, "test")
         self.assertEqual(self.generator.path, "data")
         self.assertEqual(self.generator.help_string, "Test text")
-        self.assertEqual(self.generator.dirname, os.path.dirname(os.path.realpath("../generator.py")))
+        self.assertEqual(self.generator.dirname, os.path.dirname(os.path.realpath("abm_model/generator.py")))
         self.assertEqual(self.generator.argv, sys.argv[1:])
         self.assertEqual(self.generator.short_flags, ["h", "N", "t", "b", "D", "I", "T", "p"])
         self.assertEqual(self.generator.long_flags, ["help", "population-size", "total-time", "beta", "recovery-period",
@@ -78,17 +79,44 @@ class TestGenerateData(TestCase):
         self.assertEqual(self.generator.title, "testing")
         self.assertEqual(self.generator.path, "test_dir")
 
+        # Again with named flags
+        self.generator.argv = ["--population-size", 5, "--total-time", 35, "--beta", 0.2,
+                               "--recovery-period", 5, "--initial-infected", 3, "--title", "testing_again",
+                               "--path", "test_dir_again"]
+        self.generator.update_parameters()
+        self.assertEqual(self.generator.population_size, 5)
+        self.assertEqual(self.generator.total_time, 35)
+        self.assertEqual(self.generator.beta, 0.2)
+        self.assertEqual(self.generator.recovery_period, 5)
+        self.assertEqual(self.generator.I_0, 3)
+        self.assertEqual(self.generator.title, "testing_again")
+        self.assertEqual(self.generator.path, "test_dir_again")
+
         # Checking all erroneous values raise errors
         self.generator.argv = ["-N", "hi"]
         self.assertRaises(SystemExit, self.generator.update_parameters)
-        self.generator.argv = ["-t", "hi"]
+        self.generator.argv = ["--total-time", "hi"]
         self.assertRaises(SystemExit, self.generator.update_parameters)
         self.generator.argv = ["-b", "hi"]
         self.assertRaises(SystemExit, self.generator.update_parameters)
         self.generator.argv = ["-D", "hi"]
         self.assertRaises(SystemExit, self.generator.update_parameters)
-        self.generator.argv = ["-I", "hi"]
+        self.generator.argv = ["--initial-infected", "hi"]
         self.assertRaises(SystemExit, self.generator.update_parameters)
+
+    def test_create_csv(self):
+
+        # Here we check that the path exists and the file is created. We will delete this path
+        # at the end of the test
+        self.generator.path = "test_path"
+        self.generator.create_csv()
+        self.assertEqual(os.path.exists(self.generator.path + "/csv_files/"), True)
+        self.assertEqual(os.path.exists(self.generator.path + '/csv_files/' + self.generator.title + '.csv'), True)
+
+        # This checks the other part of the if statement (if the path already exists)
+        self.generator.create_csv()
+        self.assertEqual(os.path.exists(self.generator.path + '/csv_files/' + self.generator.title + '.csv'), True)
+        shutil.rmtree("test_path")
 
 
 if __name__ == '__main__':

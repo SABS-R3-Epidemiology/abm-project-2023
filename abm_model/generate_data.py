@@ -27,7 +27,7 @@ class DataGenerator(Generator):
         if len(options) >= 1:
             for name, value in options:
                 if name in ['-h', '--help']:
-                    print(help_text)
+                    print(self.help_string)
                     sys.exit()
                 elif name in ['-N', '--population-size']:
                     try:
@@ -75,6 +75,7 @@ class DataGenerator(Generator):
         data_frame.to_csv(self.path + '/csv_files/' + self.title + '.csv')
 
 
+# The next few lines will be run by the command line
 help_text = """
 
 python abm_model/generate_data.py [--help] [--population-size=100] [--total-time=20]
@@ -89,7 +90,7 @@ python abm_model/generate_data.py [--help] [--population-size=100] [--total-time
 --initial-infected=1    -I      Initial number of infected individuals
 --title="test"          -T      Title attached to the output .csv file
 --path="data"           -p      Path to the directory containing the .csv file and the plots
-"""
-generator = DataGenerator(help_text)
-generator.update_parameters()
-generator.create_csv()
+"""  # pragma: no cover
+generator = DataGenerator(help_text)  # pragma: no cover
+generator.update_parameters()  # pragma: no cover
+generator.create_csv()  # pragma: no cover

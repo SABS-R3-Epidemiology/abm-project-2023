@@ -7,6 +7,21 @@ class Minicell:
     """
     A box where all people are tracked.
 
+    Parameters:
+    ----------
+
+    population_size:
+        The size of the total population within the cell
+    beta:
+    recovery_period:
+        The number of time steps it takes for someone to go from the infected
+        class to the recovered class
+    initial:
+    name:
+        The name of the minicell
+    path:
+        The path where ... are stored
+
     Attributes:
     ----------
 
@@ -23,26 +38,6 @@ class Minicell:
         A list containing people ordered by names
     current_time:
         The current time of the simulation
-    name:
-        The name of the minicell
-    path:
-        The path where dats are stored
-
-    Methods:
-    -------
-
-    update(dt):
-        Changes the status of each pearson into the minicell coherently with the model
-        inputs: dt: the time lenght of the step to update
-        output: None
-    write_csv(path):
-        Upload the hystory on the file path.csv
-        inputs: path: the path of the file where the hystory is being transcribed
-        output: None
-    handle(event):
-        Update the evets that are to be handled at the end of the time step
-        inputs: event: the event to handle
-        output: None
     """
 
     def __init__(self, population_size: int = 100, beta: float = 0.01,
@@ -105,16 +100,28 @@ class Minicell:
     def handle(self, event):
 
         """
-        an event is a dictionary with keys:
+        Update the events that are to be handled at the end of the time step
+
+        An event is a dictionary with keys:
             'person': the target of the event
+
             'status': the new status specified
+
+        Parameters:
+        ----------
+
+        event:
+            The event to handle
+
         ACHTUNG0:
-            THIS MAY CAUSE COLLISIONS IF ONE PERSON IS INFECTED
-            WE SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
-            (e.g. with) event['person'].status.handle(event['status'])
-            WE SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
-            (e.g. with) cell.rising(event)
-            IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
+        --------
+
+        THIS MAY CAUSE COLLISIONS IF ONE PERSON IS INFECTED
+        WE SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
+        (e.g. with) event['person'].status.handle(event['status'])
+        WE SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
+        (e.g. with) cell.rising(event)
+        IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
         """
 
         statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Recovered': self.r_list}
@@ -125,7 +132,12 @@ class Minicell:
     def write_csv(self):
 
         """
-        ACHTUNG1: if self.all_list is modified, the .csv file will not be reliable
+        Upload the hystory on the file path.csv
+
+        ACHTUNG1:
+        --------
+
+        If self.all_list is modified, the .csv file will not be reliable
         """
 
         file = open(self.path + '/plot_data_' + self.name + '.csv', 'a')
@@ -140,7 +152,7 @@ class Minicell:
         self.current_time += dt
 
         """
-        update each person's status, persons eventually raise events during this process
+        Changes the status of each pearson into the minicell coherently with the model
         """
 
         parent_record = {}

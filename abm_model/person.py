@@ -21,25 +21,10 @@ class Person:
     Attributes:
     ----------
 
-    .name(str):
-        Same as above
     .status(status object):
         Use composition with status class, indicating the status for each person
     .history(dic):
         A dictionary containing the date of infection and date of recovery
-
-    Methods:
-    -------
-
-    .update(cell):
-        Triggers the change of status with an input of 'Minicell' object
-        for originally susceptible people: pass
-        for originally infected people: check whether it is the time to recover:
-        if yes, recover by adding to '.events' to be handled by '.handle()';
-        if no, generate list of susceptible people to be infected
-        for originally recovered people: pass
-    .read_infection_history():
-        Print out the date of infection and recovery(if exist) based on '.history' attribute
     """
     def __init__(self, name: str, initial_status):
 
@@ -51,6 +36,18 @@ class Person:
         return self.name == other.name
 
     def update(self, cell, dt):
+        """
+        Triggers the change of status with an input of 'Minicell' object
+
+        For originally susceptible people: pass
+
+        For originally infected people: check whether it is the time to recover:
+            If yes, recover by adding to '.events' to be handled by '.handle()'
+
+            If no, generate list of susceptible people to be infected
+
+        For originally recovered people: pass
+        """
 
         if isinstance(self.status, Susceptible):
             pass
@@ -74,6 +71,9 @@ class Person:
             pass
 
     def read_infection_history(self):
+        """
+        Print out the date of infection and recovery(if exist) based on '.history' attribute
+        """
 
         if len(self.history) == 0:
             print(self.name + " was not infected")

@@ -9,6 +9,9 @@ Overview:
 - :class:`Minicell`
 - :class:`Person`
 - :class:`Status`
+- :class:`Susceptible`
+- :class:`Infected`
+- :class:`Recovered`
 
 
 .. autoclass:: Minicell
@@ -18,4 +21,13 @@ Overview:
     :members:
 
 .. autoclass:: Status
+    :members:
+
+.. autoclass:: Susceptible
+    :members:
+
+.. autoclass:: Infected
+    :members:
+
+.. autoclass:: Recovered
     :members:

@@ -9,6 +9,11 @@ class Generator:
         """
 
         :param help_string: The text that will be outputted if "--help" is entered
+        Parameters:
+        ----------
+
+        help_string:
+            The text that will be outputted if "--help" is entered
         """
         self.help_string = help_string
         # This will be called by the testing machine on GitHub which will not share
@@ -23,7 +28,10 @@ class Generator:
     def get_options(self) -> list[tuple[str, str]]:
         """This uses the `getopt` module to parse command line options entered by the user
 
-        :return: A list of tuples containing the flag and value that the user has entered
+        Return:
+        ------
+
+        A list of tuples containing the flag and value that the user has entered
         """
         try:
             short_flags_string = self.short_flags[0]
@@ -38,9 +46,8 @@ class Generator:
             sys.exit()
 
     def update_parameters(self):
-        """This method is not implemented here!!
-
-        :return:
+        """
+        Raises an error when called
         """
         raise NotImplementedError("Must call from a subclass")
 

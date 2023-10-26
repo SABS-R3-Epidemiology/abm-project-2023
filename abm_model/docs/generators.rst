@@ -13,6 +13,7 @@ Overview:
 
 .. autoclass:: Generator
     :members:
+    :special-members: __init__
 
 .. autoclass:: PlotGenerator
     :members:

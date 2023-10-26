@@ -15,7 +15,7 @@ class TestPerson(TestCase):
         self.susceptible = Person(name='L', initial_status=Susceptible())
         self.infected = Person(name='M', initial_status=Infected())
         self.recovered = Person(name='N', initial_status=Recovered())
-        
+
     def test__init__(self):
         """
         Test the initialisation function in person.py

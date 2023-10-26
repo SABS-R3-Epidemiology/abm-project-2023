@@ -16,12 +16,12 @@ class TestPlot(TestCase):
 
     def test__init__(self):
         self.plot = Plotter(csv_file_name='plot_data_test.csv')
-        self.assertEqual(self.plot.csv_file_name, 'title')
+        self.assertEqual(self.plot.csv_file_name, "plot_data_test.csv")
 
     def test_plot_data(self):
         with patch('builtins.open', new_callable=mock_open, read_data=self.data) as mock_file:
             self.plot = Plotter(csv_file_name='plot_data_test.csv')
-            read_data = open("data/plot_data_" + self.plot.csv_file_name + ".csv").read()
+            read_data = open("data/" + self.plot.csv_file_name).read()
             assert read_data == self.data
             # print(read_data)
             mock_file.assert_called_with("data/plot_data_title.csv")

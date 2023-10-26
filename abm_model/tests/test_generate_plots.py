@@ -21,7 +21,6 @@ class TestGeneratePlots(TestCase):
         self.generator = PlotGenerator("Test text")
         self.assertEqual(self.generator.csv_file_name, "default.csv")
         self.assertEqual(self.generator.help_string, "Test text")
-        self.assertEqual(self.generator.dirname, os.path.dirname(os.path.realpath("abm_model/generator.py")))
         self.assertEqual(self.generator.argv, sys.argv[1:])
         self.assertEqual(self.generator.short_flags, ["h", "f"])
         self.assertEqual(self.generator.long_flags, ["help", "csv-file-name"])

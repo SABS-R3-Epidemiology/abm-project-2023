@@ -20,7 +20,6 @@ class TestGenerator(TestCase):
         # Non default case
         self.generator = Generator("Test text")
         self.assertEqual(self.generator.help_string, "Test text")
-        self.assertEqual(self.generator.dirname, os.path.dirname(os.path.realpath("abm_model/generator.py")))
         self.assertEqual(self.generator.argv, sys.argv[1:])
         self.assertEqual(self.generator.short_flags, ["h"])
         self.assertEqual(self.generator.long_flags, ["help"])

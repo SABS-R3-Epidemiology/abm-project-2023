@@ -43,6 +43,7 @@ class TestGifPlotter(unittest.TestCase):
         gif.points_manipulation()
         p = Point([0.1, 0.125])
         p.data = a.i_list[0]
+
         p.history = [None, 0]
         self.assertEqual(gif.point_list[0], p)
 

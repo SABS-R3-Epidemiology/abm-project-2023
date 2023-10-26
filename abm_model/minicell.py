@@ -76,7 +76,6 @@ class Minicell:
         self.s_list = []
         self.i_list = []
         self.r_list = []
-        self.all_list = []
         self.name = name
         self.path = path
         self.data = pd.DataFrame(columns=('Susceptible',
@@ -97,6 +96,8 @@ class Minicell:
             else:
                 my_person = Person(str(name), Susceptible())
                 self.s_list.append(my_person)
+
+        # initializing the .csv files
 
         self.data._set_value(index=self.current_time, col='Susceptible', value=len(self.s_list))
         self.data._set_value(index=self.current_time, col='Infected', value=len(self.i_list))

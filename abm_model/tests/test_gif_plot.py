@@ -1,7 +1,6 @@
 import unittest
 from abm_model.gif_plot import Point, gif_plotter
 import abm_model
-from abm_model.status import Infected
 
 
 class TestPoint(unittest.TestCase):

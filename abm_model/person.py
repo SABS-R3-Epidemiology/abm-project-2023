@@ -1,3 +1,4 @@
+from uu import Error
 import numpy as np
 
 from status import Susceptible, Infected, Recovered
@@ -38,7 +39,10 @@ class Person:
         self.status = initial_status
 
     def __eq__(self, other):
-        return self.name == other.name
+        if self.name == other.name:
+            if self.status == other.status: return True
+            else: raise Error('Two people shall not have the same name!')
+        else: return False
 
     def update(self, cell, dt):
 

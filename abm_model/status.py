@@ -18,9 +18,9 @@ class Susceptible(Status):
 
         return "Susceptible"
     
-    def __eq__(self, __value: object):
+    def __eq__(self, other: Status):
 
-        return str(object) == "Susceptible"
+        return str(other) == "Susceptible"
 
 
 class Recovered(Status):
@@ -32,9 +32,9 @@ class Recovered(Status):
 
         return "Recovered"
 
-    def __eq__(self, __value: object):
+    def __eq__(self, other: Status):
 
-        return str(object) == "Recovered"
+        return str(other) == "Recovered"
 
 class Infected(Status):
     """

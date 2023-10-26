@@ -49,9 +49,9 @@ class Person:
 
     def update(self, cell, dt):
 
-        if isinstance(self.status, Susceptible):
+        if str(self.status) == 'Susceptible':
             pass
-        elif isinstance(self.status, Infected):
+        elif str(self.status) == 'Infected':
             if cell.current_time == self.status.expiry_date:
                 self.history["recovered"] = cell.current_time
                 cell.events.append({"person": self, "status": Recovered()})
@@ -67,7 +67,7 @@ class Person:
                     next_infection.history["infected"] = cell.current_time
                     child_record.append(next_infection.name)
                 return child_record
-        elif isinstance(self.status, Recovered):
+        elif str(self.status) == 'Recovered':
             pass
 
     def read_infection_history(self):

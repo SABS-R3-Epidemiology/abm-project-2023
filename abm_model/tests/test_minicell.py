@@ -38,11 +38,17 @@ class TestMinicell(TestCase):
         # [person.id for person in all_list]
         # check if there are any duplicates in this list
 
-        person_ids = [p.name for p in self.minicell.s_list] + [p.name for p in self.minicell.i_list] + [p.name for p in self.minicell.r_list]
+        s_person_ids = [p.name for p in self.minicell.s_list]
+        i_person_ids = [p.name for p in self.minicell.i_list]
+        r_person_ids = [p.name for p in self.minicell.r_list]
+        person_ids = s_person_ids + i_person_ids + r_person_ids
         self.assertEqual(len(person_ids), len(set(person_ids)))
 
         # Check that all people in all_list are susceptible
-        person_statuses = [p.status for p in self.minicell.s_list] + [p.status for p in self.minicell.i_list] + [p.status for p in self.minicell.r_list]
+        s_person_statuses = [p.status for p in self.minicell.s_list]
+        i_person_statuses = [p.status for p in self.minicell.i_list]
+        r_person_statuses = [p.status for p in self.minicell.r_list]
+        person_statuses = s_person_statuses + i_person_statuses + r_person_statuses
         self.assertEqual(all(str(x) == 'Susceptible' for x in person_statuses), True)
 
     def test_handle(self):

@@ -40,7 +40,7 @@ class TestPlot(TestCase):
 
     @patch('plot.plt')
     def test_create_plot_legend(self, mock_plt):
-        self.plot.plot_data()
+        Plotter.plot_data(self.plot)
         assert mock_plt.legend.called
         mock_plt.xlabel.assert_called_once_with("Time step")
         mock_plt.ylabel.assert_called_once_with("Number of individuals")

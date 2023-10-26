@@ -15,7 +15,6 @@ Overview:
 .. autoclass:: Generator
     :members:
     :special-members: __init__
-    :show-inheritance:
 
 .. autoclass:: PlotGenerator
     :members:

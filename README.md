@@ -69,7 +69,7 @@ Here is a table of commands for generate_plots.py:
 
 ## Running Tests
 
-Within the abm-project-2023 directory, run the following command to run tests
+Within the abm-project-2023/abm_model directory, run the following command to run tests
 
 	python -m unittest tests/test_status.py
 

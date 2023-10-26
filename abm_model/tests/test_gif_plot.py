@@ -39,7 +39,7 @@ class TestGifPlotter(unittest.TestCase):
             gif_plotter('a')
 
     def test_points_manipulation(self):
-        a = abm_model.Minicell(I0=1, population_size=1)
+        a = abm_model.Minicell(population_size=1, initial={0: Infected(1, 0, 5)})
         gif = gif_plotter(a)
         gif.points_manipulation()
         p = Point([0.1, 0.125])

@@ -24,7 +24,7 @@ class TestPlot(TestCase):
             read_data = open("data/" + self.plot.csv_file_name).read()
             assert read_data == self.data
             # print(read_data)
-            mock_file.assert_called_with("data/plot_data_title.csv")
+            mock_file.assert_called_with("data/plot_data_test.csv")
 
             rows = read_data.splitlines()
             reader = csv.reader(rows, delimiter=',')
@@ -40,7 +40,7 @@ class TestPlot(TestCase):
 
     @patch('plot.plt')
     def test_create_plot_legend(self, mock_plt):
-        self.plot.create_plot_legend()
+        self.plot.plot_data()
         assert mock_plt.legend.called
         mock_plt.xlabel.assert_called_once_with("Time step")
         mock_plt.ylabel.assert_called_once_with("Number of individuals")

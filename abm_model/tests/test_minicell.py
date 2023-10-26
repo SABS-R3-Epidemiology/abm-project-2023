@@ -41,8 +41,6 @@ class TestMinicell(TestCase):
         self.assertEqual(len(self.minicell.s_list),
                          self.minicell.population_size - 1)
 
-        # Test that there are 0 people in i_list and r_list
-
         # Test that there are no duplicates in the person id.
         # Use list comprehensions to generate list of person ids from all_list
         # [person.id for person in all_list]
@@ -54,12 +52,13 @@ class TestMinicell(TestCase):
         person_ids = s_person_ids + i_person_ids + r_person_ids
         self.assertEqual(len(person_ids), len(set(person_ids)))
 
-        # Check that all people in all_list are susceptible
+        # Check that all people in all_list are susceptible except for one
         s_person_statuses = [p.status for p in self.minicell.s_list]
         i_person_statuses = [p.status for p in self.minicell.i_list]
         r_person_statuses = [p.status for p in self.minicell.r_list]
-        person_statuses = s_person_statuses + i_person_statuses + r_person_statuses
-        self.assertEqual(all(str(x) == 'Susceptible' for x in person_statuses), True)
+        s_r_statuses = s_person_statuses + r_person_statuses
+        self.assertEqual(len(i_person_statuses), 1)
+        self.assertEqual(all(str(x) == 'Susceptible' for x in s_r_statuses), True)
 
     def test_handle(self):
         """

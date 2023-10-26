@@ -33,15 +33,21 @@ class Minicell:
 
     update(dt):
         Changes the status of each pearson into the minicell coherently with the model
+
         inputs: dt: the time lenght of the step to update
+
         output: None
     write_csv(path):
         Upload the hystory on the file path.csv
+
         inputs: path: the path of the file where the hystory is being transcribed
+
         output: None
     handle(event):
         Update the evets that are to be handled at the end of the time step
+
         inputs: event: the event to handle
+
         output: None
     """
 

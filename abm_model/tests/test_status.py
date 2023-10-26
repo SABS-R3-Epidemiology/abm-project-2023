@@ -2,7 +2,7 @@ import numpy as np
 import unittest
 from unittest import TestCase
 
-from status import Susceptible, Infected
+from abm_model.status import Susceptible, Infected
 
 
 class TestSusceptible(TestCase):

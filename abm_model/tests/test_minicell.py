@@ -2,7 +2,7 @@ import unittest
 from unittest import TestCase
 
 #import abm_model as abmm
-from minicell import Minicell
+from abm_model.minicell import Minicell
 
 
 class TestMinicell(TestCase):

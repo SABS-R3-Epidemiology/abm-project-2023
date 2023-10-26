@@ -1,12 +1,12 @@
 import sys
 import os
-from minicell import run_minicell
-from generator import Generator
+from abm_model.minicell import run_minicell
+from abm_model.generator import Generator
 
 
 class DataGenerator(Generator):
 
-    def __init__(self, help_string: str):
+    def __init__(self, help_string: str = ""):
         super().__init__(help_string)
 
         # The default values
@@ -40,6 +40,7 @@ class DataGenerator(Generator):
                         self.total_time = int(value)
                     except ValueError:
                         print("Error: total time should be an int")
+                        sys.exit()
                 elif name in ['-b', '--beta']:
                     try:
                         self.beta = float(value)

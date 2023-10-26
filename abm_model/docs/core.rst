@@ -22,6 +22,7 @@ Overview:
 
 .. autoclass:: Status
     :members:
+    :show-inheritance:
 
 .. autoclass:: Susceptible
     :members:

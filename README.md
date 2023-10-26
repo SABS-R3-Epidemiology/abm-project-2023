@@ -1,9 +1,10 @@
-
 [![Operating systems](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/os_versions.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/os_versions.yml)
 
 [![Python package](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/python_versions.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/python_versions.yml)
 
 [![Style tests (flake8)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/style.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/style.yml)
+
+[![Documentation Status](https://readthedocs.org/projects/abm-project-2023/badge/?version=latest)](https://abm-project-2023.readthedocs.io/en/latest/?badge=latest)
 
 # Agent Based Model Mini-Project 2023
 

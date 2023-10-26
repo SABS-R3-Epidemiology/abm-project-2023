@@ -6,15 +6,22 @@
 Welcome to ABM project's documentation!
 =======================================
 
+This is a python backend for the abm-project-2023 package.
+
+
+Contents
+========
+
+.. module:: abm_model
+
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+
+    core
 
 
 
-Indices and tables
-==================
+Search
+======
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

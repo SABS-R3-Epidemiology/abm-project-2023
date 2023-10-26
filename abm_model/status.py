@@ -13,7 +13,9 @@ class Susceptible(Status):
     This class indicates a susceptible status with suitable representation
     """
     def __repr__(self):
-
+        """
+        Returns a string representation of the current class
+        """
         return "Susceptible"
 
 
@@ -22,7 +24,9 @@ class Recovered(Status):
     This class indicates a recovered status with suitable representation
     """
     def __repr__(self):
-
+        """
+        Returns a string representation of the current class
+        """
         return "Recovered"
 
 
@@ -51,6 +55,8 @@ class Infected(Status):
         self.threshold = threshold
 
     def __repr__(self):
-
+        """
+        Returns a string representation of the current class
+        """
         return "Infected"
 

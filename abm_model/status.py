@@ -33,9 +33,9 @@ class Infected(Status):
     Parameters:
     ----------
 
-    recovery_period(float):
+    recovery_period:
         The average recovery period
-    current_time(int):
+    current_time:
         An input from the microcell indicating the current time which is then used
         to calculate the recovery date
     """

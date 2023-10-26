@@ -4,7 +4,6 @@ from unittest import TestCase
 
 #import abm_model as abmm
 from abm_model.minicell import Minicell
-from abm_model.status import Infected
 
 
 class TestMinicell(TestCase):

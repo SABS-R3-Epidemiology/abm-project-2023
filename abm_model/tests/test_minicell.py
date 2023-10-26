@@ -98,8 +98,10 @@ class TestMinicell(TestCase):
         Test the 'update' function in minicell.py
         """
 
-        m = Minicell(initial={'0': Infected()})
+        m = Minicell(initial={0: Infected()})
         self.assertEqual(self.minicell.current_time, 0)
+        m.update(dt=1)
+        m.update(dt=1)
         m.update(dt=1)
         self.assertEqual(m.current_time, 1)
 

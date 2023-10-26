@@ -39,9 +39,6 @@ class TestMinicell(TestCase):
         self.assertEqual(len(self.minicell.i_list), 1)
         self.assertEqual(self.minicell.r_list, [])
 
-        self.assertEqual(len(self.minicell.all_list),
-                         0)
-
         self.assertEqual(len(self.minicell.s_list),
                          self.minicell.population_size - 1)
 
@@ -75,7 +72,6 @@ class TestMinicell(TestCase):
         self.assertEqual(len(self.minicell.i_list), 2)
         self.assertEqual(len(self.minicell.s_list),
                          self.minicell.population_size - 2)
-        self.assertEqual(len(self.minicell.all_list), 0)
 
         self.assertEqual(len(self.minicell.r_list), 0)
         # Check that we can move people between lists
@@ -104,7 +100,7 @@ class TestMinicell(TestCase):
         Test the 'update' function in minicell.py
         """
 
-        m = Minicell(initial={0: Infected()})
+        m = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
         m.update(dt=1)
         m.update(dt=1)

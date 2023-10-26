@@ -5,8 +5,56 @@ from abm_model.generator import Generator
 
 
 class DataGenerator(Generator):
+    """
+    This class inherits from Generator, and is run by the user from a command line terminal to
+    generate data for the given parameters and will write to a .csv file.
+
+    Parameters:
+    ----------
+
+    help_string:
+        The text to be outputted to the user if "-h" or "--help" flags are appended
+
+    Arguments:
+    ----------
+    argv:
+        The list of all arguments that the user enters as flags. E.g. if the user has specified
+        the help flag then argv = ["-h"] or ["--help"]. Note that this is inherited from the base
+        class.
+    short_flags:
+        The list of short flags that the user can enter, without the "-". The acceptable options are
+        "h", "N", "t", "b", "D", "I", "T" and "p".
+    long_flags:
+        The list of long flags that the user can enter, without the "--". The acceptable options are
+        "help", "population-size", "total-time", "beta", "recovery-period", "initial-infected", "title"
+        and "path".
+    population_size:
+        This is the total number of individuals for the simulation.
+    total_time:
+        This is the number of time steps (hours) that the simulation will run for.
+    beta:
+        This is the effective contact rate of the disease.
+    recovery_period:
+        This is the average number of days (passed to a Poisson random variable) that an infected
+        individual stays infected for.
+    I_0:
+        This is the number of individuals infected at the beginning of the simulation.
+    title:
+        This is the title of the .csv file. However, this will normally default to a title
+        involving population_size and I_0.
+    path:
+        This is the path in which the .csv file will be stored. This will normally default
+        to abm-project-2023/data/csv_files.
+    """
 
     def __init__(self, help_string: str = ""):
+        """
+
+        Parameters:
+        ----------
+        help_string:
+            The text to be outputted to the user if "-h" or "--help" flags are appended
+        """
         super().__init__(help_string)
 
         # The default values
@@ -22,6 +70,15 @@ class DataGenerator(Generator):
                             "initial-infected", "title", "path"]
 
     def update_parameters(self):
+        """
+        This method searches through the user inputted flags from options and will
+        print out the help_string if "-h" or "--help" is entered. Otherwise, it will
+        use the user inputted flags and values to replace the defaults.
+
+        Return:
+        ----------
+        None
+        """
         options = self.get_options()
 
         if len(options) >= 1:
@@ -65,6 +122,14 @@ class DataGenerator(Generator):
                     self.path = value
 
     def create_csv(self):
+        """
+        This method takes all the provided parameters to invoke the run_minicell method from minicell. This
+        method produces a pandas data_frame, which can then be converted into a .csv file as described
+        in the method.
+        Return:
+        ----------
+        None
+        """
 
         data_frame = run_minicell(I0=self.I_0, population_size=self.population_size, total_time=self.total_time,
                                   beta=self.beta, recovery_period=self.recovery_period, name=self.title, path=self.path)

@@ -5,7 +5,7 @@ import getopt
 
 class Generator:
 
-    def __init__(self, help_string: str):
+    def __init__(self, help_string: str = ""):
         """
 
         :param help_string: The text that will be outputted if "--help" is entered

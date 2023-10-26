@@ -1,6 +1,8 @@
 import numpy as np
 
-from status import Susceptible, Infected, Recovered
+# REMOVE AFTER TESTING
+from .status import Susceptible, Infected, Recovered
+# from status import Susceptible, Infected, Recovered
 
 
 class Person:

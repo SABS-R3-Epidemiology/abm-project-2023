@@ -1,7 +1,10 @@
 import os
-from status import Susceptible, Infected
+# REMOVE AFTER TESTING
+from .status import Susceptible, Infected
+# from status import Susceptible, Infected
 import pandas as pd
-from person import Person
+from .person import Person
+# from person import Person
 
 
 class Minicell:

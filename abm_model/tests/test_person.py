@@ -59,6 +59,7 @@ class TestPerson(TestCase):
         """
         Test the 'update' function in person.py
         """
+        self.recovery_period = 3
         self.events = []
         self.infected.status.expiry_date = 1
         self.current_time = 0

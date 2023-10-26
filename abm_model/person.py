@@ -40,9 +40,12 @@ class Person:
 
     def __eq__(self, other):
         if self.name == other.name:
-            if self.status == other.status: return True
-            else: raise Error('Two people shall not have the same name!')
-        else: return False
+            if self.status == other.status:
+                return True
+            else:
+                raise Error('Two people shall not have the same name!')
+        else:
+            return False
 
     def update(self, cell, dt):
 

@@ -17,7 +17,7 @@ class Susceptible(Status):
     def __repr__(self):
 
         return "Susceptible"
-    
+
     def __eq__(self, other: Status):
 
         return str(other) == "Susceptible"
@@ -35,6 +35,7 @@ class Recovered(Status):
     def __eq__(self, other: Status):
 
         return str(other) == "Recovered"
+
 
 class Infected(Status):
     """
@@ -61,12 +62,16 @@ class Infected(Status):
     def __repr__(self):
 
         return "Infected"
-    
+
     def __eq__(self, other: Status):
 
-        if str(other) != "Infected": return False
-        elif other.threshold != self.threshold: return False
-        elif other.expiry_date != self.expiry_date: return False
-        else: return str(other) == "Infected"
+        if str(other) != "Infected":
+            return False
+        elif other.threshold != self.threshold:
+            return False
+        elif other.expiry_date != self.expiry_date:
+            return False
+        else:
+            return str(other) == "Infected"
 
 

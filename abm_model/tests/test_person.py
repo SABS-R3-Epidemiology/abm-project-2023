@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 #import abm_model as abmm
 from person import Person
-from status import *
+from status import Susceptible, Infected, Recovered
 #from status import Status, Susceptible, Infected, Recovered
 
 
@@ -76,7 +76,7 @@ class TestPerson(TestCase):
         self.susceptible.update(self, 1)
         self.infected.update(self, 1)
         self.recovered.update(self, 1)
-        self.assertEqual(self.events, [{ 'person': self.infected, 'status': Recovered() }])
+        self.assertEqual(self.events, [{'person': self.infected, 'status': Recovered()}])
 
     @patch('builtins.print')
     def test_read_infection_history(self, mock_print):

@@ -65,7 +65,7 @@ setup(
         # Dependencies go here!
         'numpy',
         'matplotlib',
-	'pandas',
+        'pandas',
         'scipy',
     ],
     extras_require={

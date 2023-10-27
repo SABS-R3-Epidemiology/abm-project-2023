@@ -25,9 +25,15 @@ Overview:
 
 .. autoclass:: Susceptible
     :members:
+    :show-inheritance:
+    :special-members: __repr__
 
 .. autoclass:: Infected
     :members:
+    :show-inheritance:
+    :special-members: __repr__
 
 .. autoclass:: Recovered
     :members:
+    :show-inheritance:
+    :special-members: __repr__

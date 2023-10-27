@@ -5,9 +5,9 @@ from unittest import TestCase
 from unittest.mock import patch
 
 #import abm_model as abmm
-from abm_model.person import Person
-from abm_model.status import Susceptible, Infected, Recovered
-
+from person import Person
+from status import Susceptible, Infected, Recovered
+import copy
 #from status import Status, Susceptible, Infected, Recovered
 
 
@@ -81,24 +81,52 @@ class TestPerson(TestCase):
             assert event['person'] in self.s_list
             self.assertEqual(str(event['status']), 'Infected')
 
+        a = Person(name='0', initial_status=Susceptible())
+        a_dup = copy.deepcopy(a)
+        a.update(self, 1)
+        self.assertEqual(a, a_dup)
+
+        a = Person(name='0', initial_status=Recovered())
+        a_dup = copy.deepcopy(a)
+        a.update(self, 1)
+        self.assertEqual(a, a_dup)
+
+        self.current_time = 1
+        self.infected_status = Infected(threshold=3)
+        self.infected = Person(name='I', initial_status=self.infected_status)
+        self.infected.status.expiry_date = 1
+        self.events = []
+        self.infected.update(self, 1)
+        self.assertEqual(self.events, [{"person": self.infected, "status": Recovered()}])
+        self.assertEqual(self.infected.recovery_time, 1)
+        self.assertEqual(self.infected.history, {'recovered': 1})
+
     @patch('builtins.print')
     def test_read_infection_history(self, mock_print):
         """
         Test the 'read_infection_history' function in person.py
         """
-        self.person = Person(name='AT', initial_status='Infected')
+        self.person = Person(name='AT', initial_status=Susceptible())
         self.person.read_infection_history()
 
         mock_print.assert_called_with('AT was not infected')
+
+        self.person = Person(name='AT', initial_status=Infected())
+        self.person.read_infection_history()
+
+        mock_print.assert_called_with('AT was infected at the beginning')
+
+        self.person.history = {'infected': 3}
+        self.person.read_infection_history()
+
+        mock_print.assert_called_with('AT was infected at day 3')
 
     def test__repr__(self):
         """
         Test the '__repr__' function in person.py
         """
-        self.person = Person(name='TAMYA', initial_status='Infected')
-        test_string = f"Person(ID = '{self.person.name}'"
-        test_string += f", status = {self.person.status})"
-        self.assertEqual(test_string,
+        self.person = Person(name='TAMYA', initial_status=Infected())
+        self.assertEqual(str(self.person),
                          "Person(ID = 'TAMYA', status = Infected)")
 
 

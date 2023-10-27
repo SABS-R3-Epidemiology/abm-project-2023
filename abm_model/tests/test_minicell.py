@@ -3,7 +3,9 @@ import unittest
 from unittest import TestCase
 
 #import abm_model as abmm
-from abm_model.minicell import Minicell
+from minicell import Minicell
+from status import Infected, Susceptible
+from abm_model.person import Person
 
 
 class TestMinicell(TestCase):
@@ -104,6 +106,16 @@ class TestMinicell(TestCase):
         m.update(dt=1)
         m.update(dt=1)
         self.assertEqual(m.current_time, 3)
+
+        a = Minicell()
+        a.population_size = 2
+        a.beta = 10000
+        a.s_list = [Person(name='1', initial_status=Susceptible())]
+        a.i_list = [Person(name='0', initial_status=Infected(recovery_period=5, current_time=0, threshold=3))]
+        a.update(1)
+        while a.s_list:
+            a.update(1)
+        self.assertEqual(a.parent_record, {'1': ['0', 1]})
 
 
 if __name__ == '__main__':

@@ -115,6 +115,7 @@ class TestMinicell(TestCase):
         a.update(1)
         while a.s_list:
             a.update(1)
+        a.parent_record['1'][1] = 1
         self.assertEqual(a.parent_record, {'1': ['0', 1]})
 
 

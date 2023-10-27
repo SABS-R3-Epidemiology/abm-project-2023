@@ -4,7 +4,7 @@ import getopt
 
 
 class Generator:
-
+    "Class representing "
     def __init__(self, help_string: str = ""):
         """
         Parameters:

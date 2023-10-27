@@ -112,17 +112,13 @@ class Minicell:
 
         event:
             The event to handle
-
-        ACHTUNG0:
-        --------
-
-        THIS MAY CAUSE COLLISIONS IF ONE PERSON IS INFECTED
-        WE SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
-        (e.g. with) event['person'].status.handle(event['status'])
-        WE SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
-        (e.g. with) cell.rising(event)
-        IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
         """
+        #ACHTUNG0: THIS MAY CAUSE COLLISIONS IF ONE PERSON IS INFECTED
+        #WE SUGGEST ADDING AN HANDLE METHOD TO THE STATUS CLASS THAT TO BE CALLED BY A MINICELL
+        #(e.g. with) event['person'].status.handle(event['status'])
+        #WE SUGGEST ADDING A RAISING METHOD TO THE MINICELL CLASS THAT CAN BE CALLED BY A PERSON
+        #(e.g. with) cell.rising(event)
+        #IN THIS WAY COLLISIONS CAN BE HANDLED TOGETHER
 
         statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Recovered': self.r_list}
         statuses[str(event['person'].status)].remove(event['person'])
@@ -133,12 +129,9 @@ class Minicell:
 
         """
         Upload the hystory on the file path.csv
-
-        ACHTUNG1:
-        --------
-
-        If self.all_list is modified, the .csv file will not be reliable
         """
+        #ACHTUNG1:
+        #If self.all_list is modified, the .csv file will not be reliable
 
         file = open(self.path + '/plot_data_' + self.name + '.csv', 'a')
         file.write(str(self.current_time) + ',')

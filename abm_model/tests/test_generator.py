@@ -1,6 +1,5 @@
 import unittest
 from unittest import TestCase
-import sys
 from abm_model.generator import Generator
 
 

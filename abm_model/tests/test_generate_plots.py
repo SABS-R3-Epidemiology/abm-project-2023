@@ -1,6 +1,5 @@
 import unittest
 from unittest import TestCase
-import sys
 from abm_model.generate_plots import PlotGenerator
 
 

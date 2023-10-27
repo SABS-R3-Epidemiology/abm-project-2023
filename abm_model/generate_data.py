@@ -91,35 +91,30 @@ class DataGenerator(Generator):
                         self.population_size = int(value)
                     except ValueError:
                         print("Error: population size should be an int")
-                        print(name, value)
                         sys.exit()
                 elif name in ['-t', '--total-time']:
                     try:
                         self.total_time = int(value)
                     except ValueError:
                         print("Error: total time should be an int")
-                        print(name, value)
                         sys.exit()
                 elif name in ['-b', '--beta']:
                     try:
                         self.beta = float(value)
                     except ValueError:
                         print("Error: beta value should be a float or an int")
-                        print(name, value)
                         sys.exit()
                 elif name in ['-D', '--recovery-period']:
                     try:
                         self.recovery_period = float(value)
                     except ValueError:
                         print("Error: recovery period should be a float or an int")
-                        print(name, value)
                         sys.exit()
                 elif name in ['-I', '--initial-infected']:
                     try:
                         self.I_0 = int(value)
                     except ValueError:
                         print("Error: initial number of infected should be an int")
-                        print(name, value)
                         sys.exit()
                 elif name in ['-T', '--title']:
                     self.title = value

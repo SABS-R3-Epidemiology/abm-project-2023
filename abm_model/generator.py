@@ -69,4 +69,3 @@ class Generator:
         Raises an error when called
         """
         raise NotImplementedError("Must call from a subclass")
-

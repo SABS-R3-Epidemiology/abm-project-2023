@@ -72,6 +72,7 @@ class TestGeneratePlots(TestCase):
     def test_create_plots(self):
 
         # Here we check that a FileNotFoundError is raised, as the .csv file is incorrect
+        self.generator.csv_file_name = "test.csv"
         self.assertRaises(FileNotFoundError, self.generator.create_plots)
 
 

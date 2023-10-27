@@ -57,7 +57,7 @@ class PlotGenerator(Generator):
         """
         options = self.get_options()
 
-        if len(options) != 1:
+        if len(options) > 1:
             print("Error: either use '--help' option for help, or '--csv-file-name' to "
                   "state the file containing the data you wish to be plotted")
             sys.exit()
@@ -77,8 +77,9 @@ class PlotGenerator(Generator):
         ----------
         None
         """
-        plotter = Plotter(self.csv_file_name)
-        plotter.plot_data()
+        if self.csv_file_name != "default.csv":
+            plotter = Plotter(self.csv_file_name)
+            plotter.plot_data()
 
 
 # The next few lines will be called by the user from the command line

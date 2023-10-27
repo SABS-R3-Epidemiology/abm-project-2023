@@ -81,9 +81,11 @@ class Person:
         """
         Print out the date of infection and recovery(if exist) based on '.history' attribute
         """
-
-        if len(self.history) == 0:
+        # The following change fixes a bug
+        if (len(self.history) == 0 and str(self.status) == 'Susceptible'):
             print(self.name + " was not infected")
+        elif (len(self.history) == 0 and str(self.status) == 'Infected'):
+            print(self.name + " was infected at the beginning")
         else:
             for key, value in self.history.items():
                 print(self.name + " was " + key + " at day " + str(value))

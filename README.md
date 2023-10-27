@@ -1,3 +1,6 @@
+[![Operating systems](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/os_versions.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/os_versions.yml)
+[![Python package](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/python_versions.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/python_versions.yml)
+[![Style tests (flake8)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/style.yml/badge.svg)](https://github.com/SABS-R3-Epidemiology/abm-project-2023/actions/workflows/style.yml)
 [![Documentation Status](https://readthedocs.org/projects/abm-project-2023/badge/?version=latest)](https://abm-project-2023.readthedocs.io/en/latest/?badge=latest)
 
 # Agent Based Model Mini-Project 2023
@@ -61,6 +64,28 @@ Here is a table of commands for generate_plots.py:
 |`--help`|`-h`|Print help|
 |`--csv-file-name`|`-f`|The chosen .csv file containing the data of a simulation|
 
+## Running Tests
+
+Within the abm-project-2023/abm_model directory, run the following command to run tests
+
+	python -m unittest tests/test_status.py
+
+This will run the tests in `test_status.py`. We can also run the other test scripts by replacing this with:
+
+>* `test_gif_plot.py`
+>* `test_minicell.py`
+>* `test_person.py`
+>* `test_plot.py`
+
 
 ## Parameter Definitions
 
+|Parameter|Command Shortcut|Description|
+| --- | --- | --- |
+|`population_size`|`-N`|Total number of individuals in the simulation|
+|`total_time`|`-t`|Number of time steps [days] that the simulation will run for|
+|`beta`|`-b`|Effective contact rate of the disease|
+|`recovery_period`|`-D`|Average number of time steps for which an individual is infected|
+|`initial_infected`|`-I`|Initial number of infected individuals|
+|`title`|`-T`|Title attached to the output .csv file|
+|`path`|`-p`|Path to the directory containing the .csv file and the plots|

@@ -1,0 +1,7 @@
+[run]
+source = abm_model
+omit =
+	*/tests/*
+	*/gif_plot.py
+	*/__init__.py
+	*/version_info.py

@@ -9,7 +9,7 @@ Welcome to ABM project's documentation!
 This is a python backend for the abm-project-2023 package.
 
 
-Contents:
+Contents
 ========
 
 .. module:: abm_model
@@ -17,6 +17,7 @@ Contents:
 .. toctree::
 
     core
+    generators
 
 
 

@@ -5,4 +5,3 @@ omit =
 	*/gif_plot.py
 	*/__init__.py
 	*/version_info.py
-	*/run_tests.py

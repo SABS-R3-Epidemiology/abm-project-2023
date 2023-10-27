@@ -5,8 +5,8 @@ from unittest import TestCase
 from unittest.mock import patch
 
 #import abm_model as abmm
-from person import Person
-from status import Susceptible, Infected, Recovered
+from abm_model.person import Person
+from abm_model.status import Susceptible, Infected, Recovered
 import copy
 #from status import Status, Susceptible, Infected, Recovered
 

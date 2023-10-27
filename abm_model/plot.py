@@ -28,7 +28,6 @@ class Plotter:
         self.plot_path = "data/plots"
         self.lines = []
         self.categories = []
-        plt.clf()
 
     def plot_data(self):
         """This is the main method for this class, and will open the file then read from it. It

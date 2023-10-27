@@ -58,7 +58,7 @@ class Person:
 
         if str(self.status) == 'Susceptible':
             pass
-        elif isinstance(self.status, Infected):
+        elif str(self.status) == 'Infected':
             if cell.current_time >= self.status.expiry_date:
 
                 self.history["recovered"] = cell.current_time

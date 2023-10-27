@@ -14,3 +14,5 @@ from .minicell import Minicell # noqa
 from .generator import Generator # noqa
 from .generate_plots import PlotGenerator # noqa
 from .generate_data import DataGenerator # noqa
+from .generate_gif import GifGenerator # noqa
+from tests import * # noqa

@@ -9,6 +9,7 @@ Overview:
 - :class:`Generator`
 - :class:`PlotGenerator`
 - :class:`DataGenerator`
+- :class:`GifGenerator`
 
 
 .. autoclass:: Generator
@@ -19,4 +20,7 @@ Overview:
     :members:
 
 .. autoclass:: DataGenerator
+    :members:
+
+.. autoclass:: GifGenerator
     :members:

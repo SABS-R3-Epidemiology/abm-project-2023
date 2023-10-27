@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase
 import os
-from abm_model.generate_gif import GifGenerator
+from abm_model import GifGenerator
 import shutil
 
 

@@ -1,7 +1,7 @@
 import sys
 import os
-from abm_model.minicell import run_minicell
-from abm_model.generator import Generator
+from abm_model import run_minicell
+from abm_model import Generator
 
 
 class DataGenerator(Generator):

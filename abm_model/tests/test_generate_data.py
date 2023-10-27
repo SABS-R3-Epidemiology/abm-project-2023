@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase
 import os
-from abm_model.generate_data import DataGenerator
+from abm_model import DataGenerator
 import shutil
 
 

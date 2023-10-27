@@ -10,9 +10,10 @@ from .version_info import VERSION_INT, VERSION  # noqa
 # Import main classes
 from .person import Person # noqa
 from .status import * # noqa
-from .minicell import Minicell # noqa
+from .minicell import * # noqa
 from .generator import Generator # noqa
 from .generate_plots import PlotGenerator # noqa
 from .generate_data import DataGenerator # noqa
 from .generate_gif import GifGenerator # noqa
-from tests import * # noqa
+from .plot import Plotter # noqa
+from .gif_plot import * # noqa

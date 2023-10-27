@@ -1,6 +1,6 @@
 import sys
-from abm_model.plot import Plotter
-from abm_model.generator import Generator
+from abm_model import Plotter
+from abm_model import Generator
 
 
 class PlotGenerator(Generator):
@@ -81,15 +81,14 @@ class PlotGenerator(Generator):
         plotter.plot_data()
 
 
-if __name__ == "__main__":
-    # The next few lines will be called by the user from the command line
-    help_text = """
-    
-    python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
-    
-    --help                  -h	    Print help
-    --csv_file_name         -f      Title of the .csv file containing the required data for plotting
-    """  # pragma: no cover
-    generator = PlotGenerator(help_text)  # pragma: no cover
-    generator.update_parameters()  # pragma: no cover
-    generator.create_plots()  # pragma: no cover
+# The next few lines will be called by the user from the command line
+help_text = """
+
+python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
+
+--help                  -h	    Print help
+--csv_file_name         -f      Title of the .csv file containing the required data for plotting
+"""  # pragma: no cover
+generator = PlotGenerator(help_text)  # pragma: no cover
+generator.update_parameters()  # pragma: no cover
+generator.create_plots()  # pragma: no cover

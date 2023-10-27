@@ -3,9 +3,9 @@ import unittest
 from unittest import TestCase
 
 #import abm_model as abmm
-from abm_model.minicell import Minicell
-from abm_model.status import Infected, Susceptible
-from abm_model.person import Person
+from abm_model import Minicell
+from abm_model import Infected, Susceptible
+from abm_model import Person
 
 
 class TestMinicell(TestCase):

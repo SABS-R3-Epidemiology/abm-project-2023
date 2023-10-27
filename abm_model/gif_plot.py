@@ -1,9 +1,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import math
-from abm_model.person import Person
-from abm_model.status import Infected, Susceptible, Recovered
-from abm_model.minicell import Minicell
+from abm_model import Person
+from abm_model import Infected, Susceptible, Recovered
+from abm_model import Minicell
 from matplotlib.animation import FuncAnimation
 from functools import partial
 

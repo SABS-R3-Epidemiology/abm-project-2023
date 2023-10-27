@@ -1,5 +1,5 @@
 import unittest
-from abm_model.gif_plot import Point, gif_plotter
+from abm_model import Point, gif_plotter
 import abm_model
 
 

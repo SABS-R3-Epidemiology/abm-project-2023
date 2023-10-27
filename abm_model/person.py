@@ -22,9 +22,9 @@ class Person:
     Attributes:
     ----------
 
-    .status(status object):
+    status(status object):
         Use composition with status class, indicating the status for each person
-    .history(dic):
+    history(dic):
         A dictionary containing the date of infection and date of recovery
     """
     def __init__(self, name: str, initial_status):
@@ -79,7 +79,7 @@ class Person:
 
     def read_infection_history(self):
         """
-        Print out the date of infection and recovery(if exist) based on '.history' attribute
+        Print out the date of infection and recovery (if exist) based on '.history' attribute
         """
         # The following change fixes a bug
         if (len(self.history) == 0 and str(self.status) == 'Susceptible'):
@@ -91,5 +91,8 @@ class Person:
                 print(self.name + " was " + key + " at day " + str(value))
 
     def __repr__(self):
+        """
+        Returns the ID and status of the person
+        """
 
         return f"Person(ID = '{self.name}', status = {self.status})"

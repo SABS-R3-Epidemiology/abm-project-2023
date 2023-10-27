@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 from unittest import TestCase
-from abm_model import Susceptible, Infected, Recovered
+from abm_model.status import Susceptible, Infected, Recovered
 import copy
 
 

@@ -1,6 +1,6 @@
 import unittest
 from unittest import TestCase
-from abm_model import Generator
+from abm_model.generator import Generator
 
 
 class TestGenerator(TestCase):

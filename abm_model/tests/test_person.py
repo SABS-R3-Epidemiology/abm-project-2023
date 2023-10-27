@@ -96,6 +96,7 @@ class TestPerson(TestCase):
         self.infected = Person(name='I', initial_status=self.infected_status)
         self.infected.status.expiry_date = 1
         self.events = []
+        self.s_list = []
         self.infected.update(self, 1)
         self.assertEqual(self.events, [{"person": self.infected, "status": Recovered()}])
         self.assertEqual(self.infected.recovery_time, 1)

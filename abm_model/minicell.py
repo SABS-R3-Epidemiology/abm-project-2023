@@ -1,7 +1,7 @@
 import os
 import pandas as pd
-from abm_model import Susceptible, Infected
-from abm_model import Person
+from abm_model.status import Susceptible, Infected
+from abm_model.person import Person
 
 
 class Minicell:

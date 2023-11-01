@@ -47,7 +47,7 @@ class TestGeneratePlots(TestCase):
 
         # Some incorrect arguments passed
         self.generator.argv += ["-j", 3]
-        self.assertRaises(SystemExit, self.generator.get_options)
+        self.assertRaises(RuntimeError, self.generator.get_options)
 
         # Incorrect flag
         self.generator.argv = []
@@ -57,8 +57,7 @@ class TestGeneratePlots(TestCase):
     def test_update_parameters(self):
         # Checking help
         self.generator.argv = ["-h"]
-        with self.assertRaises(SystemExit):
-            self.generator.update_parameters()
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
 
         # Checking options (correct values)
         self.generator.argv = ["-f", "testing.csv"]

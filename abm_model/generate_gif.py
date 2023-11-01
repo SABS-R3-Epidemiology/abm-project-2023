@@ -86,7 +86,8 @@ class GifGenerator(Generator):
             for name, value in options:
                 if name in ['-h', '--help']:
                     print(self.help_string)
-                    sys.exit()
+                    self.help_string = "printed"
+                    break
                 elif name in ['-N', '--population-size']:
                     try:
                         self.population_size = int(value)
@@ -157,4 +158,5 @@ python abm_model/generate_gif.py [--help] [--population-size=100] [--total-time=
 """  # pragma: no cover
 generator = GifGenerator(help_text)  # pragma: no cover
 generator.update_parameters()  # pragma: no cover
-generator.create_gif()  # pragma: no cover
+if generator.help_string != "printed":
+    generator.create_gif()  # pragma: no cover

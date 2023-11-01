@@ -42,7 +42,7 @@ class TestGenerator(TestCase):
 
         # Incorrect arguments test for just the generator class (add other flags)
         self.generator.argv += ["-N", 100]
-        self.assertRaises(SystemExit, self.generator.get_options)
+        self.assertRaises(RuntimeError, self.generator.get_options)
 
     def test_update_parameters(self):
         # This method is not implemented in this class

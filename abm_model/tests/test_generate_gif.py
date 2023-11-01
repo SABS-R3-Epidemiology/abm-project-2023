@@ -66,7 +66,8 @@ class TestGenerateGif(TestCase):
     def test_update_parameters(self):
         # Checking help
         self.generator.argv = ["-h"]
-        self.assertRaises(RuntimeError, self.generator.update_parameters)
+        self.generator.update_parameters()
+        self.assertEqual(self.generator.help_string, "printed")
 
         # Checking all options (correct values)
         self.generator.argv = ["-N", 50, "-t", 30, "-b", 0.1, "-D", 50, "-I", 2, "-T", "testing",

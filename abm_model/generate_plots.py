@@ -1,4 +1,3 @@
-import sys
 from abm_model import Plotter
 from abm_model import Generator
 

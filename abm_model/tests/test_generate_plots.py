@@ -57,7 +57,8 @@ class TestGeneratePlots(TestCase):
     def test_update_parameters(self):
         # Checking help
         self.generator.argv = ["-h"]
-        self.assertRaises(SystemExit, self.generator.update_parameters)
+        with self.assertRaises(SystemExit):
+            self.generator.update_parameters()
 
         # Checking options (correct values)
         self.generator.argv = ["-f", "testing.csv"]

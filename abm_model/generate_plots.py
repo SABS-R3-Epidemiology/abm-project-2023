@@ -1,5 +1,5 @@
-from abm_model import Plotter
-from abm_model import Generator
+from abm_model.plot import Plotter
+from abm_model.generator import Generator
 
 
 class PlotGenerator(Generator):

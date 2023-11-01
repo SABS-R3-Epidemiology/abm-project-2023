@@ -38,8 +38,7 @@ class Generator:
 
         """
         self.help_string = help_string
-        # args = sys.argv[1:]
-        args = ["-h"]
+        args = sys.argv[1:]
         self.argv = args.copy()
         if "--unit" in self.argv:
             self.argv.remove("--unit")

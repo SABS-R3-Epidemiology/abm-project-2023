@@ -1,7 +1,7 @@
 import os
-from abm_model import Generator
-from abm_model import Minicell
-from abm_model import gif_plotter
+from abm_model.generator import Generator
+from abm_model.minicell import Minicell
+from abm_model.gif_plot import gif_plotter
 
 
 class GifGenerator(Generator):

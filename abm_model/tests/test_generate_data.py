@@ -56,7 +56,7 @@ class TestGenerateData(TestCase):
 
         # Some incorrect arguments passed
         self.generator.argv += ["-j", 3]
-        self.assertRaises(SystemExit, self.generator.get_options)
+        self.assertRaises(RuntimeError, self.generator.get_options)
 
         # Incorrect order of arguments
         self.generator.argv = []
@@ -66,8 +66,7 @@ class TestGenerateData(TestCase):
     def test_update_parameters(self):
         # Checking help
         self.generator.argv = ["-h"]
-        with self.assertRaises(SystemExit):
-            self.generator.update_parameters()
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
 
         # Checking all options (correct values)
         self.generator.argv = ["-N", 50, "-t", 30, "-b", 0.1, "-D", 50, "-I", 2, "-T", "testing",
@@ -96,20 +95,15 @@ class TestGenerateData(TestCase):
 
         # Checking all erroneous values raise errors
         self.generator.argv = ["-N", "hi"]
-        with self.assertRaises(SystemExit):
-            self.generator.update_parameters()
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
         self.generator.argv = ["--total-time", "hi"]
-        with self.assertRaises(SystemExit):
-            self.generator.update_parameters()
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
         self.generator.argv = ["-b", "hi"]
-        with self.assertRaises(SystemExit):
-            self.generator.update_parameters()
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
         self.generator.argv = ["-D", "hi"]
-        with self.assertRaises(SystemExit):
-            self.generator.update_parameters()
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
         self.generator.argv = ["--initial-infected", "hi"]
-        with self.assertRaises(SystemExit):
-            self.generator.update_parameters()
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
 
     def test_create_csv(self):
 

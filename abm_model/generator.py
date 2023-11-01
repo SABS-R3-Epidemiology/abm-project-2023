@@ -61,7 +61,7 @@ class Generator:
             options, args = getopt.getopt(self.argv, short_flags_string, long_flags_opt)
             return options
         except getopt.GetoptError:
-            raise RuntimeException("Error: incorrect arguments provided. Use '--help' option for help.")
+            raise RuntimeError("Error: incorrect arguments provided. Use '--help' option for help.")
 
     def update_parameters(self):
         """

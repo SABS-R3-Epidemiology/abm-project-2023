@@ -154,8 +154,8 @@ python abm_model/generate_gif.py [--help] [--population-size=100] [--total-time=
 --initial-infected=1    -I      Initial number of infected individuals
 --title="test"          -T      Title attached to the output .gif file
 --path="data"           -p      Path to the directory containing the .gif file and the plots
-"""  # pragma: no cover
-generator = GifGenerator(help_text)  # pragma: no cover
-generator.update_parameters()  # pragma: no cover
+"""
+generator = GifGenerator(help_text)
+generator.update_parameters()
 if generator.help_string != "printed":
-    generator.create_gif()  # pragma: no cover
+    generator.create_gif()

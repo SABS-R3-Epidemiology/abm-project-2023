@@ -6,13 +6,20 @@ import csv
 
 class Plotter:
 
-    def __init__(self, title: str = ""):
+    def __init__(self, csv_file_name: str = "plot_data_test.csv"):
         """Here we initialise the class with some default class parameters (note these will
         be read from the file)
 
-        :param title: Title of the .csv file containing the desired data
+        :param csv_file_name: Title of the .csv file containing the desired data
         """
-        self.title = title
+
+        # Check to see if the csv_file_name is a valid csv file
+        if not csv_file_name[-4:] == ".csv":
+            raise ValueError("File must be .csv")
+        if not os.path.exists("data/csv_files/" + csv_file_name):
+            raise FileNotFoundError("Entered file does not exist")
+
+        self.csv_file_name = csv_file_name
 
         # Both population_size and initial_infected are read from the .csv file, so here
         # we will simply initialise them with default values which will be changed
@@ -31,14 +38,15 @@ class Plotter:
         :return:
         """
 
-        with open("data/plot_data_" + self.title + ".csv", "r") as csv_file:
+        with open("data/csv_files/" + self.csv_file_name, "r") as csv_file:
             # Structure of csv file (with no whitespace in between):
-            # Time,          Susceptible,     Infected,     Recovered,
-            # 1,             90,              10,           0,
-            # 2,             79,              20,           1,
-            # ...,           ...,             ...,          ...,
+            # Time,          Susceptible,     Infected,     Recovered
+            # 1,             90,              10,           0
+            # 2,             79,              20,           1
+            # ...,           ...,             ...,          ...
             self.lines = [line[0:4] for line in csv.reader(csv_file)]
             self.categories = self.lines[0]
+            self.categories[0] = "Time"
 
             # We will exit this method if there are 0 or 1 lines only in the file as
             # there is nothing to plot
@@ -86,7 +94,7 @@ class Plotter:
             self.create_plot_files()
 
     @staticmethod
-    def convert_to_ints(self, str_values_list: list[str]):
+    def convert_to_ints(str_values_list: list[str]):
 
         """This method checks that `str_values_list` is of the correct length and that
         the internal values are valid. If this is not the case, then errors will be raised.
@@ -123,7 +131,7 @@ class Plotter:
         plt.savefig(destination)
 
     def create_plot_legend(self):
-        """We create the plot legend and title here
+        """We create the plot legend and csv_file_name here
 
         :return:
         """
@@ -132,3 +140,4 @@ class Plotter:
         plt.xlabel("Time step")
 
         plt.title("Agent Based Model for " + str(self.population_size) + " individuals in a room")
+        plt.show()

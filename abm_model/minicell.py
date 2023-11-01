@@ -1,5 +1,6 @@
 import os
-from abm_model.status import Susceptible
+import pandas as pd
+from abm_model.status import Susceptible, Infected
 from abm_model.person import Person
 
 
@@ -39,10 +40,8 @@ class Minicell:
     current_time:
         The current time of the simulation
     """
-
-    def __init__(self, population_size: int = 100, beta: float = 0.01,
-                 recovery_period: float = 1,
-                 initial: dict = {}, name: str = 'test', path: str = 'data'):
+    def __init__(self, I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1,
+                 name: str = 'test', path: str = 'data', threshold: int = 5):
 
         cur_dir = '.'
         for other_dir in path.rsplit(sep='/'):
@@ -53,14 +52,24 @@ class Minicell:
         # setting the epistemic parameters
 
         if type(beta) is not float and type(beta) is not int:
-            raise TypeError("Beta must be an float")
+            raise TypeError("Beta must be a float")
         self.beta = beta
+
         if type(recovery_period) is not float and type(recovery_period) is not int:
-            raise TypeError("Recovery period must be an float")
+            raise TypeError("Recovery period must be a float")
         self.recovery_period = recovery_period
+
+        if type(I0) is not int or type(threshold) is not int:
+            raise TypeError("Initial infected and thresholds must be ints")
+
+        initial = {}
+        for i in range(I0):
+            initial[i] = Infected(recovery_period, 0, threshold)
 
         if type(population_size) is not int:
             raise TypeError("Population size must be an int")
+        if population_size < I0:
+            raise ValueError("Population size must be greater than I0.")
         self.population_size = population_size
         self.current_time = 0
         self.events = []
@@ -69,11 +78,17 @@ class Minicell:
         self.r_list = []
         self.name = name
         self.path = path
+        self.data = pd.DataFrame(columns=('Susceptible',
+                                          'Infected',
+                                          'Recovered'))
         self.parent_record = {}
 
         # initializing each pearson in the minicell as susceptible
 
-        statuses = {'Susceptible': self.s_list, 'Infected': self.i_list, 'Recovered': self.r_list}
+        statuses = {'Susceptible': self.s_list,
+                    'Infected': self.i_list,
+                    'Recovered': self.r_list}
+
         for name in range(population_size):
             if name in initial:
                 my_person = Person(str(name), initial[name])
@@ -84,16 +99,9 @@ class Minicell:
 
         # initializing the .csv files
 
-        file = open(self.path + '/plot_data_' + self.name + '.csv', 'w')
-        file.write('Time,')
-        for some_stat in ['Susceptible', 'Infected', 'Recovered']:
-            file.write(some_stat + ',')
-        file.write('\n')
-        file.write(str(self.current_time) + ',')
-        for some_list in [self.s_list, self.i_list, self.r_list]:
-            file.write(str(len(some_list)) + ',')
-        file.write('\n')
-        file.close()
+        self.data._set_value(index=self.current_time, col='Susceptible', value=len(self.s_list))
+        self.data._set_value(index=self.current_time, col='Infected', value=len(self.i_list))
+        self.data._set_value(index=self.current_time, col='Recovered', value=len(self.r_list))
 
     def handle(self, event):
 
@@ -150,3 +158,17 @@ class Minicell:
             self.handle(event)
         self.events = []
         self.parent_record.update(parent_record)
+        self.data._set_value(index=self.current_time, col='Susceptible', value=len(self.s_list))
+        self.data._set_value(index=self.current_time, col='Infected', value=len(self.i_list))
+        self.data._set_value(index=self.current_time, col='Recovered', value=len(self.r_list))
+
+
+def run_minicell(I0: int = 1, population_size: int = 100, beta: float = 0.01, recovery_period: float = 1,
+                 name: str = 'test', path: str = 'data', threshold: int = 5, total_time: int = 10):
+
+    cell = Minicell(I0, population_size, beta, recovery_period, name, path, threshold)
+
+    for i in range(total_time):
+        cell.update(1)
+
+    return cell.data

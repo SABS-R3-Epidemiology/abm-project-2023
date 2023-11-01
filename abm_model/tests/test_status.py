@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 from unittest import TestCase
-from status import Susceptible, Infected, Recovered
+from abm_model.status import Susceptible, Infected, Recovered
 import copy
 
 
@@ -18,6 +18,7 @@ class TestSusceptible(TestCase):
 
 
 class TestInfected(TestCase):
+
     def setUp(self) -> None:
         self.infected = Infected()
 

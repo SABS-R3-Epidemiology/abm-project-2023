@@ -88,8 +88,8 @@ python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv
 
 --help                  -h	    Print help
 --csv_file_name         -f      Title of the .csv file containing the required data for plotting
-"""  # pragma: no cover
-generator = PlotGenerator(help_text)  # pragma: no cover
-generator.update_parameters()  # pragma: no cover
+"""
+generator = PlotGenerator(help_text)
+generator.update_parameters()
 if generator.help_string != "printed":
-    generator.create_plots()  # pragma: no cover
+    generator.create_plots()

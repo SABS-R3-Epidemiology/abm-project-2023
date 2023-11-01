@@ -58,9 +58,8 @@ class PlotGenerator(Generator):
         options = self.get_options()
 
         if len(options) > 1:
-            print("Error: either use '--help' option for help, or '--csv-file-name' to "
+            raise RuntimeError("Error: either use '--help' option for help, or '--csv-file-name' to "
                   "state the file containing the data you wish to be plotted")
-            sys.exit()
 
         for name, value in options:
             if name in ['-h', '--help']:

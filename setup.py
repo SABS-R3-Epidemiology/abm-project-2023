@@ -67,7 +67,6 @@ setup(
         'matplotlib',
         'pandas',
         'scipy',
-        'pandas',
     ],
     extras_require={
         'docs': [

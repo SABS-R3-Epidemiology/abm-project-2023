@@ -1,4 +1,3 @@
-import sys
 import os
 from abm_model import Generator
 from abm_model import Minicell

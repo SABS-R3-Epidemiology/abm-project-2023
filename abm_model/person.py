@@ -1,7 +1,7 @@
 from uu import Error
 import numpy as np
 
-from abm_model import Infected, Recovered
+from abm_model.status import Infected, Recovered
 
 
 class Person:

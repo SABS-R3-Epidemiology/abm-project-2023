@@ -66,7 +66,8 @@ class TestGenerateGif(TestCase):
     def test_update_parameters(self):
         # Checking help
         self.generator.argv = ["-h"]
-        self.assertRaises(SystemExit, self.generator.update_parameters)
+        with self.assertRaises(SystemExit):
+            self.generator.update_parameters()
 
         # Checking all options (correct values)
         self.generator.argv = ["-N", 50, "-t", 30, "-b", 0.1, "-D", 50, "-I", 2, "-T", "testing",
@@ -95,15 +96,20 @@ class TestGenerateGif(TestCase):
 
         # Checking all erroneous values raise errors
         self.generator.argv = ["-N", "hi"]
-        self.assertRaises(SystemExit, self.generator.update_parameters)
+        with self.assertRaises(SystemExit):
+            self.generator.update_parameters()
         self.generator.argv = ["--total-time", "hi"]
-        self.assertRaises(SystemExit, self.generator.update_parameters)
+        with self.assertRaises(SystemExit):
+            self.generator.update_parameters()
         self.generator.argv = ["-b", "hi"]
-        self.assertRaises(SystemExit, self.generator.update_parameters)
+        with self.assertRaises(SystemExit):
+            self.generator.update_parameters()
         self.generator.argv = ["-D", "hi"]
-        self.assertRaises(SystemExit, self.generator.update_parameters)
+        with self.assertRaises(SystemExit):
+            self.generator.update_parameters()
         self.generator.argv = ["--initial-infected", "hi"]
-        self.assertRaises(SystemExit, self.generator.update_parameters)
+        with self.assertRaises(SystemExit):
+            self.generator.update_parameters()
 
     def test_create_gif(self):
 

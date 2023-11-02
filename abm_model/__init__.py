@@ -13,7 +13,7 @@ from .person import Person # noqa
 from .minicell import * # noqa
 from .plot import Plotter # noqa
 from .gif_plot import * # noqa
-# from .generator import Generator # noqa
-# from .generate_plots import PlotGenerator # noqa
-# from .generate_data import DataGenerator # noqa
-# from .generate_gif import GifGenerator # noqa
+from .generator import Generator # noqa
+from .generate_plots import PlotGenerator # noqa
+from .generate_data import DataGenerator # noqa
+from .generate_gif import GifGenerator # noqa

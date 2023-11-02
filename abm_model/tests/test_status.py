@@ -23,8 +23,10 @@ class TestInfected(TestCase):
         self.infected = Infected()
 
     def test__init__(self):
-        self.assertRaises(TypeError, self.infected.__init__, '1')
-        self.assertRaises(ValueError, self.infected.__init__, -1)
+        with self.assertRaises(TypeError):
+            Infected('1')
+        with self.assertRaises(ValueError):
+            Infected(-1)
         self.infected = Infected(threshold=2)
         self.assertEqual(self.infected.threshold, 2)
         # Need test for self.expiry_date

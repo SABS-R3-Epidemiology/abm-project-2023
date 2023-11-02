@@ -56,7 +56,7 @@ class TestPlot(TestCase):
 
         # Check negative input
         with self.assertRaises(ValueError):
-            Plotter.convert_to_ints("0", "1", "2", "-3")
+            Plotter.convert_to_ints(["0", "1", "2", "-3"])
 
         # Check we get correct values
         self.assertEqual(Plotter.convert_to_ints(["1", "2", "3", "4"]), [1, 2, 3, 4])

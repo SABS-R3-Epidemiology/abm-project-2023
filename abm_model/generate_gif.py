@@ -157,7 +157,7 @@ python abm_model/generate_gif.py [--help] [--population-size=100] [--total-time=
 """
 
 if __name__ == "__main__":
-    generator = GifGenerator(help_text)
-    generator.update_parameters()
-    if generator.help_string != "printed":
-        generator.create_gif()
+    generator = GifGenerator(help_text)  # pragma: no cover
+    generator.update_parameters()  # pragma: no cover
+    if generator.help_string != "printed":  # pragma: no cover
+        generator.create_gif()  # pragma: no cover

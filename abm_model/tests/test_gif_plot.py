@@ -1,6 +1,6 @@
 import unittest
 from gif_plot import Point, gif_plotter
-from minicell import Minicell
+import abm_model
 
 
 class TestPoint(unittest.TestCase):
@@ -25,12 +25,12 @@ class TestPoint(unittest.TestCase):
 class TestGifPlotter(unittest.TestCase):
 
     def test_attributes(self):
-        a = Minicell(recovery_period=100)
+        a = abm_model.Minicell(recovery_period=100)
         gif = gif_plotter(a)
         self.assertIsNone(gif.point_list)
 
     def test_error_cases(self):
-        a = Minicell(recovery_period=100)
+        a = abm_model.Minicell(recovery_period=100)
         gif = gif_plotter(a)
         with self.assertRaises(KeyError):
             gif.gif_plotter()
@@ -38,7 +38,7 @@ class TestGifPlotter(unittest.TestCase):
             gif_plotter('a')
 
     def test_points_manipulation(self):
-        a = Minicell(I0=1, population_size=1)
+        a = abm_model.Minicell(I0=1, population_size=1)
         gif = gif_plotter(a)
         gif.points_manipulation()
         p = Point([0.1, 0.125])

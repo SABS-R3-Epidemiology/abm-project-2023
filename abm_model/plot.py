@@ -129,6 +129,7 @@ class Plotter:
 
         destination = self.plot_path + "/" + file_name + ".png"
         plt.savefig(destination)
+        plt.show()
 
     def create_plot_legend(self):
         """We create the plot legend and csv_file_name here
@@ -140,4 +141,3 @@ class Plotter:
         plt.xlabel("Time step")
 
         plt.title("Agent Based Model for " + str(self.population_size) + " individuals in a room")
-        plt.show()

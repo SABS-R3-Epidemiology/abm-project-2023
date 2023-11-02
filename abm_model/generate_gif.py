@@ -155,7 +155,9 @@ python abm_model/generate_gif.py [--help] [--population-size=100] [--total-time=
 --title="test"          -T      Title attached to the output .gif file
 --path="data"           -p      Path to the directory containing the .gif file and the plots
 """
-generator = GifGenerator(help_text)
-generator.update_parameters()
-if generator.help_string != "printed":
-    generator.create_gif()
+
+if __name__ == "__main__":
+    generator = GifGenerator(help_text)
+    generator.update_parameters()
+    if generator.help_string != "printed":
+        generator.create_gif()

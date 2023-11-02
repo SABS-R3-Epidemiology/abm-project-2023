@@ -1,6 +1,6 @@
 import unittest
-from abm_model.gif_plot import Point, gif_plotter
-from abm_model.minicell import Minicell
+from gif_plot import Point, gif_plotter
+from minicell import Minicell
 
 
 class TestPoint(unittest.TestCase):

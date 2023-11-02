@@ -2,7 +2,7 @@
 import unittest
 from unittest import TestCase
 from unittest.mock import patch, mock_open
-from abm_model.plot import Plotter
+from plot import Plotter
 import csv
 
 

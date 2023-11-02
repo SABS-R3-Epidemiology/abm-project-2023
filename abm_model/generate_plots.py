@@ -83,9 +83,9 @@ class PlotGenerator(Generator):
 # The next few lines will be called by the user from the command line
 if __name__ == "__main__":
     help_text = """
-    
+
     python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
-    
+
     --help                  -h	    Print help
     --csv_file_name         -f      Title of the .csv file containing the required data for plotting
     """

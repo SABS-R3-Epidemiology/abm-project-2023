@@ -19,10 +19,6 @@ class TestGeneratePlots(TestCase):
         self.generator = PlotGenerator("Test text")
         self.assertEqual(self.generator.csv_file_name, "default.csv")
         self.assertEqual(self.generator.help_string, "Test text")
-        # args = sys.argv[1:]
-        # if "--unit" in args:
-        #     args.remove("--unit")
-        # self.assertEqual(self.generator.argv, args)
         self.assertEqual(self.generator.short_flags, ["h", "f"])
         self.assertEqual(self.generator.long_flags, ["help", "csv-file-name"])
 
@@ -44,6 +40,10 @@ class TestGeneratePlots(TestCase):
         # Correct arguments with some other values passed
         self.generator.argv += ["-f", "testing.csv"]
         self.assertEqual(self.generator.get_options(), [("-h", ""), ("-f", "testing.csv")])
+
+        # Test the short flags
+        self.generator.get_options()
+        self.assertEqual(self.generator.short_flags_string, "hf:")
 
         # Some incorrect arguments passed
         self.generator.argv += ["-j", 3]
@@ -70,10 +70,14 @@ class TestGeneratePlots(TestCase):
         self.generator.update_parameters()
         self.assertEqual(self.generator.csv_file_name, "testing.csv")
 
+        # Checking incorrect number of parameters passed
+        self.generator.argv = ["-h", "-f", "testing.csv"]
+        self.assertRaises(RuntimeError, self.generator.update_parameters)
+
     def test_create_plots(self):
 
         # Here we check that a FileNotFoundError is raised, as the .csv file is incorrect
-        self.generator.csv_file_name = "test.csv"
+        self.generator.csv_file_name = "testing.csv"
         self.assertRaises(FileNotFoundError, self.generator.create_plots)
 
 

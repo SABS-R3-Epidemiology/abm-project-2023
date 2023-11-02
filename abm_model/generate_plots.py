@@ -77,8 +77,7 @@ class PlotGenerator(Generator):
         None
         """
         if self.csv_file_name != "default.csv":
-            plotter = Plotter(self.csv_file_name)
-            plotter.plot_data()
+            Plotter(self.csv_file_name).plot_data()
 
 
 # The next few lines will be called by the user from the command line

@@ -18,6 +18,12 @@ class TestPlot(TestCase):
         self.plot = Plotter(csv_file_name='plot_data_test.csv')
         self.assertEqual(self.plot.csv_file_name, "plot_data_test.csv")
 
+        # Test for faulty file
+        with self.assertRaises(ValueError):
+            Plotter(csv_file_name='plot_data_test')
+        with self.assertRaises(FileNotFoundError):
+            Plotter(csv_file_name='non_existent_file.csv')
+
     def test_plot_data(self):
         with patch('builtins.open', new_callable=mock_open, read_data=self.data) as mock_file:
             self.plot = Plotter(csv_file_name='plot_data_test.csv')
@@ -37,6 +43,24 @@ class TestPlot(TestCase):
             self.assertEqual(read_data[0][1], 'Susceptible')
             self.assertEqual(read_data[0][2], 'Infected')
             self.assertEqual(read_data[0][3], 'Recovered')
+
+    def test_convert_to_ints(self):
+
+        # Check incorrect length of list
+        with self.assertRaises(ValueError):
+            Plotter.convert_to_ints(["1", "2", "3"])
+
+        # Check non-integer input
+        with self.assertRaises(ValueError):
+            Plotter.convert_to_ints(["a", "1", "3", "0"])
+
+        # Check negative input
+        with self.assertRaises(ValueError):
+            Plotter.convert_to_ints("0", "1", "2", "-3")
+
+        # Check we get correct values
+        self.assertEqual(Plotter.convert_to_ints(["1", "2", "3", "4"]), [1, 2, 3, 4])
+        self.assertEqual(Plotter.convert_to_ints(["0", "0", "0", "0"]), [0, 0, 0, 0])
 
     # @patch('plot.plt')
     # def test_create_plot_legend(self, mock_plt):

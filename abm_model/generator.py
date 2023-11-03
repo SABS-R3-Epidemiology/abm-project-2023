@@ -43,6 +43,7 @@ class Generator:
         if "--unit" in self.argv:
             self.argv.remove("--unit")
         self.short_flags = ["h"]
+        self.short_flags_string = ""
         self.long_flags = ["help"]
 
     def get_options(self) -> list[tuple[str, str]]:
@@ -53,13 +54,16 @@ class Generator:
 
         A list of tuples containing the flag and value that the user has entered
         """
+
+        # Reset short_flags_string
+        self.short_flags_string = ""
         try:
-            short_flags_string = self.short_flags[0]
+            self.short_flags_string += self.short_flags[0]
             for flag in self.short_flags[1:]:
-                short_flags_string += flag + ":"
+                self.short_flags_string += flag + ":"
             long_flags_opt = [self.long_flags[0]] + [long_flag + "=" for long_flag in self.long_flags[1:]]
 
-            options, args = getopt.getopt(self.argv, short_flags_string, long_flags_opt)
+            options, args = getopt.getopt(self.argv, self.short_flags_string, long_flags_opt)
             return options
         except getopt.GetoptError:
             raise RuntimeError("Error: incorrect arguments provided. Use '--help' option for help.")

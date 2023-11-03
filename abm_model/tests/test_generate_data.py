@@ -1,7 +1,7 @@
 import unittest
 from unittest import TestCase
 import os
-from abm_model.generate_data import DataGenerator
+from generate_data import DataGenerator
 import shutil
 
 
@@ -27,10 +27,6 @@ class TestGenerateData(TestCase):
         self.assertEqual(self.generator.title, "test")
         self.assertEqual(self.generator.path, "data")
         self.assertEqual(self.generator.help_string, "Test text")
-        # args = sys.argv[1:]
-        # if "--unit" in args:
-        #     args.remove("--unit")
-        # self.assertEqual(self.generator.argv, args)
         self.assertEqual(self.generator.short_flags, ["h", "N", "t", "b", "D", "I", "T", "p"])
         self.assertEqual(self.generator.long_flags, ["help", "population-size", "total-time", "beta", "recovery-period",
                                                      "initial-infected", "title", "path"])

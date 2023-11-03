@@ -77,11 +77,9 @@ class PlotGenerator(Generator):
         None
         """
         if self.csv_file_name != "default.csv":
-            plotter = Plotter(self.csv_file_name)
-            plotter.plot_data()
+            Plotter(self.csv_file_name).plot_data()
 
 
-# The next few lines will be called by the user from the command line
 help_text = """
 
 python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv"]
@@ -89,7 +87,9 @@ python abm_model/generate_plots.py [--help] [--csv_file_name="plot_data_test.csv
 --help                  -h	    Print help
 --csv_file_name         -f      Title of the .csv file containing the required data for plotting
 """
-generator = PlotGenerator(help_text)
-generator.update_parameters()
-if generator.help_string != "printed":
-    generator.create_plots()
+# The next few lines will be called by the user from the command line
+if __name__ == "__main__":
+    generator = PlotGenerator(help_text)  # pragma: no cover
+    generator.update_parameters()  # pragma: no cover
+    if generator.help_string != "printed":  # pragma: no cover
+        generator.create_plots()  # pragma: no cover

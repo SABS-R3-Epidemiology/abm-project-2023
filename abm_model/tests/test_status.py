@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 from unittest import TestCase
-from status import Susceptible, Infected, Recovered
+from abm_model.status import Susceptible, Infected, Recovered
 import copy
 
 
@@ -18,12 +18,15 @@ class TestSusceptible(TestCase):
 
 
 class TestInfected(TestCase):
+
     def setUp(self) -> None:
         self.infected = Infected()
 
     def test__init__(self):
-        self.assertRaises(TypeError, self.infected.__init__, '1')
-        self.assertRaises(ValueError, self.infected.__init__, -1)
+        with self.assertRaises(TypeError):
+            Infected('1')
+        with self.assertRaises(ValueError):
+            Infected(-1)
         self.infected = Infected(threshold=2)
         self.assertEqual(self.infected.threshold, 2)
         # Need test for self.expiry_date

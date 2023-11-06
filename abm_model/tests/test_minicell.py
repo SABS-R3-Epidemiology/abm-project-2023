@@ -5,7 +5,7 @@ from unittest import TestCase
 #import abm_model as abmm
 from minicell import Minicell
 from status import Infected, Susceptible
-from abm_model.person import Person
+from person import Person
 
 
 class TestMinicell(TestCase):
@@ -29,20 +29,19 @@ class TestMinicell(TestCase):
         self.assertRaises(TypeError, self.minicell.__init__, population_size=2.1)
         self.assertRaises(TypeError, self.minicell.__init__, population_size='2.1')
 
-        self.minicell = Minicell(population_size=56,
-                                 beta=0.66,
-                                 recovery_period=0)
+        self.minicell = Minicell(population_size=56, beta=0.66,
+                                 recovery_period=1)
+
         self.assertEqual(self.minicell.beta, 0.66)
-        self.assertEqual(self.minicell.recovery_period, 0)
+        self.assertEqual(self.minicell.recovery_period, 1)
 
         self.minicell = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
-        self.assertEqual(self.minicell.i_list, [])
+        self.assertEqual(len(self.minicell.i_list), 1)
         self.assertEqual(self.minicell.r_list, [])
-        self.assertEqual(len(self.minicell.s_list),
-                         self.minicell.population_size)
 
-        # Test that there are 0 people in i_list and r_list
+        self.assertEqual(len(self.minicell.s_list),
+                         self.minicell.population_size - 1)
 
         # Test that there are no duplicates in the person id.
         # Use list comprehensions to generate list of person ids from all_list
@@ -55,12 +54,13 @@ class TestMinicell(TestCase):
         person_ids = s_person_ids + i_person_ids + r_person_ids
         self.assertEqual(len(person_ids), len(set(person_ids)))
 
-        # Check that all people in all_list are susceptible
+        # Check that all people in all_list are susceptible except for one
         s_person_statuses = [p.status for p in self.minicell.s_list]
         i_person_statuses = [p.status for p in self.minicell.i_list]
         r_person_statuses = [p.status for p in self.minicell.r_list]
-        person_statuses = s_person_statuses + i_person_statuses + r_person_statuses
-        self.assertEqual(all(str(x) == 'Susceptible' for x in person_statuses), True)
+        s_r_statuses = s_person_statuses + r_person_statuses
+        self.assertEqual(len(i_person_statuses), 1)
+        self.assertEqual(all(str(x) == 'Susceptible' for x in s_r_statuses), True)
 
     def test_handle(self):
         """
@@ -69,9 +69,10 @@ class TestMinicell(TestCase):
         target_person = self.minicell.s_list[0]
         fake_event = {'person': target_person, 'status': 'Infected'}
         self.minicell.handle(fake_event)
-        self.assertEqual(len(self.minicell.i_list), 1)
+        self.assertEqual(len(self.minicell.i_list), 2)
         self.assertEqual(len(self.minicell.s_list),
-                         self.minicell.population_size - 1)
+                         self.minicell.population_size - 2)
+
         self.assertEqual(len(self.minicell.r_list), 0)
         # Check that we can move people between lists
         # Create a 'fake' event that infects the first person
@@ -84,9 +85,9 @@ class TestMinicell(TestCase):
         target_person = self.minicell.i_list[0]
         fake_event = {'person': target_person, 'status': 'Recovered'}
         self.minicell.handle(fake_event)
-        self.assertEqual(len(self.minicell.i_list), 0)
-        self.assertEqual(len(self.minicell.s_list),
-                         self.minicell.population_size - 1)
+        self.assertEqual(len(self.minicell.i_list), 1)
+        self.assertEqual(len(self.minicell.s_list), self.minicell.population_size - 2)
+
         self.assertEqual(len(self.minicell.r_list), 1)
 
         # If you handle collisions in this method, test them
@@ -99,7 +100,7 @@ class TestMinicell(TestCase):
         Test the 'update' function in minicell.py
         """
 
-        m = Minicell(initial={0: Infected()})
+        m = Minicell()
         self.assertEqual(self.minicell.current_time, 0)
         m.update(dt=1)
         m.update(dt=1)
